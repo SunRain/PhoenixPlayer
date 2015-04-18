@@ -1,0 +1,12 @@
+[submodule "src/libPhoenixPlayer/PhoenixPlayerCore"]
+	path = src/libPhoenixPlayer/PhoenixPlayerCore
+	url = git@git.oschina.net:wanggjghost/PhoenixPlayer.git
+	branch = master
+[submodule "src/qml-material/qml-material"]
+	path = src/qml-material/qml-material
+	url = https://github.com/papyros/qml-material.git
+	branch = develop
+[submodule "src/qml-material/qml-extras"]
+	path = src/qml-material/qml-extras
+	url = https://github.com/papyros/qml-extras.git
+	branch = master
