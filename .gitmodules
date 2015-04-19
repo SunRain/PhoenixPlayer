@@ -10,3 +10,7 @@
 	path = src/qml-material/qml-extras
 	url = https://github.com/papyros/qml-extras.git
 	branch = master
+[submodule "src/PhoenixPlayerCore/PhoenixPlayerCore"]
+	path = src/PhoenixPlayerCore/PhoenixPlayerCore
+	url = git@git.oschina.net:wanggjghost/PhoenixPlayer.git
+	branch = master
