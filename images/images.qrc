@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icon_dummy.png</file>
+        <file>icon-l-music.svg</file>
+        <file>cover.png</file>
+        <file>default_cover.png</file>
+    </qresource>
+</RCC>

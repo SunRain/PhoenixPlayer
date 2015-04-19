@@ -1,5 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>UI/NavigationSideBar.qml</file>
+        <file>Component/IconTextButton.qml</file>
+        <file>Component/MySideBar.qml</file>
+        <file>Component/CoverImage.qml</file>
+        <file>UI/TrackAllView.qml</file>
+        <file>Component/TrackAllHeader.qml</file>
     </qresource>
 </RCC>
