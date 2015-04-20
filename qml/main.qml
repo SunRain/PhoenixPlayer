@@ -93,7 +93,7 @@ ApplicationWindow {
                 }
             }
         }
-        Rectangle {
+        Item {
             id: playContrlBar
             anchors {
                 left: sidebar.right
@@ -101,8 +101,14 @@ ApplicationWindow {
                 bottom: parent.bottom
             }
             //follow the cover height in MySideBar
-            height: units.dp(125)
-            color: "#e02a1a"
+            height: units.dp(80)
+            PlayControlSlider {
+                id: controlSlider
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+            }
         }
     }
 }

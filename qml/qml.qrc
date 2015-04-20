@@ -7,5 +7,6 @@
         <file>Component/CoverImage.qml</file>
         <file>UI/TrackAllView.qml</file>
         <file>Component/TrackAllHeader.qml</file>
+        <file>Component/PlayControlSlider.qml</file>
     </qresource>
 </RCC>
