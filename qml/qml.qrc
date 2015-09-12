@@ -13,5 +13,6 @@
         <file>UI/PlayControlBar.qml</file>
         <file>PlayerController.qml</file>
         <file>Pages/SettingsPage.qml</file>
+        <file>Pages/LocalMusicPage.qml</file>
     </qresource>
 </RCC>

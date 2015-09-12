@@ -9,9 +9,10 @@ import "../Component"
 import "../Component/MaterialMod"
 import "../UI"
 
-
 Page {
     id: settingsPage
+
+    title: qsTr("Settings")
 
     Scrollbar {
         flickableItem: main

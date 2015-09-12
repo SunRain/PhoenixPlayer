@@ -18,7 +18,7 @@ Column {
         model: ListModel {
             ListElement {
                 name: qsTr("Local")
-                page: ""
+                page: "qrc:/Pages/LocalMusicPage.qml"
                 icon: "hardware/computer" //Icon from  Material
             }
             ListElement {
@@ -70,7 +70,7 @@ Column {
                     onTriggered: {
                         console.log("Action onTriggered")
                         mainVerticalNavigation.selectedIndex = index;
-                        pageStack.push(model.page)
+                        pageStack.replace(model.page)
                     }
                 }
             }

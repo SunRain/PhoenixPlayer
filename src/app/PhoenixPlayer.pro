@@ -15,8 +15,8 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include (../../deployment.pri)
 #include (../qml-material/qml-material.pri)
-include (../PhoenixPlayerCore/PhoenixPlayerCore/Core/CoreHeaders.pri)
-include (../PhoenixPlayerCore/PhoenixPlayerCore/Plugins/QML/QmlPluginHeaders.pri)
+include (../PhoenixPlayerCore/libPhoenixPlayer/Core/CoreHeaders.pri)
+include (../PhoenixPlayerCore/libPhoenixPlayer/Plugins/QML/QmlPluginHeaders.pri)
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../PhoenixPlayerCore/release/ -lPhoenixPlayer
