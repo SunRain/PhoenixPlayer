@@ -8,6 +8,7 @@
 
 #include "MusicLibrary/IMusicTagParser.h"
 #include "MusicLibrary/MusicLibraryManager.h"
+#include "MetadataLookup/MetadataLookupMgrWrapper.h"
 
 #include "Player/Player.h"
 
@@ -23,34 +24,73 @@
 #include "CircleImage.h"
 #include "CoverCircleImage.h"
 #include "TrackGroupModel.h"
-#include "PathListModel.h"
+#include "AddonListModel.h"
+#include "MusicLibrary/LocalMusicSacnner.h"
+#include "PluginListModel.h"
 
 using namespace PhoenixPlayer;
 using namespace PhoenixPlayer::MusicLibrary;
 using namespace PhoenixPlayer::QmlPlugin;
+using namespace PhoenixPlayer::MetadataLookup;
 
 int main(int argc, char *argv[])
 {
-//    QApplication app(argc, argv);
-
-////    QQmlApplicationEngine engine;
-////    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
-//    return app.exec();
 
     QScopedPointer<QGuiApplication> app (new QGuiApplication(argc, argv));
     app.data()->setOrganizationName("SunRain");
     app.data()->setApplicationName("PhoenixPlayer");
 
-    Settings *settings = SingletonPointer<Settings>::instance ();
 
-    qmlRegisterUncreatableType<Common>("sunrain.phoenixplayer.qmlplugin", 1, 0, "Common", "");
-    qmlRegisterType<LyricsModel>("sunrain.phoenixplayer.qmlplugin", 1, 0, "LyricsModel");
-    qmlRegisterType<MusicLibraryListModel>("sunrain.phoenixplayer.qmlplugin", 1, 0, "MusicLibraryListModel");
-    qmlRegisterType<CircleImage>("sunrain.phoenixplayer.qmlplugin", 1, 0, "CircleImage");
-    qmlRegisterType<CoverCircleImage>("sunrain.phoenixplayer.qmlplugin", 1, 0, "CoverCircleImage");
-    qmlRegisterType<TrackGroupModel>("sunrain.phoenixplayer.qmlplugin", 1, 0, "TrackGroupModel");
-    qmlRegisterType<PathListModel>("sunrain.phoenixplayer.qmlplugin", 1, 0, "PathListModel");
+    // 设置系统插件目录
+    QDir dir(app.data ()->applicationDirPath ());
+    dir.cdUp ();
+    app.data ()->addLibraryPath (QString("%1/plugins").arg (dir.absolutePath ()));
+
+    qDebug()<<" system library path is "<<app.data ()->libraryPaths ();
+
+    // 装载系统翻译文件
+    QString lang = QLocale::system ().name ();
+    qDebug()<<" system lang is "<<lang;
+    QString langFile = QString("%1/translations/PhoenixPlayer-%2.qm").arg (dir.absolutePath ()).arg (lang);
+    QTranslator translator;
+    if (!QFile::exists (langFile)) {
+        langFile = QString("%1/translations/PhoenixPlayer.qm").arg (dir.absolutePath ());
+    }
+    qDebug()<<" try load translator file "<<langFile;
+    translator.load (langFile);
+    app.data ()->installTranslator (&translator);
+
+
+    // 装载插件翻译文件
+    //TODO: 暂时装载所有翻译
+    foreach (QString path, Util::getAddonDirList ()) {
+        QDir dir(path);
+        QStringList aList = dir.entryList (QDir::Dirs);
+        foreach (QString addonDir, aList) {
+            langFile = QString("%1/%2/lng-%3.qm").arg (path).arg (addonDir).arg (lang);
+            if (QFile::exists (langFile)) {
+                qDebug()<<" try load addon translator file "<<langFile;
+                QTranslator *t = new QTranslator(app.data ());
+                t->load (langFile);
+                app.data ()->installTranslator (t);
+            }
+        }
+    }
+
+    /////////////////////////////////////////////////
+    qmlRegisterUncreatableType<Common>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "Common", "");
+    qmlRegisterType<LyricsModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "LyricsModel");
+    qmlRegisterType<MusicLibraryListModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "MusicLibraryListModel");
+    qmlRegisterType<CircleImage>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "CircleImage");
+    qmlRegisterType<CoverCircleImage>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "CoverCircleImage");
+    qmlRegisterType<TrackGroupModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "TrackGroupModel");
+//    qmlRegisterType<PathListModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "PathListModel");
+    qmlRegisterType<AddonListModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AddonListModel");
+    qmlRegisterType<LocalMusicSacnner>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "LocalMusicSacnner");
+    qmlRegisterType<PluginListModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "PluginListModel");
+
+//    Settings *settings = SingletonPointer<Settings>::instance ();
+
 
 //    QString dir = SailfishApp::pathTo(QString("lib")).toLocalFile();
 
@@ -58,9 +98,20 @@ int main(int argc, char *argv[])
 //    loader->setPluginPath(PluginLoader::TypeAll, dir);
 //    loader->setNewPlugin (PluginLoader::TypePlayBackend, "GStreamerBackend");
 
-    MusicLibraryManager *manager = SingletonPointer<MusicLibraryManager>::instance ();
-    Player *musicPlayer = SingletonPointer<Player>::instance ();
-    Util *util = SingletonPointer<Util>::instance ();
+//    MusicLibraryManager *manager = SingletonPointer<MusicLibraryManager>::instance ();
+//    Player *musicPlayer = SingletonPointer<Player>::instance ();
+//    Util *util = SingletonPointer<Util>::instance ();
+
+    /////////////////////////////////////////////////
+    Settings *settings = Settings::instance ();
+    PluginLoader *loader = PluginLoader::instance ();
+    dir.cd ("lib");
+    loader->setPluginPath (Common::PluginTypeAll, dir.absolutePath ());
+    MusicLibraryManager *manager = MusicLibraryManager::instance ();
+    Player *musicPlayer = Player::instance ();
+    Util *util = Util::instance ();
+    MetadataLookupMgrWrapper *lookup = MetadataLookupMgrWrapper::instance ();
+
 
     QScopedPointer<QQmlApplicationEngine> engine(new QQmlApplicationEngine(app.data ()));
     QQmlContext *ctx = engine.data ()->rootContext ();
@@ -69,6 +120,8 @@ int main(int argc, char *argv[])
     ctx->setContextProperty ("musicPlayer", musicPlayer);
     ctx->setContextProperty ("settings", settings);
     ctx->setContextProperty ("util", util);
+//    ctx->setContextProperty ("appUtil", appUtil.data ());
+    ctx->setContextProperty ("trackMetaLookup", lookup);
 
     engine.data ()->load (QUrl(QStringLiteral("qrc:/main.qml")));
     return app.data()->exec();

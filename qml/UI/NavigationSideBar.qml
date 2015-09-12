@@ -25,11 +25,12 @@ MySideBar {
 //    }
 
     bottomItem: Component {
-        CoverImage {
+        /*CoverImage*/Rectangle {
             id: cover
             width: navigationSideBar.width / 2
             height: width
-            onClicked: {bottomItemClicked();}
+            color: "#c802e2"
+            //            onClicked: {bottomItemClicked();}
         }
     }
 

@@ -8,5 +8,10 @@
         <file>UI/TrackAllView.qml</file>
         <file>Component/TrackAllHeader.qml</file>
         <file>Component/PlayControlSlider.qml</file>
+        <file>Component/MaterialMod/RootWindow.qml</file>
+        <file>UI/MainVerticalNavigation.qml</file>
+        <file>UI/PlayControlBar.qml</file>
+        <file>PlayerController.qml</file>
+        <file>Pages/SettingsPage.qml</file>
     </qresource>
 </RCC>

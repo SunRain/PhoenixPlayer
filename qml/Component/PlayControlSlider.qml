@@ -3,14 +3,14 @@ import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.1
 import Material 0.1
 
-import Material.ListItems 0.1 as ListItem
+//import Material.ListItems 0.1 as ListItem
 
 
-ListItem.BaseListItem {
+/*ListItem.BaseListItem*/View {
     id: playControlSilder
 
-    height: parent ? parent.height : units.dp(80)
-    width: parent ? parent.width : units.dp(700) // mainView ApplicationWindow width - siderbar width
+    height: parent ? parent.height : Units.dp(80)
+    width: parent ? parent.width : Units.dp(700)
 
     property alias trackTitle: trackTitle.text
     property alias trackArtist: artist.text
@@ -25,18 +25,22 @@ ListItem.BaseListItem {
             slider.value = playedPercent;
     }
 
-    ColumnLayout {
+    Column {
         width: parent.width
-        spacing: units.dp(3)
-
+        spacing: Units.dp(3)
+        anchors {
+            left: parent.left
+            top: parent.top
+            leftMargin: Units.dp(2)
+        }
         RowLayout {
             id: playInfo
             anchors {
                 left: parent.left
                 right: parent.right
             }
-            Layout.preferredHeight: playControlSilder.height/2 - units.dp(9)
-            spacing: units.dp(16)
+            Layout.preferredHeight: playControlSilder.height/2 - Units.dp(9)
+            spacing: Units.dp(16)
 
             Label {
                 id: trackTitle
@@ -58,33 +62,38 @@ ListItem.BaseListItem {
                 text: "duration info"
             }
         }
+        Item {
+            id: sliderWrapper
+            width: parent.width
+            height: playControlSilder.height /3
 
-        Slider {
-            id: slider
-            Layout.alignment: Qt.AlignVCenter
-            Layout.fillWidth: true
-            Layout.preferredHeight: playControlSilder.height /3
-            value: 0
-            stepSize: 1
-            minimumValue: 0
-            maximumValue: 100
-            numericValueLabel: true
+            Slider {
+                id: slider
+                width: parent.width - Units.dp(50)
+                height: parent.height
+                anchors.horizontalCenter: parent.horizontalCenter
+                value: 0
+                stepSize: 1
+                minimumValue: 0
+                maximumValue: 100
+                numericValueLabel: true
 
-            property int jumpValue: 0
-            onValueChanged: {
-                console.log("=== slider change value to " + value);
-                if (slider.pressed) {
-                    console.log("=== slider pressed true");
-                    jumpValue = value;
+                property int jumpValue: 0
+                onValueChanged: {
+                    console.log("=== slider change value to " + value);
+                    if (slider.pressed) {
+                        console.log("=== slider pressed true");
+                        jumpValue = value;
+                    }
                 }
-            }
-            onPressedChanged: {
-                console.log("=== slider onPressedChanged " + slider.pressed);
-                if (!slider.pressed && jumpValue > 0) {
-                    console.log("== slider jump to value " + jumpValue);
-                    slider.value = jumpValue;
-                    playControlSilder.playJumpTo(jumpValue);
-                    jumpValue = 0;
+                onPressedChanged: {
+                    console.log("=== slider onPressedChanged " + slider.pressed);
+                    if (!slider.pressed && jumpValue > 0) {
+                        console.log("== slider jump to value " + jumpValue);
+                        slider.value = jumpValue;
+                        playControlSilder.playJumpTo(jumpValue);
+                        jumpValue = 0;
+                    }
                 }
             }
         }

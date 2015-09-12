@@ -4,5 +4,9 @@
         <file>icon-l-music.svg</file>
         <file>cover.png</file>
         <file>default_cover.png</file>
+        <file>default_disc.png</file>
+        <file>default_disc_240.png</file>
+        <file>default_disc_360.png</file>
+        <file>default_disc_490.png</file>
     </qresource>
 </RCC>

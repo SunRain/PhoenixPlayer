@@ -4,7 +4,7 @@ import Material 0.1
 import Material.Extras 0.1
 import Material.ListItems 0.1 as ListItem
 
-import sunrain.phoenixplayer.qmlplugin 1.0
+//import sunrain.phoenixplayer.qmlplugin 1.0
 
 import "../Component"
 
@@ -26,10 +26,14 @@ Item {
         height: units.dp(48)
     }
 
-    MusicLibraryListModel {
-        id: allTracksModel
-        autoFetchMetadata: settings.autoFetchMetaData
-    }
+//    MusicLibraryListModel {
+//        id: allTracksModel
+//        autoFetchMetadata: settings.autoFetchMetaData
+//    }
+    property var library: [
+        "a", "b", "c", "d",
+        "e", "f", "g"
+    ]
 
     ListView {
         id: listView
@@ -48,7 +52,8 @@ Item {
             }
         }
 
-        model: allTracksModel
+//        model: allTracksModel
+        model: library
         delegate: viewDelegate
     }
 
