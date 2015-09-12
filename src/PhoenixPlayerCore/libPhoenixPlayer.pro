@@ -8,7 +8,7 @@ QT += network core quick
 CONFIG += c++11
 
 
-include (PhoenixPlayerCore/Core/Core.pri)
-include (PhoenixPlayerCore/Plugins/QML/qml.pri)
+include (libPhoenixPlayer/Core/Core.pri)
+include (libPhoenixPlayer/Plugins/QML/qml.pri)
 
 

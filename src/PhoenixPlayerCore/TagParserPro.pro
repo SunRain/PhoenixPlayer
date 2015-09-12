@@ -9,9 +9,9 @@ QT += gui
 CONFIG += c++11
 
 #TODO 暂时链接库文件
-#include(PhoenixPlayerCore/Core/Core.pri)
-include (PhoenixPlayerCore/Core/CoreHeaders.pri)
-include (PhoenixPlayerCore/Plugins/MusicLibrary/TagParserPro/TagParserPro.pri)
+#include(libPhoenixPlayer/Core/Core.pri)
+include (libPhoenixPlayer/Core/CoreHeaders.pri)
+include (libPhoenixPlayer/Plugins/MusicLibrary/TagParserPro/TagParserPro.pri)
 
 INCLUDEPATH += \
         $$PWD

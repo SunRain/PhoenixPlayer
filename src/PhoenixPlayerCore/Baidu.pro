@@ -9,10 +9,10 @@ TARGET = LyricsBaidu
 CONFIG += c++11
 
 #TODO 暂时链接库文件
-#include(PhoenixPlayerCore/Core/Core.pri)
-include (PhoenixPlayerCore/Core/CoreHeaders.pri)
+#include(libPhoenixPlayer/Core/Core.pri)
+include (libPhoenixPlayer/Core/CoreHeaders.pri)
 
-include (PhoenixPlayerCore/Plugins/MetadataLookup/Baidu/Baidu.pri)
+include (libPhoenixPlayer/Plugins/MetadataLookup/Baidu/Baidu.pri)
 
 INCLUDEPATH += \
         $$PWD

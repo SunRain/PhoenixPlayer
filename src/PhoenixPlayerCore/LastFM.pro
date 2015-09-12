@@ -9,10 +9,10 @@ TARGET = LastFmMetaDataLookup
 CONFIG += c++11
 
 #TODO 暂时链接库文件
-#include(PhoenixPlayerCore/Core/Core.pri)
-include (PhoenixPlayerCore/Core/CoreHeaders.pri)
+#include(libPhoenixPlayer/Core/Core.pri)
+include (libPhoenixPlayer/Core/CoreHeaders.pri)
 
-include (PhoenixPlayerCore/Plugins/MetadataLookup/LastFM/LastFM.pri)
+include (libPhoenixPlayer/Plugins/MetadataLookup/LastFM/LastFM.pri)
 
 INCLUDEPATH += \
         $$PWD
