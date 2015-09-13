@@ -63,7 +63,7 @@ Column {
             IconButton {
                 id: button
                 anchors.centerIn: parent
-                size: Units.dp(48)
+                size: parent.width *0.8 //Units.dp(48)
                 action: Action {
                     iconName: model.icon
                     name: model.name

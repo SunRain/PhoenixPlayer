@@ -117,7 +117,7 @@ Controls.ApplicationWindow {
         autoFlick: false
         backgroundColor: Theme.backgroundColor//Qt.rgba(0,0,0,0)
         elevation: 0
-        width: Units.dp(64)
+        width: parent.width /20 //Units.dp(64)
     }
 
     View {
@@ -128,7 +128,7 @@ Controls.ApplicationWindow {
             bottom: parent.bottom
         }
         elevation: 2
-        height: Units.dp(128)
+        height: parent.height /10 //Units.dp(128)
         backgroundColor: Theme.backgroundColor
     }
 

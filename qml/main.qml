@@ -25,7 +25,7 @@ RootWindow {
     }
 
     leftSideBar: MainVerticalNavigation {
-        width: Units.dp(64)
+//        width: Units.dp(64)
     }
 
     bottomBar: PlayControlBar {
