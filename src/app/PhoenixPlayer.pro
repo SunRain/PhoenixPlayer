@@ -1,8 +1,9 @@
+include (../PhoenixPlayerCore/libPhoenixPlayer/libPhoenixPlayer.pri)
 
 TEMPLATE = app
 QT += qml quick widgets
-#Enable c++11
-CONFIG += c++11
+
+TARGET = ../PhoenixPlayerCore/libPhoenixPlayer/target/PhoenixPlayer
 
 SOURCES += main.cpp
 
@@ -14,14 +15,28 @@ QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include (../../deployment.pri)
-#include (../qml-material/qml-material.pri)
-include (../PhoenixPlayerCore/libPhoenixPlayer/Core/CoreHeaders.pri)
-include (../PhoenixPlayerCore/libPhoenixPlayer/Plugins/QML/QmlPluginHeaders.pri)
+include (../PhoenixPlayerCore/libPhoenixPlayer/include.pri)
 
+INCLUDEPATH += \
+        $$PWD
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../PhoenixPlayerCore/release/ -lPhoenixPlayer
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../PhoenixPlayerCore/debug/ -lPhoenixPlayer
-else:unix: LIBS += -L$$OUT_PWD/../PhoenixPlayerCore/ -lPhoenixPlayer
+isEmpty (LIB_DIR){
+    LIB_DIR = /opt/PhoenixPlayer
+}
 
-INCLUDEPATH += $$PWD/../PhoenixPlayerCore
-DEPENDPATH += $$PWD/../PhoenixPlayerCore
+QMAKE_LIBDIR += \
+    lib \
+    ../PhoenixPlayerCore/libPhoenixPlayer/target/lib \
+    $${OUT_PWD}/../PhoenixPlayerCore/libPhoenixPlayer/target/lib \
+    $${LIB_DIR}/lib
+
+QMAKE_RPATHDIR += \
+    lib \
+    ../PhoenixPlayerCore/libPhoenixPlayer/target/lib \
+    $${OUT_PWD}/../PhoenixPlayerCore/libPhoenixPlayer/target/lib \
+    $${LIB_DIR}/lib
+
+LIBS += -lPhoenixPlayer
+
+target.path = $$LIB_DIR
+INSTALLS += target
