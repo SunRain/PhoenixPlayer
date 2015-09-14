@@ -40,9 +40,9 @@ int main(int argc, char *argv[])
     app.data()->setOrganizationName("SunRain");
     app.data()->setApplicationName("PhoenixPlayer");
 
-
     // 设置系统插件目录
     QDir dir(app.data ()->applicationDirPath ());
+    app.data ()->addLibraryPath (QString("%1/plugins").arg (dir.absolutePath ()));
     dir.cdUp ();
     app.data ()->addLibraryPath (QString("%1/plugins").arg (dir.absolutePath ()));
 
@@ -104,14 +104,13 @@ int main(int argc, char *argv[])
 
     /////////////////////////////////////////////////
     Settings *settings = Settings::instance ();
-    PluginLoader *loader = PluginLoader::instance ();
-    dir.cd ("lib");
-    loader->setPluginPath (Common::PluginTypeAll, dir.absolutePath ());
+//    PluginLoader *loader = PluginLoader::instance ();
+//    dir.cd ("lib");
+//    loader->setPluginPath (Common::PluginTypeAll, dir.absolutePath ());
     MusicLibraryManager *manager = MusicLibraryManager::instance ();
     Player *musicPlayer = Player::instance ();
     Util *util = Util::instance ();
     MetadataLookupMgrWrapper *lookup = MetadataLookupMgrWrapper::instance ();
-
 
     QScopedPointer<QQmlApplicationEngine> engine(new QQmlApplicationEngine(app.data ()));
     QQmlContext *ctx = engine.data ()->rootContext ();
