@@ -58,28 +58,28 @@ Page {
     //                top: parent.top
     //                bottom: playContrlBar.top
     //            }
-    //            TabView {
-    //                id: tabView
-    //                anchors.fill: parent
-    //                clip: true
-    //                currentIndex: page.selectedTab
-    //                model: tabs
-    //            }
-    //            VisualItemModel {
-    //                id: tabs
-    //                property int index: tabView.currentIndex
-    //                onIndexChanged: {
-    //                    console.log("==== tabs index changed to " + index);
-    //                    if (index == 4) { //match  tabs array
-    //                        viewLoader.source = "qrc:/UI/TrackAllView.qml"
-    //                    }
-    //                }
-    //                Loader {
-    //                    id: viewLoader
-    //                    width: tabView.width
-    //                    height: tabView.height
-    //                }
-    //            }
+    TabView {
+        id: tabView
+        anchors.fill: parent
+        clip: true
+        currentIndex: page.selectedTab
+        model: tabs
+    }
+    VisualItemModel {
+        id: tabs
+        property int index: tabView.currentIndex
+        onIndexChanged: {
+            console.log("==== tabs index changed to " + index);
+            if (index == 4) { //match  tabs array
+                viewLoader.source = "qrc:/UI/TrackAllView.qml"
+            }
+        }
+        Loader {
+            id: viewLoader
+            width: tabView.width
+            height: tabView.height
+        }
+    }
     //        }
     //        Item {
     //            id: playContrlBar

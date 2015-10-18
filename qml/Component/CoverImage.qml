@@ -1,6 +1,6 @@
-//import QtQuick 2.0
-//import Material 0.1
-//import sunrain.phoenixplayer.qmlplugin 1.0
+import QtQuick 2.0
+import Material 0.1
+import sunrain.phoenixplayer.qmlplugin 1.0
 
 //CoverCircleImage {
 //    id: coverImage

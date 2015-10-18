@@ -4,7 +4,7 @@ import Material 0.1
 import Material.Extras 0.1
 import Material.ListItems 0.1 as ListItem
 
-//import sunrain.phoenixplayer.qmlplugin 1.0
+import com.sunrain.phoenixplayer.qmlplugin 1.0
 
 import "../Component"
 
@@ -13,7 +13,7 @@ Item {
     clip: true
 
     Component.onCompleted: {
-        allTracksModel.showAllTracks();
+//        allTracksModel.showAllTracks();
     }
 
     TrackAllHeader {
@@ -23,17 +23,17 @@ Item {
             right: parent.right
             top: parent.top
         }
-        height: units.dp(48)
+        height: Units.dp(48)
     }
 
 //    MusicLibraryListModel {
 //        id: allTracksModel
 //        autoFetchMetadata: settings.autoFetchMetaData
 //    }
-    property var library: [
-        "a", "b", "c", "d",
-        "e", "f", "g"
-    ]
+//    property var library: [
+//        "a", "b", "c", "d",
+//        "e", "f", "g"
+//    ]
 
     ListView {
         id: listView
@@ -47,14 +47,17 @@ Item {
             NumberAnimation {
                 easing.type: Easing.OutBounce
                 properties: "y"
-                from: tracksListView.height/2
+                from: listView.height/2
                 duration: 1000
             }
         }
 
 //        model: allTracksModel
-        model: library
+        model: musicLibraryManager.allTracks()
         delegate: viewDelegate
+//        Component.onCompleted: {
+//            listView.model = musicLibraryManager.allTracks();
+//        }
     }
 
     Scrollbar {
@@ -97,17 +100,17 @@ Item {
                 anchors {
                     left: parent.left
                     right: parent.right
-                    margins: units.dp(16)
+                    margins: Units.dp(16)
                 }
 
-                height: parent.height - units.dp(1)
-                spacing: units.dp(16)
+                height: parent.height - Units.dp(1)
+                spacing: Units.dp(16)
 
                 Label {
                     Layout.alignment: Qt.AlignVCenter
                     Layout.fillWidth: true
-//                    Layout.preferredWidth: units.dp(100)
-                    text: model.trackTitle
+//                    Layout.preferredWidth: Units.dp(100)
+                    text: model.modelData.name //model.modelData.trackMeta.title
                     style: "subheading"
                     elide: Text.ElideRight
 
@@ -116,31 +119,31 @@ Item {
 
                 Label {
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: units.dp(100)
+                    Layout.preferredWidth: Units.dp(100)
 
                     elide: Text.ElideRight
 
-                    text: model.artistName
+                    text: model.modelData.artistMeta.name//model.artistName
                     color: Theme.light.subTextColor
                 }
 
                 Label {
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: units.dp(100)
+                    Layout.preferredWidth: Units.dp(100)
 
                     elide: Text.ElideRight
 
-                    text: model.albumName
+                    text: model.modelData.albumMeta.name//model.albumName
                     color: Theme.light.subTextColor
                 }
 
                 Label {
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: units.dp(100)
+                    Layout.preferredWidth: Units.dp(100)
 
                     elide: Text.ElideRight
 
-                    text: model.albumName
+                    text: model.modelData.trackMeta.duration
                     color: Theme.light.subTextColor
                 }
             }

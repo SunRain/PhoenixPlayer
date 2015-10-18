@@ -15,37 +15,37 @@ View {
 //        right: parent.right
 //        top: parent.top
 //    }
-//    height: units.dp(48)
+//    height: Units.dp(48)
     RowLayout {
         anchors {
             left: parent.left
             right: parent.right
-            margins: units.dp(16)
+            margins: Units.dp(16)
         }
-        height: parent.height - units.dp(1)
-        spacing: units.dp(16)
+        height: parent.height - Units.dp(1)
+        spacing: Units.dp(16)
         Label {
             Layout.alignment: Qt.AlignVCenter
                 Layout.fillWidth: true
-//            Layout.preferredWidth: units.dp(100)
+//            Layout.preferredWidth: Units.dp(100)
             text: qsTr("Title")
             color: Theme.light.subTextColor
         }
         Label {
             Layout.alignment: Qt.AlignVCenter
-            Layout.preferredWidth: units.dp(100)
+            Layout.preferredWidth: Units.dp(100)
             text: qsTr("Artist")
             color: Theme.light.subTextColor
         }
         Label {
             Layout.alignment: Qt.AlignVCenter
-            Layout.preferredWidth: units.dp(100)
+            Layout.preferredWidth: Units.dp(100)
             text: qsTr("Album")
             color: Theme.light.subTextColor
         }
         Label {
             Layout.alignment: Qt.AlignVCenter
-            Layout.preferredWidth: units.dp(100)
+            Layout.preferredWidth: Units.dp(100)
             text: qsTr("Duration")
             color: Theme.light.subTextColor
         }

@@ -33,8 +33,8 @@ RootWindow {
         anchors.fill: parent
     }
 
-    LocalMusicSacnner {
-        id: localMusicSacnner
+    LocalMusicScanner {
+        id: localMusicScanner
     }
 
     initialPage: Component {

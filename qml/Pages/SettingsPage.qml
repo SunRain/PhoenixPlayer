@@ -55,7 +55,7 @@ Page {
                 Button {
                     text: qsTr("Refresh")
                     onClicked:  {
-                        localMusicSacnner.scanLocalMusic();
+                        localMusicScanner.scanLocalMusic();
                     }
                 }
 
