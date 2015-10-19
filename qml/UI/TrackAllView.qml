@@ -72,14 +72,10 @@ Item {
 //            selected: selectedFile != undefined &&
 //                      selectedFile.filePath == model.filePath
 
-//            onClicked: {
-//                if (model.isDir) {
-//                    folderModel.goTo(model.filePath)
-//                } else {
-//                    snackbar.open("Opening " + model.fileName)
-//                    Qt.openUrlExternally(model.filePath)
-//                }
-//            }
+            onClicked: {
+                console.log("==== on click "+model.modelData.name);
+                musicPlayer.playFromLibrary(model.modelData.hash);
+            }
 
 //            onPressAndHold: {
 //                if (selected)

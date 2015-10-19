@@ -12,6 +12,8 @@
 #include "MetadataLookup/MetadataLookupMgrWrapper.h"
 
 #include "PlayerCore/PlayerCore.h"
+#include "PlayerCore/PlayListMgr.h"
+#include "PlayerCore/VolumeControl.h"
 
 #include "Settings.h"
 #include "PluginLoader.h"
@@ -90,6 +92,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<LocalMusicScanner>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "LocalMusicScanner");
     qmlRegisterType<PluginListModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "PluginListModel");
 
+    qmlRegisterUncreatableType<PlayListMgr>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "PlayListMgr", "Cannot be created");
+
     qmlRegisterUncreatableType<AlbumMeta>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AlbumMeta", "Cannot be created");
     qmlRegisterUncreatableType<ArtistMeta>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "ArtistMeta", "Cannot be created");
     qmlRegisterUncreatableType<CoverMeta>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "CoverMeta", "Cannot be created");
@@ -115,6 +119,7 @@ int main(int argc, char *argv[])
 //    dir.cd ("lib");
 //    loader->setPluginPath (Common::PluginTypeAll, dir.absolutePath ());
     MusicLibraryManager *manager = MusicLibraryManager::instance ();
+    VolumeControl *volume = VolumeControl::instance ();
     PlayerCore *musicPlayer = PlayerCore::instance ();
     Util *util = Util::instance ();
     MetadataLookupMgrWrapper *lookup = MetadataLookupMgrWrapper::instance ();
@@ -124,6 +129,7 @@ int main(int argc, char *argv[])
 
     ctx->setContextProperty ("musicLibraryManager", manager);
     ctx->setContextProperty ("musicPlayer", musicPlayer);
+    ctx->setContextProperty ("volumeCtrl", volume);
     ctx->setContextProperty ("settings", settings);
     ctx->setContextProperty ("util", util);
 //    ctx->setContextProperty ("appUtil", appUtil.data ());
