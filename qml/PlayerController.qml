@@ -15,6 +15,7 @@ Item {
     Connections {
         target: musicPlayer
         onPlayBackendStateChanged: { //int state
+            console.log("=== onPlayBackendStateChanged " + state);
             internal.playBackendState = state;
             if (state == Common.PlayBackendPlaying) {
                 internal.isPlaying = true;
@@ -26,16 +27,21 @@ Item {
         }
         //void playTickPercent(int percent);
         onPlayTickPercent: {
-            internal.playTickPercent = percent / 100
+            internal.playTickPercent = percent
             if (!internal._useBind())
                 controller.playTickChanged();
         }
         onPlayTickActual: {
             //sec
             internal.playTickActualSec = sec;
+            if (!internal._useBind())
+                controller.playTickChanged();
         }
         onTrackChanged: {
-            internal.playingSongHash = musicLibraryManager.playingSongHash();
+            console.log("===================== onTrackChanged");
+//            internal.playingSongHash = musicLibraryManager.playingSongHash();
+            internal._reload();
+            trackChanged();
         }
     }
 
@@ -44,7 +50,7 @@ Item {
         property bool isPlaying: musicPlayer.playBackendState == Common.PlayBackendPlaying
         property real playTickPercent: 0
         property int playTickActualSec: 0
-        property var playingSongHash: undefined
+//        property var playingSongHash: undefined
         property var trackTitle
         property var trackArtist
         property var trackAlbum
@@ -52,27 +58,37 @@ Item {
         property int playBackendState: Common.PlayBackendStopped
 
         Component.onCompleted:  {
-            playingSongHash = musicLibraryManager.playingSongHash();
-        }
-
-        onPlayingSongHashChanged: {
-//            trackTitle = musicLibraryManager.querySongTitle(playingSongHash);
-//            trackArtist = musicLibraryManager.queryOneByIndex(playingSongHash, Common.E_ArtistName, true);
-//            trackAlbum = musicLibraryManager.queryOneByIndex(playingSongHash, Common.E_AlbumName, true)
-//            trackLength = musicLibraryManager.queryOneByIndex(playingSongHash, Common.E_SongLength);
-//            if (!internal._useBind())
-//                controller.trackChanged();
+//            playingSongHash = musicLibraryManager.playingSongHash();
             _reload();
         }
+
+//        onPlayingSongHashChanged: {
+////            trackTitle = musicLibraryManager.querySongTitle(playingSongHash);
+////            trackArtist = musicLibraryManager.queryOneByIndex(playingSongHash, Common.E_ArtistName, true);
+////            trackAlbum = musicLibraryManager.queryOneByIndex(playingSongHash, Common.E_AlbumName, true)
+////            trackLength = musicLibraryManager.queryOneByIndex(playingSongHash, Common.E_SongLength);
+////            if (!internal._useBind())
+////                controller.trackChanged();
+//            _reload();
+//        }
 
         function _useBind() {
             return controller.bindController && (controller.bindItem != null)
         }
         function _reload() {
-            trackTitle = musicLibraryManager.querySongTitle(playingSongHash);
-            trackArtist = musicLibraryManager.queryOneByIndex(playingSongHash, Common.E_ArtistName, true);
-            trackAlbum = musicLibraryManager.queryOneByIndex(playingSongHash, Common.E_AlbumName, true)
-            trackLength = musicLibraryManager.queryOneByIndex(playingSongHash, Common.E_SongLength);
+            console.log("=============== internal._reload()");
+//            trackTitle = musicLibraryManager.querySongTitle(playingSongHash);
+//            trackArtist = musicLibraryManager.queryOneByIndex(playingSongHash, Common.E_ArtistName, true);
+//            trackAlbum = musicLibraryManager.queryOneByIndex(playingSongHash, Common.E_AlbumName, true)
+//            trackLength = musicLibraryManager.queryOneByIndex(playingSongHash, Common.E_SongLength);
+            trackTitle = musicPlayer.playList.currentTrack.trackMeta.title;
+            trackAlbum = musicPlayer.playList.currentTrack.albumMeta.name;
+            trackArtist = musicPlayer.playList.currentTrack.artistMeta.name;
+            trackLength = musicPlayer.playList.currentTrack.trackMeta.duration;
+
+            console.log("== track title " + trackTitle + " album " + trackAlbum + " artist " + trackArtist
+                        + " duration " + trackLength);
+
             if (!internal._useBind())
                 controller.trackChanged();
             controller.internalReloaded();
@@ -95,7 +111,7 @@ Item {
 
     function getTrackUUID() {
         if (internal._useBind()) return bindItem.getTrackUUID();
-        return internal.playingSongHash;
+        return musicPlayer.playList.currentTrack.hash//internal.playingSongHash;
     }
     function getPlayBackendState() {
         if (internal._useBind()) return bindItem.getPlayBackendState();
@@ -107,6 +123,7 @@ Item {
     }
     function getCoverUri(defaultUri) {
         if (internal._useBind()) return bindItem.getCoverUri();
+        //TODO need update to match new  api
         var coverUri = appUtil.adjustCoverUri(musicLibraryManager.querySongImageUri(internal.playingSongHash), defaultUri);
         return coverUri;
     }
@@ -146,48 +163,48 @@ Item {
     }
 
     function forwardTrackName() {
-        if (internal._useBind()) return bindItem.forwardTrackName();
-        var hash = musicPlayer.forwardTrackHash();
-        var t = musicLibraryManager.querySongTitle(hash);
-        if (t == undefined || t == "")
-            return qsTr("UnKnow");
-        return t;
+//        if (internal._useBind()) return bindItem.forwardTrackName();
+//        var hash = musicPlayer.forwardTrackHash();
+//        var t = musicLibraryManager.querySongTitle(hash);
+//        if (t == undefined || t == "")
+//            return qsTr("UnKnow");
+//        return t;
     }
     function forwardTrackInfo() {
-        if (internal._useBind()) return bindItem.forwardTrackInfo();
-        var hash = musicPlayer.forwardTrackHash();
-        var artist = musicLibraryManager.queryOneByIndex(hash, Common.E_ArtistName);
-        if (artist == undefined || artist == "")
-            artist = qsTr("UnKnow");
-        var time = musicLibraryManager.queryOneByIndex(hash, Common.E_SongLength);
-        if (time == undefined || time == "")
-            time = qsTr("UnKnow");
-        else
-            time = util.formateSongDuration(time);
-        return artist + " / " + time;
+//        if (internal._useBind()) return bindItem.forwardTrackInfo();
+//        var hash = musicPlayer.forwardTrackHash();
+//        var artist = musicLibraryManager.queryOneByIndex(hash, Common.E_ArtistName);
+//        if (artist == undefined || artist == "")
+//            artist = qsTr("UnKnow");
+//        var time = musicLibraryManager.queryOneByIndex(hash, Common.E_SongLength);
+//        if (time == undefined || time == "")
+//            time = qsTr("UnKnow");
+//        else
+//            time = util.formateSongDuration(time);
+//        return artist + " / " + time;
     }
 
     function backwardTrackName() {
-        if (internal._useBind()) return bindItem.backwardTrackName();
-        var hash = musicPlayer.backwardTrackHash()
-        var t = musicLibraryManager.querySongTitle(hash);
-        if (t == undefined || t == "")
-            return qsTr("UnKnow");
-        return t;
+//        if (internal._useBind()) return bindItem.backwardTrackName();
+//        var hash = musicPlayer.backwardTrackHash()
+//        var t = musicLibraryManager.querySongTitle(hash);
+//        if (t == undefined || t == "")
+//            return qsTr("UnKnow");
+//        return t;
     }
     function backwardTrackInfo() {
-        if (internal._useBind()) return bindItem.backwardTrackInfo();
+//        if (internal._useBind()) return bindItem.backwardTrackInfo();
 
-        var hash = musicPlayer.backwardTrackHash();
-        var artist = musicLibraryManager.queryOneByIndex(hash, Common.E_ArtistName);
-        if (artist == undefined || artist == "")
-            artist = qsTr("UnKnow");
-        var time = musicLibraryManager.queryOneByIndex(hash, Common.E_SongLength);
-        if (time == undefined || time == "")
-            time = qsTr("UnKnow");
-        else
-            time = util.formateSongDuration(time);
-        return artist + " / " + time;
+//        var hash = musicPlayer.backwardTrackHash();
+//        var artist = musicLibraryManager.queryOneByIndex(hash, Common.E_ArtistName);
+//        if (artist == undefined || artist == "")
+//            artist = qsTr("UnKnow");
+//        var time = musicLibraryManager.queryOneByIndex(hash, Common.E_SongLength);
+//        if (time == undefined || time == "")
+//            time = qsTr("UnKnow");
+//        else
+//            time = util.formateSongDuration(time);
+//        return artist + " / " + time;
     }
 
     function getPlayQueuePopoverUri() {

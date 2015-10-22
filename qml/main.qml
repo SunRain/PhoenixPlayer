@@ -33,6 +33,10 @@ RootWindow {
         anchors.fill: parent
     }
 
+    PlayerController {
+        id: playerController
+    }
+
     LocalMusicScanner {
         id: localMusicScanner
     }
