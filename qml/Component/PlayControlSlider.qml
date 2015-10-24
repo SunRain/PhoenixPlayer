@@ -3,10 +3,12 @@ import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.1
 import Material 0.1
 
+//import Ubuntu.Components 1.1
+
 //import Material.ListItems 0.1 as ListItem
 
 
-/*ListItem.BaseListItem*/View {
+View {
     id: playControlSilder
 
     height: parent ? parent.height : Units.dp(80)
@@ -79,6 +81,11 @@ import Material 0.1
                 numericValueLabel: true
 
                 property int jumpValue: 0
+
+                function valueInfo(v) {
+                    return "bb:b "+v.toFixed(0)
+                }
+
                 onValueChanged: {
                     console.log("=== slider change value to " + value);
                     if (slider.pressed) {
