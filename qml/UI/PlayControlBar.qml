@@ -29,8 +29,8 @@ Item {
 //                slider.value = playerController.playTickActualSec();//sec;
 //                playedTime.text = util.formateSongDuration(playerController.playTickActualSec());
 //            }
-            console.log(" onPlayTickChanged playTickPercent " + playerController.playTickPercent());
-            slider.playedPercent = playerController.playTickPercent();
+            console.log(" onPlayTickChanged playedSec " + playerController.playTickActualSec());
+            slider.playedSec = playerController.playTickActualSec();
         }
         onPlayBackendStateChanged: {
             _isPlaying = playerController.isPlaying();
@@ -116,11 +116,11 @@ Item {
             right: menuRow.left
             rightMargin: Units.dp(2)
         }
-        playedPercent: 0
+        playedSec: 0;
         trackTitle: _title//musicPlayer.playList.currentTrack.trackMeta.title
         trackArtist: _artist//usicPlayer.playList.currentTrack.artistMeta.name
         durationInfo: util.formateSongDuration(_durationValue)//musicPlayer.playList.currentTrack.trackMeta.duration
-
+        durationSec: _durationValue
     }
     Row {
         id: menuRow

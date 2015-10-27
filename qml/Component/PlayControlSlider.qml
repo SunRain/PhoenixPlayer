@@ -17,14 +17,15 @@ View {
     property alias trackTitle: trackTitle.text
     property alias trackArtist: artist.text
     property alias durationInfo: durationInfo.text
+    property alias durationSec: slider.maximumValue
 
-    property int playedPercent
+    property int playedSec
 
-    signal playJumpTo(int newPercent)
+    signal playJumpTo(int newSec)
 
-    onPlayedPercentChanged: {
+    onPlayedSecChanged: {
         if (!slider.pressed)
-            slider.value = playedPercent;
+            slider.value = playedSec;
     }
 
     Column {
