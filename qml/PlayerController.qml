@@ -32,8 +32,8 @@ Item {
                 controller.playTickChanged();
         }
         onPlayTickActual: {
-            //sec
-            internal.playTickActualSec = sec;
+            //void playTickActual(quint64 second);
+            internal.playTickActualSec = second;
             if (!internal._useBind())
                 controller.playTickChanged();
         }

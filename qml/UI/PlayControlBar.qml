@@ -116,6 +116,12 @@ Item {
             right: menuRow.left
             rightMargin: Units.dp(2)
         }
+        onPlayJumpTo: {
+            //newSec
+            console.log("********* onPlayJumpTo "+ newSec);
+            musicPlayer.setPosition(newSec, false);
+        }
+
         playedSec: 0;
         trackTitle: _title//musicPlayer.playList.currentTrack.trackMeta.title
         trackArtist: _artist//usicPlayer.playList.currentTrack.artistMeta.name

@@ -19,7 +19,7 @@ View {
     property alias durationInfo: durationInfo.text
     property alias durationSec: slider.maximumValue
 
-    property int playedSec
+    property int playedSec: 0
 
     signal playJumpTo(int newSec)
 
@@ -100,7 +100,7 @@ View {
                         console.log("== slider jump to value " + jumpValue);
                         slider.value = jumpValue;
                         playControlSilder.playJumpTo(jumpValue);
-                        jumpValue = 0;
+//                        jumpValue = 0;
                     }
                 }
             }
