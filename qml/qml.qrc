@@ -14,5 +14,6 @@
         <file>PlayerController.qml</file>
         <file>Pages/SettingsPage.qml</file>
         <file>Pages/LocalMusicPage.qml</file>
+        <file>UI/TrackGroupView.qml</file>
     </qresource>
 </RCC>

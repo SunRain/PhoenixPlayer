@@ -37,18 +37,49 @@ TabbedPage {
         model: 6 //size of sectionTitles
 
         delegate: Tab {
+            id: tab
+            clip: true
             title: sectionTitles[index]
 //            property string selectedComponent: modelData[0]
 //            property var section: modelData
-            sourceComponent: Item {
-                anchors.fill: parent
-                clip: true
-                Loader {
-                    anchors.fill: parent
-                    source: {
-                        if (index == 4)
-                            return "qrc:/UI/TrackAllView.qml";
-                    }
+//            sourceComponent: Item {
+//                anchors.fill: parent
+//                clip: true
+//                Loader {
+//                    anchors.fill: parent
+//                    source: {
+//                        if (index == 4)
+//                            return "qrc:/UI/TrackAllView.qml";
+//                    }
+//                }
+//            }
+//            source: {
+//                if (index == 2) {
+//                    return "qrc:/UI/TrackGroupView.qml, {pageType: }";
+//                }
+//                if (index == 4)
+//                    return "qrc:/UI/TrackAllView.qml";
+//            }
+            Component.onCompleted: {
+                console.log("==== Tab onCompleted with index " + index);
+                if (index == 2) {
+                    var type = TrackGroupModel.TypeAlbum
+                    tab.setSource("qrc:/UI/TrackGroupView.qml",
+                                  {"pageType":type});
+                }
+                if (index == 3) {
+                    type = TrackGroupModel.TypeArtist
+                    tab.setSource("qrc:/UI/TrackGroupView.qml",
+                                  {"pageType":type});
+                }
+                if (index == 4) {
+//                    return "qrc:/UI/TrackAllView.qml";
+                    tab.setSource("qrc:/UI/TrackAllView.qml");
+                }
+                if (index == 5) {
+                    type = TrackGroupModel.TypeGenre
+                    tab.setSource("qrc:/UI/TrackGroupView.qml",
+                                  {"pageType":type});
                 }
             }
         }
