@@ -19,6 +19,8 @@ qrc_*.cpp
 ui_*.h
 Makefile*
 *-build-*
+build-*-Debug
+build-*-Release
 # QtCreator
 *.autosave
 #QtCtreator Qml
