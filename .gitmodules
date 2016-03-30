@@ -3,3 +3,11 @@
 	path = src/PhoenixPlayerCore/libPhoenixPlayer
 	url = https://github.com/SunRain/libPhoenixPlayer.git
 	branch = master
+[submodule "ThirdParty/qml-material"]
+	path = ThirdParty/qml-material
+	url = https://github.com/SunRain/qml-material.git
+	branch = develop
+[submodule "ThirdParty/quickflux"]
+	path = ThirdParty/quickflux
+	url = https://github.com/SunRain/quickflux.git
+	branch = master
