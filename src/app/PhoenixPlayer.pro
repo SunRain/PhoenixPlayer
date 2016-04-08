@@ -5,9 +5,15 @@ QT += qml quick widgets
 
 TARGET = ../PhoenixPlayerCore/libPhoenixPlayer/target/PhoenixPlayer
 
-SOURCES += main.cpp
+HEADERS += \
+    AudioMetaGroupDelegate.h
 
-RESOURCES += ../../qml/qml.qrc \
+SOURCES += \
+    main.cpp \
+    AudioMetaGroupDelegate.cpp
+
+RESOURCES += \
+    ../../qml/qml.qrc \
     ../../images/images.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
@@ -16,6 +22,8 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include (../../deployment.pri)
 include (../PhoenixPlayerCore/libPhoenixPlayer/include.pri)
+include (../../thirdparty/quickflux/quickflux.pri)
+include (../../thirdparty/qsyncable/qsyncable.pri)
 
 INCLUDEPATH += \
         $$PWD

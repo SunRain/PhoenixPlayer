@@ -12,38 +12,38 @@ Item {
     signal playTickChanged
     signal internalReloaded
 
-    Connections {
-        target: musicPlayer
-        onPlayBackendStateChanged: { //int state
-            console.log("=== onPlayBackendStateChanged " + state);
-            internal.playBackendState = state;
-            if (state == Common.PlayBackendPlaying) {
-                internal.isPlaying = true;
-            } else {
-                internal.isPlaying = false;
-            }
-            if (!internal._useBind())
-                controller.playBackendStateChanged();
-        }
-        //void playTickPercent(int percent);
-        onPlayTickPercent: {
-            internal.playTickPercent = percent
-            if (!internal._useBind())
-                controller.playTickChanged();
-        }
-        onPlayTickActual: {
-            //void playTickActual(quint64 second);
-            internal.playTickActualSec = second;
-            if (!internal._useBind())
-                controller.playTickChanged();
-        }
-        onTrackChanged: {
-            console.log("===================== onTrackChanged");
-//            internal.playingSongHash = musicLibraryManager.playingSongHash();
-            internal._reload();
-            trackChanged();
-        }
-    }
+//    Connections {
+//        target: musicPlayer
+//        onPlayBackendStateChanged: { //int state
+//            console.log("=== onPlayBackendStateChanged " + state);
+//            internal.playBackendState = state;
+//            if (state == Common.PlayBackendPlaying) {
+//                internal.isPlaying = true;
+//            } else {
+//                internal.isPlaying = false;
+//            }
+//            if (!internal._useBind())
+//                controller.playBackendStateChanged();
+//        }
+//        //void playTickPercent(int percent);
+//        onPlayTickPercent: {
+//            internal.playTickPercent = percent
+//            if (!internal._useBind())
+//                controller.playTickChanged();
+//        }
+//        onPlayTickActual: {
+//            //void playTickActual(quint64 second);
+//            internal.playTickActualSec = second;
+//            if (!internal._useBind())
+//                controller.playTickChanged();
+//        }
+//        onTrackChanged: {
+//            console.log("===================== onTrackChanged");
+////            internal.playingSongHash = musicLibraryManager.playingSongHash();
+//            internal._reload();
+//            trackChanged();
+//        }
+//    }
 
     QtObject {
         id: internal

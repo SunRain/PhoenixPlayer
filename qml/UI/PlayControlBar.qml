@@ -5,10 +5,13 @@ import com.sunrain.phoenixplayer.qmlplugin 1.0
 
 import "../Component"
 
-Item {
+View {
     id: playControlBar
     width: parent ? parent.width : Units.dp(700)
-    height: parent ? parent.height : Units.dp(120)
+    height: slider.height//parent ? parent.height : Units.dp(120)
+
+    elevation: 1
+    elevationInverted: true
 
     property bool _isPlaying: playerController.isPlaying()
     property var _durationValue: playerController.getTrackLength()
@@ -39,25 +42,23 @@ Item {
 
     Image {
         id: trackImage
-        anchors {
-            left: parent.left
-            leftMargin: Units.dp(2)
-            top: parent.top
-            bottom: parent.bottom
-        }
-        width: parent.height
-        height: width
+        anchors.left: parent.left
+        anchors.leftMargin: Units.dp(2)
+        height: parent.height
+        width: height
         fillMode: Image.PreserveAspectFit
         source: "qrc:///default_disc_240.png"
     }
 
     Row {
         id: toggleRow
-        anchors {
-            left: trackImage.right
-            top: parent.top
-            bottom: parent.bottom
-        }
+//        anchors {
+//            left: trackImage.right
+//            top: parent.top
+//            bottom: parent.bottom
+//        }
+        anchors.left: trackImage.right
+        height: parent.height
         spacing: Units.dp(2)
 
         IconButton {
@@ -111,8 +112,8 @@ Item {
         anchors {
             left: toggleRow.right
             leftMargin: Units.dp(2)
-            top: parent.top
-            bottom: parent.bottom
+//            top: parent.top
+//            bottom: parent.bottom
             right: menuRow.left
             rightMargin: Units.dp(2)
         }
@@ -131,11 +132,12 @@ Item {
     Row {
         id: menuRow
         anchors {
-            top: parent.top
-            bottom: parent.bottom
+//            top: parent.top
+//            bottom: parent.bottom
             right: parent.right
             rightMargin: Units.dp(2)
         }
+        height: parent.height
         spacing: Units.dp(6)
         IconButton {
             id: queue

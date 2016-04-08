@@ -1,5 +1,6 @@
 import QtQuick 2.2
-import Material 0.1
+import QuickFlux 1.0
+import Material 0.2
 import Material.ListItems 0.1 as ListItem
 import com.sunrain.phoenixplayer.qmlplugin 1.0
 
@@ -7,11 +8,11 @@ import "Component"
 import "Component/MaterialMod"
 import "UI"
 import "Pages"
+import "QuickFlux/Actions"
+import "QuickFlux/Scripts"
 
 RootWindow {
     visible: true
-    width: Units.dp(1280)
-    height: Units.dp(800)
     title: qsTr("Phoenix Player")
 //    flags: Qt.FramelessWindowHint
 
@@ -24,24 +25,42 @@ RootWindow {
         tabHighlightColor: "white"
     }
 
-    leftSideBar: MainVerticalNavigation {
-//        width: Units.dp(64)
-    }
+    initialPage: BaseViewPage{}//LocalMusicPage {}
 
     bottomBar: PlayControlBar {
-//        color: "#26d93e"
-        anchors.fill: parent
+    }
+
+    ProgressCircle {
+        id: progressCircle
+        anchors.centerIn: parent
+        z: 10
+        indeterminate: false
+        width: Math.min(parent.width/10, parent.height/10)
+        height: width
+        dashThickness: Units.dp(8)
     }
 
     PlayerController {
         id: playerController
     }
 
-    LocalMusicScanner {
-        id: localMusicScanner
+    LocalTrackScanner {
+        id: scanner
     }
 
-    initialPage: Component {
-        LocalMusicPage {}
+    AppScript {
+        runWhen: ActionTypes.showProgress
+        script: {
+            progressCircle.opacity = 1;
+            progressCircle.indeterminate = true
+        }
     }
+    AppScript {
+        runWhen: ActionTypes.hideProgress
+        script: {
+            progressCircle.indeterminate = false
+            progressCircle.opacity = 0
+        }
+    }
+
 }

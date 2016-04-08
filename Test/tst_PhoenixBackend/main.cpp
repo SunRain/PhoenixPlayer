@@ -19,14 +19,14 @@
 #include "Settings.h"
 #include "PluginLoader.h"
 #include "Common.h"
-#include "SongMetaData.h"
+#include "AudioMetaObject.h"
 #include "SingletonPointer.h"
-#include "Util.h"
+#include "Utility.h"
 
 using namespace PhoenixPlayer;
 using namespace PhoenixPlayer::MusicLibrary;
 using namespace PhoenixPlayer::MetadataLookup;
-using namespace PhoenixPlayer::MetaData;
+//using namespace PhoenixPlayer::MetaData;
 using namespace PhoenixPlayer::PlayBackend;
 
 int main(int argc, char *argv[])
@@ -40,10 +40,10 @@ int main(int argc, char *argv[])
     dir.cdUp ();
     app.data ()->addLibraryPath (QString("%1/plugins").arg (dir.absolutePath ()));
 
-//    Settings *settings = Settings::instance ();
-    PluginLoader *loader = PluginLoader::instance ();
+    Settings *settings = new Settings();
+    PluginLoader *loader = new PluginLoader(settings);
 //    MusicLibraryManager *manager = MusicLibraryManager::instance ();
-    VolumeControl *volume = VolumeControl::instance ();
+    VolumeControl *volume = new VolumeControl(loader);
 //    volume->setMuted (false);
     volume->setVolume (50);
 //    PlayerCore *musicPlayer = PlayerCore::instance ();

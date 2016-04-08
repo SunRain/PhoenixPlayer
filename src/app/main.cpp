@@ -18,9 +18,9 @@
 #include "Settings.h"
 #include "PluginLoader.h"
 #include "Common.h"
-#include "SongMetaData.h"
+#include "AudioMetaObject.h"
 #include "SingletonPointer.h"
-#include "Util.h"
+#include "Utility.h"
 
 #include "LyricsModel.h"
 #include "MusicLibraryListModel.h"
@@ -30,11 +30,14 @@
 #include "AddonListModel.h"
 #include "PluginListModel.h"
 
+#include "libphoenixplayer_global.h"
+#include "LibPhoenixPlayerMain.h"
+
 using namespace PhoenixPlayer;
 using namespace PhoenixPlayer::MusicLibrary;
 using namespace PhoenixPlayer::QmlPlugin;
 using namespace PhoenixPlayer::MetadataLookup;
-using namespace PhoenixPlayer::MetaData;
+//using namespace PhoenixPlayer::MetaData;
 
 int main(int argc, char *argv[])
 {
@@ -66,7 +69,7 @@ int main(int argc, char *argv[])
 
     // 装载插件翻译文件
     //TODO: 暂时装载所有翻译
-    foreach (QString path, Util::getAddonDirList ()) {
+    foreach (QString path, Utility::getAddonDirList ()) {
         QDir dir(path);
         QStringList aList = dir.entryList (QDir::Dirs);
         foreach (QString addonDir, aList) {
@@ -80,8 +83,11 @@ int main(int argc, char *argv[])
         }
     }
 
+    PhoenixPlayer::LibPhoenixPlayer_Init ();
+    LibPhoenixPlayer::instance ()->registerPlugins ("com.sunrain.phoenixplayer.qmlplugin");
+
     /////////////////////////////////////////////////
-    qmlRegisterUncreatableType<Common>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "Common", "Cannot be created");
+//    qmlRegisterUncreatableType<Common>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "Common", "Cannot be created");
     qmlRegisterType<LyricsModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "LyricsModel");
 //    qmlRegisterType<MusicLibraryListModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "MusicLibraryListModel");
     qmlRegisterType<CircleImage>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "CircleImage");
@@ -89,52 +95,15 @@ int main(int argc, char *argv[])
     qmlRegisterType<TrackGroupModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "TrackGroupModel");
 //    qmlRegisterType<PathListModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "PathListModel");
     qmlRegisterType<AddonListModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AddonListModel");
-    qmlRegisterType<LocalMusicScanner>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "LocalMusicScanner");
+//    qmlRegisterType<LocalMusicScanner>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "LocalMusicScanner");
     qmlRegisterType<PluginListModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "PluginListModel");
 
-    qmlRegisterUncreatableType<PlayListMgr>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "PlayListMgr", "Cannot be created");
-
-    qmlRegisterUncreatableType<AlbumMeta>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AlbumMeta", "Cannot be created");
-    qmlRegisterUncreatableType<ArtistMeta>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "ArtistMeta", "Cannot be created");
-    qmlRegisterUncreatableType<CoverMeta>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "CoverMeta", "Cannot be created");
-    qmlRegisterUncreatableType<TrackMeta>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "TrackMeta", "Cannot be created");
-    qmlRegisterUncreatableType<SongMetaData>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "SongMetaData", "Cannot be created");
-
-//    Settings *settings = SingletonPointer<Settings>::instance ();
-
-
-//    QString dir = SailfishApp::pathTo(QString("lib")).toLocalFile();
-
-//    PluginLoader *loader = PluginLoader::instance();
-//    loader->setPluginPath(PluginLoader::TypeAll, dir);
-//    loader->setNewPlugin (PluginLoader::TypePlayBackend, "GStreamerBackend");
-
-//    MusicLibraryManager *manager = SingletonPointer<MusicLibraryManager>::instance ();
-//    Player *musicPlayer = SingletonPointer<Player>::instance ();
-//    Util *util = SingletonPointer<Util>::instance ();
-
-    /////////////////////////////////////////////////
-    Settings *settings = Settings::instance ();
-//    PluginLoader *loader = PluginLoader::instance ();
-//    dir.cd ("lib");
-//    loader->setPluginPath (Common::PluginTypeAll, dir.absolutePath ());
-    MusicLibraryManager *manager = MusicLibraryManager::instance ();
-    VolumeControl *volume = VolumeControl::instance ();
-    PlayerCore *musicPlayer = PlayerCore::instance ();
-    Util *util = Util::instance ();
-    MetadataLookupMgrWrapper *lookup = MetadataLookupMgrWrapper::instance ();
 
     QScopedPointer<QQmlApplicationEngine> engine(new QQmlApplicationEngine(app.data ()));
     QQmlContext *ctx = engine.data ()->rootContext ();
+    ctx->setContextProperty ("util", Utility::instance ());
 
-    ctx->setContextProperty ("musicLibraryManager", manager);
-    ctx->setContextProperty ("musicPlayer", musicPlayer);
-    ctx->setContextProperty ("volumeCtrl", volume);
-    ctx->setContextProperty ("settings", settings);
-    ctx->setContextProperty ("util", util);
-//    ctx->setContextProperty ("appUtil", appUtil.data ());
-    ctx->setContextProperty ("trackMetaLookup", lookup);
-
+    qDebug()<<"***********************************";
     engine.data ()->load (QUrl(QStringLiteral("qrc:/main.qml")));
     return app.data()->exec();
 }

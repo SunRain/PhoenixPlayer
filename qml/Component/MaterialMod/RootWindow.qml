@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-import QtQuick 2.0
-import QtQuick.Controls 1.2 as Controls
-import QtQuick.Window 2.0
-import QtQuick.Layouts 1.1
-import Material 0.1
+import QtQuick 2.4
+import QtQuick.Controls 1.3 as Controls
+import QtQuick.Window 2.2
+import Material 0.2
+import Material.Extras 0.1
 
 /*!
    \qmltype ApplicationWindow
@@ -69,7 +69,7 @@ Controls.ApplicationWindow {
      */
     property alias initialPage: __pageStack.initialItem
 
-    property alias leftSideBar: _sidebar.contents
+//    property alias leftSideBar: _sidebar.contents
     property alias bottomBar: _bottonBar.data
 
     /*!
@@ -91,10 +91,16 @@ Controls.ApplicationWindow {
         id: __theme
     }
 
+    PlatformExtensions {
+        id: platformExtensions
+        decorationColor: __toolbar.decorationColor
+        window: app
+    }
+
     PageStack {
         id: __pageStack
         anchors {
-            left: _sidebar.right//parent.left
+            left: parent.left //_sidebar.right//parent.left
             right: parent.right
             top: __toolbar.bottom
             bottom: _bottonBar.top//parent.bottom
@@ -105,31 +111,32 @@ Controls.ApplicationWindow {
         onReplaced: __toolbar.replace(page)
     }
 
-    Sidebar {
-        id: _sidebar
+//    Sidebar {
+//        id: _sidebar
 
-        anchors {
-            left: parent.left
-            top: __toolbar.bottom
-            topMargin: Units.dp(2)
-            bottom: _bottonBar.top//parent.bottom
-        }
-        autoFlick: false
-        backgroundColor: Theme.backgroundColor//Qt.rgba(0,0,0,0)
-        elevation: 0
-        width: parent.width /20 //Units.dp(64)
-    }
+//        anchors {
+//            left: parent.left
+//            top: __toolbar.bottom
+//            topMargin: Units.dp(2)
+//            bottom: _bottonBar.top//parent.bottom
+//        }
+//        autoFlick: false
+//        backgroundColor: Theme.backgroundColor//Qt.rgba(0,0,0,0)
+//        elevation: 0
+//        width: parent.width /25 //Units.dp(64)
+//    }
 
-    View {
+    /*View*/Item {
         id:_bottonBar
         anchors {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
         }
-        elevation: 2
-        height: parent.height /10 //Units.dp(128)
-        backgroundColor: Theme.backgroundColor
+        height: childrenRect.height
+//        elevation: 2
+//        height: parent.height /10 //Units.dp(128)
+//        backgroundColor: Theme.backgroundColor
     }
 
     Toolbar {
@@ -156,29 +163,91 @@ Controls.ApplicationWindow {
         id: overlayLayer
     }
 
-    width: Units.dp(800)
+    width: Units.dp(1200)
     height: Units.dp(600)
+
+    Dialog {
+        id: errorDialog
+
+        property var promise
+
+        positiveButtonText: "Retry"
+
+        onAccepted: {
+            promise.resolve()
+            promise = null
+        }
+
+        onRejected: {
+            promise.reject()
+            promise = null
+        }
+    }
+
+    /*!
+       Show an error in a dialog, with the specified secondary button text (defaulting to "Close")
+       and an optional retry button.
+
+       Returns a promise which will be resolved if the user taps retry and rejected if the user
+       cancels the dialog.
+     */
+    function showError(title, text, secondaryButtonText, retry) {
+        if (errorDialog.promise) {
+            errorDialog.promise.reject()
+            errorDialog.promise = null
+        }
+
+        errorDialog.negativeButtonText = secondaryButtonText ? secondaryButtonText : "Close"
+        errorDialog.positiveButton.visible = retry || false
+
+        errorDialog.promise = new Promises.Promise()
+        errorDialog.title = title
+        errorDialog.text = text
+        errorDialog.open()
+
+        return errorDialog.promise
+    }
 
     Component.onCompleted: {
         if (clientSideDecorations)
             flags |= Qt.FramelessWindowHint
 
+        function calculateDiagonal() {
+            return Math.sqrt(Math.pow((Screen.width/Screen.pixelDensity), 2) +
+                    Math.pow((Screen.height/Screen.pixelDensity), 2)) * 0.039370;
+        }
+
         Units.pixelDensity = Qt.binding(function() {
             return Screen.pixelDensity
         });
 
-        Device.type = Qt.binding(function () {
-            var diagonal = Math.sqrt(Math.pow((Screen.width/Screen.pixelDensity), 2) +
-                    Math.pow((Screen.height/Screen.pixelDensity), 2)) * 0.039370;
+        Units.multiplier = Qt.binding(function() {
+            var diagonal = calculateDiagonal();
+            var baseMultiplier = platformExtensions.multiplier
 
             if (diagonal >= 3.5 && diagonal < 5) { //iPhone 1st generation to phablet
-                Units.multiplier = 1;
+                return baseMultiplier;
+            } else if (diagonal >= 5 && diagonal < 6.5) {
+                return baseMultiplier;
+            } else if (diagonal >= 6.5 && diagonal < 10.1) {
+                return baseMultiplier;
+            } else if (diagonal >= 10.1 && diagonal < 29) {
+                return 1.4 * baseMultiplier;
+            } else if (diagonal >= 29 && diagonal < 92) {
+                return 1.4 * baseMultiplier;
+            } else {
+                return 1.4 * baseMultiplier;
+            }
+        });
+
+        Device.type = Qt.binding(function () {
+            var diagonal = calculateDiagonal();
+
+            if (diagonal >= 3.5 && diagonal < 5) { //iPhone 1st generation to phablet
                 return Device.phone;
             } else if (diagonal >= 5 && diagonal < 6.5) {
-                Units.multiplier = 1;
                 return Device.phablet;
             } else if (diagonal >= 6.5 && diagonal < 10.1) {
-                Units.multiplier = 1;
                 return Device.tablet;
             } else if (diagonal >= 10.1 && diagonal < 29) {
                 return Device.desktop;
@@ -192,8 +261,14 @@ Controls.ApplicationWindow {
         // Nasty hack because singletons cannot import the module they were declared in, so
         // the grid unit cannot be defined in either Device or Units, because it requires both.
         Units.gridUnit = Qt.binding(function() {
-            return Device.type === Device.phone || Device.type === Device.phablet
-                    ? Units.dp(48) : Device.type == Device.tablet ? Units.dp(56) : Units.dp(64)
+            var isPortrait = app.width < app.height
+            if (Device.type === Device.phone || Device.type === Device.phablet) {
+                return isPortrait ? Units.dp(56) : Units.dp(48)
+            } else if (Device.type == Device.tablet) {
+                return Units.dp(64)
+            } else {
+                return Device.hasTouchScreen ? Units.dp(64) : Units.dp(48)
+            }
         })
     }
 }

@@ -1,12 +1,13 @@
 import QtQuick 2.2
-import Material 0.1
+import Material 0.2
+import Material.ListItems 0.1 as ListItem
 import com.sunrain.phoenixplayer.qmlplugin 1.0
 
 import "../Component"
 import "../Component/MaterialMod"
 import "../UI"
 
-TabbedPage {
+TabbedPage/*Page*/ {
     id: page
     title: qsTr("Local music")
 
@@ -26,13 +27,45 @@ TabbedPage {
     ]
 
     property var sectionTitles: [
-        qsTr("PlayList"),
-        qsTr("Recent"),
         qsTr("Album"),
         qsTr("Artist"),
-        qsTr("All"),
         qsTr("Genres"),
+        qsTr("All"),
+        qsTr("Recent"),
+        qsTr("PlayList")
     ]
+    property var sectionIconNames: [
+        "av/album",
+        "social/person",
+        "av/web",
+        "av/queue_music",
+        "av/queue",
+        "av/playlist_play"
+    ]
+    Sidebar {
+        id: sideBar
+        expanded: true
+        Column {
+            width: parent.width
+            Repeater {
+                id: sidebarRepeater
+                property int selectedSection: 0
+                model: 6 //size of sectionTitles
+                delegate: ListItem.Standard/*Subtitled*/ {
+                    width: parent.width
+                    text: sectionTitles[index]
+                    selected: sidebarRepeater.selectedSection == index
+                    iconName: sectionIconNames[index]
+                    onClicked: {
+                        sidebarRepeater.selectedSection = index
+                    }
+                }
+            }
+
+        }
+    }
+
+
     Repeater {
         model: 6 //size of sectionTitles
 
@@ -84,28 +117,5 @@ TabbedPage {
             }
         }
     }
-
-//    Tab {
-//        id: tabView
-//        anchors.fill: parent
-//        clip: true
-//        currentIndex: page.selectedTab
-//        model: tabs
-//    }
-//    VisualItemModel {
-//        id: tabs
-//        property int index: tabView.currentIndex
-//        onIndexChanged: {
-//            console.log("==== tabs index changed to " + index);
-//            if (index == 4) { //match  tabs array
-//                viewLoader.source = "qrc:/UI/TrackAllView.qml"
-//            }
-//        }
-//        Loader {
-//            id: viewLoader
-//            width: tabView.width
-//            height: tabView.height
-//        }
-//    }
 
 }

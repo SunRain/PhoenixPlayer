@@ -1,90 +1,71 @@
 import QtQuick 2.2
-import Material 0.1
+import Material 0.2
+import Material.ListItems 0.1 as ListItem
+import QtQuick.Controls 1.3 as Controls
+import QtQuick.Controls.Styles 1.3 as Styles
 
 import "../Component"
 
-MySideBar {
-    id: navigationSideBar
+/*Flickable*/Sidebar {
+    id: flickable
+//    width: parent ? parent.width : Units.dp(250)
+//    height: parent ? parent.height : Units.dp(800)
 
-    property real coverSize
-
-    signal topItemClicked
-    signal bottomItemClicked
-
-//    topItem: Component {
-//        Image {
-//            id: logo
-//            source: "qrc:/icon_dummy.png"
-//            width: navigationSideBar.width / 4
-//            height: width
-//            Ink {
-//                anchors.fill: parent
-//                onClicked: {topItemClicked();}
-//            }
-//        }
-//    }
-
-    bottomItem: Component {
-        /*CoverImage*/Rectangle {
-            id: cover
-            width: navigationSideBar.width / 2
-            height: width
-            color: "#c802e2"
-            //            onClicked: {bottomItemClicked();}
-        }
-    }
+//    contentWidth: parent.width
+//    contentHeight: column.height
 
     Column {
-        width: parent.width - units.dp(20)
-        x: units.dp(10)
-        spacing: units.dp(5)
-
-        IconTextButton {
-            iconSource: "qrc:/icon_dummy.png"
-            iconSize: units.dp(48)
-            text: qsTr("icon1")
+        id: column
+        width: parent.width
+        ListItem.Subheader {
+            text: qsTr("Local Music")
         }
-        IconTextButton {
-            iconSource: "qrc:/icon_dummy.png"
-            iconSize: units.dp(48)
-            text: qsTr("icon2")
+        Repeater {
+            id: musicRepeater
+            property int selectedSection: 0
+            model: inner.sidebarLocalTitles.length //size of sectionTitles
+            delegate: ListItem.Standard {
+                width: parent.width
+                text: inner.sidebarLocalTitles[index]
+                selected: musicRepeater.selectedSection == index
+                iconName: inner.sidebarLocalIconNames[index]
+                onClicked: {
+                    musicRepeater.selectedSection = index
+                }
+            }
         }
-        IconTextButton {
-            iconSource: "qrc:/icon_dummy.png"
-            iconSize: units.dp(48)
-            text: qsTr("icon3")
-
+        ListItem.Divider {}
+        ListItem.SectionHeader {
+            text: qsTr("Addon")
         }
-        IconTextButton {
-            iconSource: "qrc:/icon_dummy.png"
-            iconSize: units.dp(48)
-            text: qsTr("icon4")
-
+        ListItem.Divider {}
+        ListItem.SectionHeader {
+            id: recentHeader
+            text: qsTr("Recent")
+            expanded: true
+//            ThinDivider {
+//                width: parent.width
+//                anchors.top: parent.top
+//                visible: parent.expanded
+//            }
         }
-        IconTextButton {
-            iconSource: "qrc:/icon_dummy.png"
-            iconSize: units.dp(48)
-            text: qsTr("icon5")
-
+        Repeater {
+            id: musicRepeater2
+            property int selectedSection: 0
+            model: recentHeader.expanded ? inner.sidebarLocalTitles.length : 0//size of sectionTitles
+            delegate: ListItem.Standard {
+                width: parent.width
+                text: inner.sidebarLocalTitles[index]
+                selected: musicRepeater2.selectedSection == index
+                iconName: inner.sidebarLocalIconNames[index]
+                onClicked: {
+                    musicRepeater2.selectedSection = index
+                }
+            }
         }
-        IconTextButton {
-            iconSource: "qrc:/icon_dummy.png"
-            iconSize: units.dp(48)
-            text: qsTr("icon6")
-
-        }
-        IconTextButton {
-            iconSource: "qrc:/icon_dummy.png"
-            iconSize: units.dp(48)
-            text: qsTr("icon7")
-
-        }
-        IconTextButton {
-            iconSource: "qrc:/icon_dummy.png"
-            iconSize: units.dp(48)
-            text: qsTr("icon8")
-
+        ListItem.Divider {}
+        ListItem.Subheader {
+            text: qsTr("Playlist")
         }
     }
 }
-

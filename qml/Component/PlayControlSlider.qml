@@ -1,18 +1,14 @@
 import QtQuick 2.0
-import QtGraphicalEffects 1.0
+//import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.1
-import Material 0.1
+import Material 0.2
 
-//import Ubuntu.Components 1.1
-
-//import Material.ListItems 0.1 as ListItem
-
-
-View {
+/*Item*/Column {
     id: playControlSilder
 
-    height: parent ? parent.height : Units.dp(80)
+//    height: column.height
     width: parent ? parent.width : Units.dp(700)
+    spacing: Units.dp(6)
 
     property alias trackTitle: trackTitle.text
     property alias trackArtist: artist.text
@@ -28,14 +24,15 @@ View {
             slider.value = playedSec;
     }
 
-    Column {
-        width: parent.width
-        spacing: Units.dp(3)
-        anchors {
-            left: parent.left
-            top: parent.top
-            leftMargin: Units.dp(2)
-        }
+//    Column {
+//        id: column
+//        width: parent.width
+//        spacing: Units.dp(3)
+//        anchors {
+//            left: parent.left
+////            top: parent.top
+//            leftMargin: Units.dp(2)
+//        }
         RowLayout {
             id: playInfo
             anchors {
@@ -65,27 +62,25 @@ View {
                 text: "duration info"
             }
         }
-        Item {
-            id: sliderWrapper
-            width: parent.width
-            height: playControlSilder.height /3
+//        Item {
+//            id: sliderWrapper
+//            width: parent.width
+//            height: playControlSilder.height /3
 
             Slider {
                 id: slider
                 width: parent.width - Units.dp(50)
-                height: parent.height
+//                height: parent.height
                 anchors.horizontalCenter: parent.horizontalCenter
                 value: 0
                 stepSize: 1
                 minimumValue: 0
                 maximumValue: 100
                 numericValueLabel: true
+                knobLabel: "aa:bb" //"bb:b " + value
+                knobDiameter: Units.dp(42)
 
                 property int jumpValue: 0
-
-                function valueInfo(v) {
-                    return "bb:b "+v.toFixed(0)
-                }
 
                 onValueChanged: {
                     console.log("=== slider change value to " + value);
@@ -103,7 +98,7 @@ View {
 //                        jumpValue = 0;
                     }
                 }
-            }
+//            }
         }
-    }
+//    }
 }

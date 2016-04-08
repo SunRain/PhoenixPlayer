@@ -15,5 +15,12 @@
         <file>Pages/SettingsPage.qml</file>
         <file>Pages/LocalMusicPage.qml</file>
         <file>UI/TrackGroupView.qml</file>
+        <file>Pages/BaseViewPage.qml</file>
+        <file>Component/TrackInfoRectangle.qml</file>
+        <file>Component/QObject.qml</file>
+        <file>QuickFlux/Scripts/LocalTrackScanner.qml</file>
+        <file>QuickFlux/Actions/ActionTypes.qml</file>
+        <file>QuickFlux/Actions/AppActions.qml</file>
+        <file>QuickFlux/Actions/qmldir</file>
     </qresource>
 </RCC>
