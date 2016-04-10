@@ -11,6 +11,7 @@ import "../Component"
 import "../Component/MaterialMod"
 import "../UI"
 import "../QuickFlux/Actions"
+import "../QuickFlux/Stores"
 
 Page {
     id: viewPage
@@ -113,9 +114,23 @@ Page {
     }
     Item {
         id: content
-        anchors.left: sidebar.left
+        anchors.left: sidebar.right
         anchors.right: parent.right
         height: parent.height
+        ListView {
+            anchors.fill: parent
+            model: AudioGroupStore.model
+            delegate: Label{
+                text: model.HASH
+                Component.onCompleted: {
+//                    console.log("===== main onCompleted data "+ AudioGroupStore.model.get(0));
+                }
+
+            }
+        }
+//        AudioGroupStore {
+//            id: store
+//        }
     }
 
     Button {
@@ -128,7 +143,7 @@ Page {
             AppActions.selectMusicScannerDirs();
         }
         Component.onCompleted:  {
-            console.log("==== musicLibraryManager.empty(); "+musicLibraryManager.empty())
+//            console.log("==== musicLibraryManager.empty(); "+musicLibraryManager.empty())
         }
     }
 

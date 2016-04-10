@@ -22,5 +22,7 @@
         <file>QuickFlux/Actions/ActionTypes.qml</file>
         <file>QuickFlux/Actions/AppActions.qml</file>
         <file>QuickFlux/Actions/qmldir</file>
+        <file>QuickFlux/Stores/AudioGroupStore.qml</file>
+        <file>QuickFlux/Stores/qmldir</file>
     </qresource>
 </RCC>

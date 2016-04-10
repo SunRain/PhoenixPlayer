@@ -29,9 +29,12 @@
 #include "TrackGroupModel.h"
 #include "AddonListModel.h"
 #include "PluginListModel.h"
+#include "AudioMetaObjectKeys.h"
 
 #include "libphoenixplayer_global.h"
 #include "LibPhoenixPlayerMain.h"
+
+#include "AudioGroupDelegate.h"
 
 using namespace PhoenixPlayer;
 using namespace PhoenixPlayer::MusicLibrary;
@@ -97,13 +100,17 @@ int main(int argc, char *argv[])
     qmlRegisterType<AddonListModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AddonListModel");
 //    qmlRegisterType<LocalMusicScanner>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "LocalMusicScanner");
     qmlRegisterType<PluginListModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "PluginListModel");
+    qmlRegisterType<AudioGroupDelegate>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AudioGroupDelegate");
+    qmlRegisterUncreatableType<AudioMetaObjectKeyName>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AudioMetaObjectKeyName", "Cannot be created");
 
+
+
+//    AudioGroupDelegate *d = new AudioGroupDelegate();
 
     QScopedPointer<QQmlApplicationEngine> engine(new QQmlApplicationEngine(app.data ()));
     QQmlContext *ctx = engine.data ()->rootContext ();
     ctx->setContextProperty ("util", Utility::instance ());
-
-    qDebug()<<"***********************************";
+//    ctx->setContextProperty ("groupDelegate", d);
     engine.data ()->load (QUrl(QStringLiteral("qrc:/main.qml")));
     return app.data()->exec();
 }

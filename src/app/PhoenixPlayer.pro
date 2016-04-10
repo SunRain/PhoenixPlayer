@@ -1,16 +1,19 @@
-include (../PhoenixPlayerCore/libPhoenixPlayer/libPhoenixPlayer.pri)
-
 TEMPLATE = app
 QT += qml quick widgets
 
 TARGET = ../PhoenixPlayerCore/libPhoenixPlayer/target/PhoenixPlayer
 
+CONFIG += c++11
+CONFIG += WITH_QML_LIB
+
+include (../PhoenixPlayerCore/libPhoenixPlayer/libPhoenixPlayer.pri)
+
 HEADERS += \
-    AudioMetaGroupDelegate.h
+    AudioGroupDelegate.h
 
 SOURCES += \
     main.cpp \
-    AudioMetaGroupDelegate.cpp
+    AudioGroupDelegate.cpp
 
 RESOURCES += \
     ../../qml/qml.qrc \
