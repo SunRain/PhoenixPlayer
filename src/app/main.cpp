@@ -36,6 +36,8 @@
 
 #include "AudioGroupDelegate.h"
 
+#include "ApplicationUtility.h"
+
 using namespace PhoenixPlayer;
 using namespace PhoenixPlayer::MusicLibrary;
 using namespace PhoenixPlayer::QmlPlugin;
@@ -103,13 +105,11 @@ int main(int argc, char *argv[])
     qmlRegisterType<AudioGroupDelegate>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AudioGroupDelegate");
     qmlRegisterUncreatableType<AudioMetaObjectKeyName>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AudioMetaObjectKeyName", "Cannot be created");
 
-
-
-//    AudioGroupDelegate *d = new AudioGroupDelegate();
-
+    QScopedPointer<ApplicationUtility> appUtility(new ApplicationUtility());
     QScopedPointer<QQmlApplicationEngine> engine(new QQmlApplicationEngine(app.data ()));
     QQmlContext *ctx = engine.data ()->rootContext ();
     ctx->setContextProperty ("util", Utility::instance ());
+    ctx->setContextProperty ("AppUtility", appUtility.data ());
 //    ctx->setContextProperty ("groupDelegate", d);
     engine.data ()->load (QUrl(QStringLiteral("qrc:/main.qml")));
     return app.data()->exec();

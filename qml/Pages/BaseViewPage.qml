@@ -16,6 +16,7 @@ import "../QuickFlux/Stores"
 Page {
     id: viewPage
 
+    property bool showLibraryPathSelector: false
     default property alias data: content.data
 
     actions: [
@@ -41,110 +42,65 @@ Page {
         }
     }
 
-    QtObject {
-        id: inner
-        property var sidebarLocalTitles: [
-            qsTr("Album"),
-            qsTr("Artist"),
-            qsTr("Genres"),
-            qsTr("All")
-//            qsTr("Recent"),
-//            qsTr("PlayList")
-        ]
-        property var sidebarLocalIconNames: [
-            "av/album",
-            "social/person",
-            "av/web",
-            "av/queue_music"
-//            "av/queue",
-//            "av/playlist_play"
-        ]
+    NavigationSideBar {
+        id: sidebar
     }
 
-    Sidebar {
-        id: sidebar
-        Column {
-            id: column
-            width: parent.width
-            ListItem.Subheader {
-                text: qsTr("Local Music")
-            }
-            Repeater {
-                id: musicRepeater
-                property int selectedSection: 0
-                model: inner.sidebarLocalTitles.length //size of sectionTitles
-                delegate: ListItem.Standard {
-                    width: parent.width
-                    text: inner.sidebarLocalTitles[index]
-                    selected: musicRepeater.selectedSection == index
-                    iconName: inner.sidebarLocalIconNames[index]
-                    onClicked: {
-                        musicRepeater.selectedSection = index
-                    }
-                }
-            }
-            ListItem.Divider {}
-            ListItem.SectionHeader {
-                text: qsTr("Addon")
-            }
-            ListItem.Divider {}
-            ListItem.SectionHeader {
-                id: recentHeader
-                text: qsTr("Recent")
-            }
-            Repeater {
-                id: musicRepeater2
-                property int selectedSection: 0
-                model: recentHeader.expanded ? inner.sidebarLocalTitles.length : 0//size of sectionTitles
-                delegate: ListItem.Standard {
-                    width: parent.width
-                    text: inner.sidebarLocalTitles[index]
-                    selected: musicRepeater2.selectedSection == index
-                    iconName: inner.sidebarLocalIconNames[index]
-                    onClicked: {
-                        musicRepeater2.selectedSection = index
-                    }
-                }
-            }
-            ListItem.Divider {}
-            ListItem.Subheader {
-                text: qsTr("Playlist")
-            }
-        }
-    }
     Item {
         id: content
         anchors.left: sidebar.right
         anchors.right: parent.right
         height: parent.height
-        ListView {
-            anchors.fill: parent
-            model: AudioGroupStore.model
-            delegate: Label{
-                text: model.HASH
-                Component.onCompleted: {
-//                    console.log("===== main onCompleted data "+ AudioGroupStore.model.get(0));
-                }
+//        ListView {
+//            anchors.fill: parent
+//            model: AudioGroupStore.model
+//            Component.onCompleted: {
+//                console.log("===== main onCompleted data "+ AudioGroupStore.model.get(0));
+//                console.log("===== main onCompleted value "+ model.Values);
+//            }
+//            delegate: Label{
+//                text: model.KEY_NAME
+//                Component.onCompleted: {
+//                    console.log("===== Label onCompleted data "+ model.KEY_LIST);
+//                    console.log("===== Label onCompleted model "+ AudioGroupStore.model.get(index).KEY_LIST);
+//                    console.log("===== Label onCompleted parse "
+//                                + AppUtility.groupObjectToList(AudioGroupStore.model.get(index).KEY_LIST));
 
-            }
-        }
-//        AudioGroupStore {
-//            id: store
+//                }
+
+//            }
 //        }
+//        Item {
+//            anchors.fill: parent
+//            ColumnFlow {
+//                id: grid
+//                anchors.fill: parent
+//                columns: 5
+//                model: 20
+
+//                delegate: Rectangle {
+//                    id: item
+//                    height: 100.0 * Math.random()
+//                    color: Qt.rgba(Math.random(), Math.random(), Math.random(), Math.random())
+//                    Text {text: index}
+//                }
+//            }
+//        }
+
     }
 
     Button {
         anchors.centerIn: parent
         elevation: 1
         text: qsTr("Press to add music folder")
-        visible: musicLibraryManager.empty();
-        enabled: musicLibraryManager.empty()
+        visible: showLibraryPathSelector//musicLibraryManager.empty();
+        enabled: showLibraryPathSelector//musicLibraryManager.empty()
         onClicked: {
             AppActions.selectMusicScannerDirs();
         }
-        Component.onCompleted:  {
-//            console.log("==== musicLibraryManager.empty(); "+musicLibraryManager.empty())
-        }
+//        Component.onCompleted:  {
+////            console.log("==== musicLibraryManager.empty(); "+musicLibraryManager.empty())
+//        }
     }
 
 

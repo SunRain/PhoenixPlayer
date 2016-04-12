@@ -8,4 +8,8 @@ KeyTable {
     property string selectMusicScannerDirs
     property string showProgress
     property string hideProgress
+
+    property string showAlbumCategory
+    property string showArtistCategory
+    property string showGenresCategory
 }

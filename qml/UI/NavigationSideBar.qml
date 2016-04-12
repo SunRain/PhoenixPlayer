@@ -1,19 +1,36 @@
 import QtQuick 2.2
+import QuickFlux 1.0
 import Material 0.2
 import Material.ListItems 0.1 as ListItem
 import QtQuick.Controls 1.3 as Controls
 import QtQuick.Controls.Styles 1.3 as Styles
 
 import "../Component"
+import "../QuickFlux/Actions"
+import "../QuickFlux/Stores"
 
-/*Flickable*/Sidebar {
-    id: flickable
-//    width: parent ? parent.width : Units.dp(250)
-//    height: parent ? parent.height : Units.dp(800)
+Sidebar {
+    id: sidebar
 
-//    contentWidth: parent.width
-//    contentHeight: column.height
-
+    QtObject {
+        id: inner
+        property var sidebarLocalTitles: [
+            qsTr("Album"),
+            qsTr("Artist"),
+            qsTr("Genres"),
+            qsTr("All")
+//            qsTr("Recent"),
+//            qsTr("PlayList")
+        ]
+        property var sidebarLocalIconNames: [
+            "av/album",
+            "social/person",
+            "av/web",
+            "av/queue_music"
+//            "av/queue",
+//            "av/playlist_play"
+        ]
+    }
     Column {
         id: column
         width: parent.width
@@ -22,15 +39,30 @@ import "../Component"
         }
         Repeater {
             id: musicRepeater
-            property int selectedSection: 0
+            property int selectedIndex: 0
             model: inner.sidebarLocalTitles.length //size of sectionTitles
             delegate: ListItem.Standard {
                 width: parent.width
                 text: inner.sidebarLocalTitles[index]
-                selected: musicRepeater.selectedSection == index
+                selected: musicRepeater.selectedIndex == index
                 iconName: inner.sidebarLocalIconNames[index]
                 onClicked: {
-                    musicRepeater.selectedSection = index
+                    musicRepeater.selectedIndex = index;
+                    console.log("===== musicRepeater clicked "+index)
+                    switch(index) {
+                    case 0:
+                        AppActions.showAlbumCategory();
+                        break;
+                    case 1:
+                        AppActions.showArtistCategory();
+                        break;
+                    case 2:
+                        AppActions.showGenresCategory();
+                        break;
+                    default:
+                        AppActions.showAlbumCategory();
+                    }
+
                 }
             }
         }
@@ -42,12 +74,6 @@ import "../Component"
         ListItem.SectionHeader {
             id: recentHeader
             text: qsTr("Recent")
-            expanded: true
-//            ThinDivider {
-//                width: parent.width
-//                anchors.top: parent.top
-//                visible: parent.expanded
-//            }
         }
         Repeater {
             id: musicRepeater2

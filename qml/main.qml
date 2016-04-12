@@ -25,7 +25,7 @@ RootWindow {
         tabHighlightColor: "white"
     }
 
-    initialPage: BaseViewPage{}//LocalMusicPage {}
+    initialPage: MusicCategoryViewPage{}//BaseViewPage{}//LocalMusicPage {}
 
     bottomBar: PlayControlBar {
     }

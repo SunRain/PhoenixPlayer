@@ -5,5 +5,9 @@ import QuickFlux 1.0
 ActionCreator {
     signal showProgress();
     signal hideProgress();
-    signal selectMusicScannerDirs()
+    signal selectMusicScannerDirs();
+
+    signal showAlbumCategory();
+    signal showArtistCategory();
+    signal showGenresCategory();
 }

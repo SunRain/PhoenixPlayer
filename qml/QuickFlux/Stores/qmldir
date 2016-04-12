@@ -1,1 +1,1 @@
-singleton AudioGroupStore 1.0 AudioGroupStore.qml
+singleton MusicCategoryStore 1.0 MusicCategoryStore.qml

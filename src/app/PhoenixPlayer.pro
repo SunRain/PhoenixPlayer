@@ -9,11 +9,13 @@ CONFIG += WITH_QML_LIB
 include (../PhoenixPlayerCore/libPhoenixPlayer/libPhoenixPlayer.pri)
 
 HEADERS += \
-    AudioGroupDelegate.h
+    AudioGroupDelegate.h \
+    ApplicationUtility.h
 
 SOURCES += \
     main.cpp \
-    AudioGroupDelegate.cpp
+    AudioGroupDelegate.cpp \
+    ApplicationUtility.cpp
 
 RESOURCES += \
     ../../qml/qml.qrc \

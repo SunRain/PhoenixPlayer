@@ -35,8 +35,8 @@ Item {
                 AppActions.hideProgress();
             })
 
-//            once(dialog.onRejected, exit.bind(this,0));
-//            once(localMusicScanner.onSearchingFinished, exit.bind(this,0));
+            once(dialog.onRejected, exit.bind(this,0));
+            once(localMusicScanner.onSearchingFinished, exit.bind(this,0));
         }
     }
 }
