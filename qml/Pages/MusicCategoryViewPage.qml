@@ -13,6 +13,7 @@ import "../Component/MaterialMod"
 import "../UI"
 import "../QuickFlux/Actions"
 import "../QuickFlux/Stores"
+import "../"
 
 BaseViewPage {
     id: categoryPage
@@ -38,77 +39,89 @@ BaseViewPage {
 //    }
     Timer {
         id: delayColumnFlow
-        interval: 500
+        interval: 100
         onTriggered: {
             columnFlow.reEvalColumns();
         }
     }
 
+    RandomColor {
+        id: random
+    }
+
     Flickable {
         id: flickable
-        anchors.fill: parent
+        width: parent.width - Const.tinySpace *4
+        height: parent.height
+        x: Const.tinySpace *2
         contentHeight: columnFlow.height
-        contentWidth: parent.width
+        contentWidth: width
         ColumnFlow {
             id: columnFlow
             width: parent.width
             columns: 6
             model: MusicCategoryStore.model
             delegate: Item {
-                height: column.height + Units.dp(8)
+                height: column.height + Const.tinySpace *2
+                property string pColor
+                property string dColor
+                property string textColor
+                property string subTextColor
+                Component.onCompleted: {
+                    random.generate();
+                    pColor = random.primaryLightColor;
+                    dColor = random.primaryDarkColor;
+                    textColor = random.textColor;
+                    subTextColor = random.subTextColor;
+                }
                 Card {
-                    width: parent.width - Units.dp(8)
-                    x: Units.dp(4)
+                    width: parent.width - Const.tinySpace *2
+                    x: Const.tinySpace
                     height: column.height
-//                    Rectangle {
-//                        width: parent.width
-//                        height: column.height
-//                        color: AppUtility.randomFromPalette(Palette.colors);
-                        Column {
-                            id: column
+                    Rectangle {
+                        anchors.fill: parent
+                        color: pColor
+                    }
+                    Column {
+                        id: column
+                        width: parent.width
+                        spacing: Const.tinySpace
+                        property var imgUri: AppUtility.groupObjectToImgUri(MusicCategoryStore.model.get(index))
+                        property bool uriEmpty: imgUri == "" || imgUri == undefined
+                        property var name: AppUtility.groupObjectToName(MusicCategoryStore.model.get(index))
+                        property bool nameEmpty: name == "" || name == undefined
+                        Item {
                             width: parent.width
-                            spacing: Units.dp(4)
-                            property var imgUri: AppUtility.groupObjectToImgUri(MusicCategoryStore.model.get(index))
-                            property bool uriEmpty: imgUri == "" || imgUri == undefined
-                            property var name: AppUtility.groupObjectToName(MusicCategoryStore.model.get(index))
-                            property bool nameEmpty: name == "" || name == undefined
-                            Item {
-                                width: parent.width
-                                height: width
-                                Rectangle {
-                                    anchors.fill: parent
-                                    color: AppUtility.randomFromPalette(Palette.colors);
-                                    opacity: column.uriEmpty ? 1 : 0
-                                    Label {
-                                        width: parent.width
-                                        text: column.nameEmpty ? "?" : column.name.substring(0,1)
-                                        horizontalAlignment: Text.AlignHCenter
-                                        verticalAlignment: Image.AlignVCenter
-                                        style: "display4"
-                                        font.pixelSize: parent.width * 0.6
-                                    }
-                                }
-                                Image {
-                                    id: image
-                                    anchors.fill: parent
-                                    fillMode: Image.PreserveAspectFit
-                                    horizontalAlignment: Image.AlignHCenter
+                            height: width
+                            Rectangle {
+                                anchors.fill: parent
+                                color: dColor
+                                opacity: column.uriEmpty ? 1 : 0
+                                Label {
+                                    width: parent.width
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    text: column.nameEmpty ? "?" : column.name.substring(0,1)
+                                    horizontalAlignment: Text.AlignHCenter
                                     verticalAlignment: Image.AlignVCenter
-                                    source: AppUtility.qrcStrPath(column.imgUri);
+                                    style: "display3"
+                                    font.pixelSize: parent.width * 0.5
                                 }
                             }
-                            Label {
-                                style: "body1"
-                                width: parent.width
-                                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                                horizontalAlignment: Text.AlignHCenter
-                                text: AppUtility.groupObjectToName(MusicCategoryStore.model.get(index))
+                            Image {
+                                id: image
+                                anchors.fill: parent
+                                fillMode: Image.PreserveAspectFit
+                                horizontalAlignment: Image.AlignHCenter
+                                verticalAlignment: Image.AlignVCenter
+                                source: AppUtility.qrcStrPath(column.imgUri);
                             }
-                            Item {
-                                width: parent.width
-                                height: Units.dp(4)
-                            }
-//                        }
+                        }
+                        ListItem.Standard {
+                            width: parent.width
+                            height: Const.itemHeight
+                            text: AppUtility.groupObjectToName(MusicCategoryStore.model.get(index))
+                            textColor: textColor
+                        }
                     }
                     Ink {
                         id: ink
@@ -116,19 +129,6 @@ BaseViewPage {
                         enabled: true
                     }
                 }
-//                Rectangle {
-//                    anchors.top: parent.top
-//                    anchors.left: parent.left
-//                    anchors.right: parent.right
-//                    anchors.bottom: parent.bottom
-//                    anchors.margins: Units.dp(2)
-//                    color: Qt.rgba(Math.random(), Math.random(), Math.random(), Math.random())
-
-//                    Label {
-////                        fontStyles: "title"
-//                        text: AppUtility.groupObjectToName(MusicCategoryStore.model.get(index))
-//                    }
-//                }
             }
         }
     }

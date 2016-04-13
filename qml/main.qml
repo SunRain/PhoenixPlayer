@@ -16,6 +16,9 @@ RootWindow {
     title: qsTr("Phoenix Player")
 //    flags: Qt.FramelessWindowHint
 
+    width: Units.dp(1440)
+    height: Units.dp(900)
+
     id: demo
 
     theme {
@@ -47,7 +50,6 @@ RootWindow {
     LocalTrackScanner {
         id: scanner
     }
-
     AppScript {
         runWhen: ActionTypes.showProgress
         script: {

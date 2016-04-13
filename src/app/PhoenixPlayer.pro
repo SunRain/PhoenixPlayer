@@ -10,12 +10,14 @@ include (../PhoenixPlayerCore/libPhoenixPlayer/libPhoenixPlayer.pri)
 
 HEADERS += \
     AudioGroupDelegate.h \
-    ApplicationUtility.h
+    ApplicationUtility.h \
+    AllMusicDelegate.h
 
 SOURCES += \
     main.cpp \
     AudioGroupDelegate.cpp \
-    ApplicationUtility.cpp
+    ApplicationUtility.cpp \
+    AllMusicDelegate.cpp
 
 RESOURCES += \
     ../../qml/qml.qrc \

@@ -8,6 +8,7 @@ import QtQuick.Controls.Styles 1.3 as Styles
 import "../Component"
 import "../QuickFlux/Actions"
 import "../QuickFlux/Stores"
+import "../"
 
 Sidebar {
     id: sidebar
@@ -36,13 +37,16 @@ Sidebar {
         width: parent.width
         ListItem.Subheader {
             text: qsTr("Local Music")
+            margins: Const.leftEdgeMargins
+            height: Const.subHeaderHeight
         }
         Repeater {
             id: musicRepeater
             property int selectedIndex: 0
-            model: inner.sidebarLocalTitles.length //size of sectionTitles
+            model: inner.sidebarLocalTitles.length
             delegate: ListItem.Standard {
-                width: parent.width
+                margins: Const.leftEdgeMargins
+                height: Const.itemHeight
                 text: inner.sidebarLocalTitles[index]
                 selected: musicRepeater.selectedIndex == index
                 iconName: inner.sidebarLocalIconNames[index]

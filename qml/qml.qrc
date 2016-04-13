@@ -25,5 +25,9 @@
         <file>QuickFlux/Stores/MusicCategoryStore.qml</file>
         <file>QuickFlux/Stores/qmldir</file>
         <file>Pages/MusicCategoryViewPage.qml</file>
+        <file>Component/RandomColor.qml</file>
+        <file>Const.qml</file>
+        <file>qmldir</file>
+        <file>Pages/AllMusicViewPage.qml</file>
     </qresource>
 </RCC>
