@@ -28,11 +28,11 @@ Item {
         height: parent.height - Const.tinySpace *4
         x: Const.tinySpace *2
         y: Const.tinySpace *2
-        model: AllMusicStore.model
+        model: LocalMusicStore.model
         spacing: Const.tinySpace
         delegate: ListItem.Subtitled {
             width: parent.width
-            text: AppUtility.pareseAudioMetaObject(metaKey.KeyHash, AllMusicStore.model.get(index))
+            text: AppUtility.pareseAudioMetaObject(metaKey.KeyHash, LocalMusicStore.model.get(index))
         }
 
     }

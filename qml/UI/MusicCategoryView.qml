@@ -18,7 +18,7 @@ Item {
     width: parent ? parent.width : Units.dp(1440)
     height: parent ? parent.height : Units.dp(900)
 
-    property int modelcount: MusicCategoryStore.model.count
+    property int modelcount: LocalMusicStore.model.count
     property int gridColumns: width > Const.cardSize ? width/Const.cardSize : 1
 
     Component.onCompleted: {
@@ -42,7 +42,7 @@ Item {
             columns: gridColumns
             spacing: Const.tinySpace
             Repeater {
-                model: MusicCategoryStore.model
+                model: LocalMusicStore.model
                 delegate: Card {
                     width: Const.cardSize
                     height: column.height
@@ -65,9 +65,9 @@ Item {
                         id: column
                         width: parent.width
                         spacing: Const.tinySpace
-                        property var imgUri: AppUtility.groupObjectToImgUri(MusicCategoryStore.model.get(index))
+                        property var imgUri: AppUtility.groupObjectToImgUri(LocalMusicStore.model.get(index))
                         property bool uriEmpty: imgUri == "" || imgUri == undefined
-                        property var name: AppUtility.groupObjectToName(MusicCategoryStore.model.get(index))
+                        property var name: AppUtility.groupObjectToName(LocalMusicStore.model.get(index))
                         property bool nameEmpty: name == "" || name == undefined
                         Item {
                             width: parent.width
@@ -98,7 +98,7 @@ Item {
                         ListItem.Standard {
                             width: parent.width
                             height: Const.itemHeight
-                            text: AppUtility.groupObjectToName(MusicCategoryStore.model.get(index))
+                            text: AppUtility.groupObjectToName(LocalMusicStore.model.get(index))
                             textColor: textColor
                         }
                     }

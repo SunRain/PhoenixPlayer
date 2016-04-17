@@ -9,10 +9,9 @@ import "../Actions"
 
 AppListener {
     id: localMusicStore
-//    property alias model: allMusicDelegate
+
     property var model: groupDelegate
     property string sourceUri: Qt.resolvedUrl("../../UI/MusicCategoryView.qml")
-//    property int count: 0
 
     AllMusicDelegate {
         id: allMusicDelegate
@@ -30,8 +29,10 @@ AppListener {
         onCurViewTypeChanged: {
             console.log("=== onCurViewTypeChanged "+curViewType)
             if (curViewType == view_category) {
+                model = groupDelegate;
                 sourceUri = Qt.resolvedUrl("../../UI/MusicCategoryView.qml");
             } else if (curViewType == view_all_music) {
+                model = allMusicDelegate;
                 sourceUri = Qt.resolvedUrl("../../UI/MusicAllView.qml");
             }
         }
@@ -41,8 +42,6 @@ AppListener {
         type: ActionTypes.showAlbumCategory
         onDispatched: {
             console.log("==== localMusicStore showAlbumCategory")
-//            AppDispatcher.dispatch(ActionTypes.toMusicCategoryPage);
-//            AppActions.toMusicCategoryPage();
             groupDelegate.showAlbumList();
             inner.curViewType = inner.view_category;
         }
@@ -51,8 +50,6 @@ AppListener {
         type: ActionTypes.showArtistCategory
         onDispatched: {
             console.log("==== localMusicStore showArtistCategory")
-//            AppDispatcher.dispatch(ActionTypes.toMusicCategoryPage);
-//            AppActions.toMusicCategoryPage();
             groupDelegate.showArtistList();
             inner.curViewType = inner.view_category;
         }
@@ -61,8 +58,6 @@ AppListener {
         type: ActionTypes.showGenresCategory
         onDispatched: {
             console.log("==== localMusicStore showGenresCategory")
-//            AppDispatcher.dispatch(ActionTypes.toMusicCategoryPage);
-//            AppActions.toMusicCategoryPage();
             groupDelegate.showGenresList();
             inner.curViewType = inner.view_category;
         }

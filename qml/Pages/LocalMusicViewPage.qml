@@ -16,7 +16,7 @@ import "../QuickFlux/Stores"
 import "../"
 
 BaseViewPage {
-    id: musicViewPage
+    id: localMusicViewPage
 
     showLibraryPathSelector: LocalMusicStore.model.count == 0
 
