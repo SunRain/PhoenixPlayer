@@ -28,7 +28,7 @@ RootWindow {
         tabHighlightColor: "white"
     }
 
-    initialPage: MusicCategoryViewPage{}//BaseViewPage{}//LocalMusicPage {}
+    initialPage: MusicViewPage{}//MusicCategoryViewPage{}//BaseViewPage{}//LocalMusicPage {}
 
     bottomBar: PlayControlBar {
     }
@@ -64,5 +64,34 @@ RootWindow {
             progressCircle.opacity = 0
         }
     }
+
+//    AppListener {
+//        id: stackListener
+//        readonly property int page_music_category: 0
+//        readonly property int page_all_music: 1
+
+//        property int curPage: 0
+
+//        Filter {
+//            type: ActionTypes.toMusicCategoryPage
+//            onDispatched: {
+//                console.log("==== stackListener ActionTypes.toMusicCategoryPage ")
+//                if (stackListener.curPage != stackListener.page_music_category) {
+//                    pageStack.replace(Qt.resolvedUrl("Pages/MusicCategoryViewPage.qml"));
+//                    stackListener.curPage = stackListener.page_music_category;
+//                }
+//            }
+//        }
+//        Filter {
+//            type: ActionTypes.toAllMusicPage
+//            onDispatched: {
+//                console.log("==== stackListener ActionTypes.toAllMusicPage ")
+//                if (stackListener.curPage != stackListener.page_all_music) {
+//                    pageStack.push(Qt.resolvedUrl("Pages/AllMusicViewPage.qml"));
+//                    stackListener.curPage = stackListener.page_all_music
+//                }
+//            }
+//        }
+//    }
 
 }

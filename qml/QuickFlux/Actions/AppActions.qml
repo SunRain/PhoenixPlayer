@@ -7,7 +7,11 @@ ActionCreator {
     signal hideProgress();
     signal selectMusicScannerDirs();
 
+//    signal toMusicCategoryPage();
+//    signal toAllMusicPage();
+
     signal showAlbumCategory();
     signal showArtistCategory();
     signal showGenresCategory();
+    signal showAllMusic();
 }

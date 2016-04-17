@@ -51,6 +51,14 @@ public:
     ///
     Q_INVOKABLE QJSValue randomFromPalette(const QJSValue &palette);
 
+    ///
+    /// \brief pareseAudioMetaObject
+    /// \param key key for data
+    /// \param data the object
+    /// \return value of key
+    ///
+    Q_INVOKABLE QJSValue pareseAudioMetaObject(const QString &key, const QJSValue &data);
+
 
 };
 

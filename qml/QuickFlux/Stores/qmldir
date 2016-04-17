@@ -1,1 +1,3 @@
 singleton MusicCategoryStore 1.0 MusicCategoryStore.qml
+singleton AllMusicStore 1.0 AllMusicStore.qml
+singleton LocalMusicStore 1.0 LocalMusicStore.qml

@@ -9,24 +9,22 @@ import QtQuick.Controls.Styles 1.3 as Styles
 import com.sunrain.phoenixplayer.qmlplugin 1.0
 
 import "../Component"
-import "../Component/MaterialMod"
-import "../UI"
 import "../QuickFlux/Actions"
 import "../QuickFlux/Stores"
 import "../"
 
-BaseViewPage {
+Item {
     id: categoryPage
-
-    showLibraryPathSelector: modelcount == 0
+    width: parent ? parent.width : Units.dp(1440)
+    height: parent ? parent.height : Units.dp(900)
 
     property int modelcount: MusicCategoryStore.model.count
-//    onModelcountChanged: {
-//        console.log("====== onModelcountChanged "+modelcount)
-//    }
-    property int gridColumns: categoryPage.contentWidth > Const.cardSize
-                              ? categoryPage.contentWidth/Const.cardSize
-                              : 1
+    property int gridColumns: width > Const.cardSize ? width/Const.cardSize : 1
+
+    Component.onCompleted: {
+        //TODO may not showAlbumCategory after Component onCompleted
+        AppActions.showAlbumCategory();
+    }
 
     RandomColor {
         id: random

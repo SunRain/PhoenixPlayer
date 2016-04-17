@@ -63,8 +63,12 @@ Sidebar {
                     case 2:
                         AppActions.showGenresCategory();
                         break;
-                    default:
-                        AppActions.showAlbumCategory();
+                    case 3:
+//                        AppActions.toAllMusicPage();
+                        AppActions.showAllMusic();
+                        break;
+//                    default:
+//                        AppActions.showAlbumCategory();
                     }
 
                 }

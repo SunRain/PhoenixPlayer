@@ -5,6 +5,7 @@ TARGET = ../PhoenixPlayerCore/libPhoenixPlayer/target/PhoenixPlayer
 
 CONFIG += c++11
 CONFIG += WITH_QML_LIB
+#CONFIG += USE_QRC
 
 include (../PhoenixPlayerCore/libPhoenixPlayer/libPhoenixPlayer.pri)
 
@@ -19,9 +20,14 @@ SOURCES += \
     ApplicationUtility.cpp \
     AllMusicDelegate.cpp
 
-RESOURCES += \
-    ../../qml/qml.qrc \
-    ../../images/images.qrc
+contains (CONFIG, USE_QRC) {
+    RESOURCES += \
+        ../../qml/qml.qrc \
+        ../../images/images.qrc
+
+    DEFINES += USE_QRC
+}
+
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

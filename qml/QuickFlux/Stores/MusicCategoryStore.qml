@@ -18,6 +18,8 @@ AppListener {
         type: ActionTypes.showAlbumCategory
         onDispatched: {
             console.log("==== MusicCategoryStore showAlbumCategory")
+//            AppDispatcher.dispatch(ActionTypes.toMusicCategoryPage);
+//            AppActions.toMusicCategoryPage();
             groupDelegate.showAlbumList();
         }
     }
@@ -25,6 +27,8 @@ AppListener {
         type: ActionTypes.showArtistCategory
         onDispatched: {
             console.log("==== MusicCategoryStore showArtistCategory")
+//            AppDispatcher.dispatch(ActionTypes.toMusicCategoryPage);
+//            AppActions.toMusicCategoryPage();
             groupDelegate.showArtistList();
         }
     }
@@ -32,6 +36,8 @@ AppListener {
         type: ActionTypes.showGenresCategory
         onDispatched: {
             console.log("==== MusicCategoryStore showGenresCategory")
+//            AppDispatcher.dispatch(ActionTypes.toMusicCategoryPage);
+//            AppActions.toMusicCategoryPage();
             groupDelegate.showGenresList();
         }
     }

@@ -35,6 +35,7 @@
 #include "LibPhoenixPlayerMain.h"
 
 #include "AudioGroupDelegate.h"
+#include "AllMusicDelegate.h"
 
 #include "ApplicationUtility.h"
 
@@ -103,7 +104,10 @@ int main(int argc, char *argv[])
 //    qmlRegisterType<LocalMusicScanner>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "LocalMusicScanner");
     qmlRegisterType<PluginListModel>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "PluginListModel");
     qmlRegisterType<AudioGroupDelegate>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AudioGroupDelegate");
-    qmlRegisterUncreatableType<AudioMetaObjectKeyName>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AudioMetaObjectKeyName", "Cannot be created");
+    qmlRegisterType<AllMusicDelegate>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AllMusicDelegate");
+
+
+    qmlRegisterType<AudioMetaObjectKeyName>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AudioMetaObjectKeyName");
 
     QScopedPointer<ApplicationUtility> appUtility(new ApplicationUtility());
     QScopedPointer<QQmlApplicationEngine> engine(new QQmlApplicationEngine(app.data ()));
@@ -111,6 +115,10 @@ int main(int argc, char *argv[])
     ctx->setContextProperty ("util", Utility::instance ());
     ctx->setContextProperty ("AppUtility", appUtility.data ());
 //    ctx->setContextProperty ("groupDelegate", d);
+#ifdef USE_QRC
     engine.data ()->load (QUrl(QStringLiteral("qrc:/main.qml")));
+#else
+    engine.data ()->load (QUrl(QStringLiteral("main.qml")));
+#endif
     return app.data()->exec();
 }

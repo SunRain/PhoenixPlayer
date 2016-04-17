@@ -9,7 +9,11 @@ KeyTable {
     property string showProgress
     property string hideProgress
 
+//    property string toMusicCategoryPage
+//    property string toAllMusicPage
+
     property string showAlbumCategory
     property string showArtistCategory
     property string showGenresCategory
+    property string showAllMusic
 }

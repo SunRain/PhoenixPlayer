@@ -28,6 +28,10 @@
         <file>Component/RandomColor.qml</file>
         <file>Const.qml</file>
         <file>qmldir</file>
-        <file>Pages/AllMusicViewPage.qml</file>
+        <file>Pages/MusicViewPage.qml</file>
+        <file>QuickFlux/Stores/AllMusicStore.qml</file>
+        <file>UI/MusicCategoryView.qml</file>
+        <file>UI/MusicAllView.qml</file>
+        <file>QuickFlux/Stores/LocalMusicStore.qml</file>
     </qresource>
 </RCC>

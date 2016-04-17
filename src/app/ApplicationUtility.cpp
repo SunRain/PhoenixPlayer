@@ -43,8 +43,10 @@ QUrl ApplicationUtility::qrcStrPath(const QString &localPath)
 {
     if (localPath.isEmpty ())
         return QUrl();
+#ifdef USE_QRC
     if (localPath.startsWith ("/"))
         return QUrl::fromLocalFile (localPath);
+#endif
     return localPath;
 }
 
@@ -84,3 +86,35 @@ QJSValue ApplicationUtility::randomFromPalette(const QJSValue &palette)
     v = map.value (key);
     return QJSValue(v.toString ());
 }
+
+QJSValue ApplicationUtility::pareseAudioMetaObject(const QString &key, const QJSValue &data)
+{
+//        qDebug()<<Q_FUNC_INFO<<"key ["<<key<<"]";
+//    qDebug()<<Q_FUNC_INFO<<"key "<<key.isArray ()<<" string "<<key.isString ()
+//           <<" obj "<<key.isObject ()<<" variant "<<key.isVariant ();
+    qDebug()<<Q_FUNC_INFO<<"key value "<<key;
+
+        qDebug()<<Q_FUNC_INFO<<"jsvalue arrary "<<data.isArray ()<<" string "<<data.isString ()
+               <<" obj "<<data.isObject ()<<" variant "<<data.isVariant ();
+
+        if (!data.isObject ())
+            return QJSValue();
+
+        QJSValue v = data.property (key);
+
+        qDebug()<<Q_FUNC_INFO<<"v value "<<v.isArray ()<<" string "<<v.isString ()
+               <<" obj "<<v.isObject ()<<" variant "<<v.isVariant ();
+
+
+
+        return v;
+}
+
+
+
+
+
+
+
+
+
