@@ -19,6 +19,10 @@ AppListener {
 
     AudioGroupDelegate {
         id: groupDelegate
+        Component.onCompleted: {
+            ////TODO may not showAlbumCategory after Component onCompleted
+            groupDelegate.showAlbumList();
+        }
     }
 
     QtObject {
@@ -31,9 +35,11 @@ AppListener {
             if (curViewType == view_category) {
                 model = groupDelegate;
                 sourceUri = Qt.resolvedUrl("../../UI/MusicCategoryView.qml");
+//                model = groupDelegate;
             } else if (curViewType == view_all_music) {
                 model = allMusicDelegate;
                 sourceUri = Qt.resolvedUrl("../../UI/MusicAllView.qml");
+//                model = allMusicDelegate;
             }
         }
     }

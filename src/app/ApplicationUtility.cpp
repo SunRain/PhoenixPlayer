@@ -89,9 +89,8 @@ QJSValue ApplicationUtility::randomFromPalette(const QJSValue &palette)
 
 QJSValue ApplicationUtility::pareseAudioMetaObject(const QString &key, const QJSValue &data)
 {
-//        qDebug()<<Q_FUNC_INFO<<"key ["<<key<<"]";
-//    qDebug()<<Q_FUNC_INFO<<"key "<<key.isArray ()<<" string "<<key.isString ()
-//           <<" obj "<<key.isObject ()<<" variant "<<key.isVariant ();
+    qDebug()<<Q_FUNC_INFO<<"==============================";
+
     qDebug()<<Q_FUNC_INFO<<"key value "<<key;
 
         qDebug()<<Q_FUNC_INFO<<"jsvalue arrary "<<data.isArray ()<<" string "<<data.isString ()
@@ -105,7 +104,9 @@ QJSValue ApplicationUtility::pareseAudioMetaObject(const QString &key, const QJS
         qDebug()<<Q_FUNC_INFO<<"v value "<<v.isArray ()<<" string "<<v.isString ()
                <<" obj "<<v.isObject ()<<" variant "<<v.isVariant ();
 
-
+        if (v.isString ()) {
+            qDebug()<<"value is string "<<v.toString ();
+        }
 
         return v;
 }

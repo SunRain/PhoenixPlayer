@@ -20,8 +20,7 @@ AudioGroupDelegate::AudioGroupDelegate(QObject *parent)
     , m_keyFiled(AudioMetaGroupObject::keyHash ())
 {
     m_libraryMgr = phoenixPlayerLib->libraryMgr ();
-
-    sync ();
+    clear ();
 }
 
 AudioGroupDelegate::~AudioGroupDelegate()
@@ -50,6 +49,12 @@ void AudioGroupDelegate::showGenresList()
     qDebug()<<">>>>>>>>>>>>>>> "<<Q_FUNC_INFO<<" <<<<<<<<<<<";
 
     m_dataList = m_libraryMgr->genreList ();
+    sync ();
+}
+
+void AudioGroupDelegate::clear()
+{
+    m_dataList.clear ();
     sync ();
 }
 

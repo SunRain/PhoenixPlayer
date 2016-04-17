@@ -22,6 +22,7 @@ public:
     Q_INVOKABLE void showArtistList();
     Q_INVOKABLE void showAlbumList();
     Q_INVOKABLE void showGenresList();
+    Q_INVOKABLE void clear();
 
 //signals:
 //    void keyFiledChanged(QString keyFiled);

@@ -23,7 +23,7 @@ Item {
 
     Component.onCompleted: {
         //TODO may not showAlbumCategory after Component onCompleted
-        AppActions.showAlbumCategory();
+//        AppActions.showAlbumCategory();
     }
 
     RandomColor {

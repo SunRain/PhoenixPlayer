@@ -29,5 +29,6 @@
         <file>UI/MusicCategoryView.qml</file>
         <file>UI/MusicAllView.qml</file>
         <file>QuickFlux/Stores/LocalMusicStore.qml</file>
+        <file>Scripts/Utility.js</file>
     </qresource>
 </RCC>
