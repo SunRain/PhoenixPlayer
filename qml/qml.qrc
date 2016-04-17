@@ -23,7 +23,6 @@
         <file>QuickFlux/Actions/AppActions.qml</file>
         <file>QuickFlux/Actions/qmldir</file>
         <file>QuickFlux/Stores/qmldir</file>
-        <file>Pages/MusicCategoryViewPage.qml</file>
         <file>Component/RandomColor.qml</file>
         <file>Const.qml</file>
         <file>qmldir</file>
