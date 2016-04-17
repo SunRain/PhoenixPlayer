@@ -26,6 +26,18 @@ Item {
 //        AppActions.showAlbumCategory();
     }
 
+    QtObject {
+        id: inner
+        property string pColor
+        property string dColor
+        property string textColor
+        property string subTextColor
+        property var imgUri
+        property bool uriEmpty: true
+        property var name
+        property bool nameEmpty: true
+    }
+
     RandomColor {
         id: random
     }
@@ -44,18 +56,30 @@ Item {
             Repeater {
                 model: LocalMusicStore.model
                 delegate: Card {
+                    id: card
                     width: Const.cardSize
                     height: column.height
                     property string pColor
                     property string dColor
                     property string textColor
                     property string subTextColor
+                    property var imgUri: AppUtility.groupObjectToImgUri(LocalMusicStore.model.get(index))
+                    property bool uriEmpty: imgUri == "" || imgUri == undefined
+                    property var name: AppUtility.groupObjectToName(LocalMusicStore.model.get(index))
+                    property bool nameEmpty: name == "" || name == undefined
                     Component.onCompleted: {
                         random.generate();
                         pColor = random.primaryLightColor;
                         dColor = random.primaryDarkColor;
                         textColor = random.textColor;
                         subTextColor = random.subTextColor;
+                        inner.pColor = pColor;
+                        inner.dColor = dColor;
+                        inner.textColor = textColor;
+                        inner.subTextColor = subTextColor;
+                        inner.imgUri = imgUri;
+                        inner.name = name;
+                        inner.nameEmpty = nameEmpty;
                     }
                     Rectangle {
                         anchors.fill: parent
@@ -65,21 +89,17 @@ Item {
                         id: column
                         width: parent.width
                         spacing: Const.tinySpace
-                        property var imgUri: AppUtility.groupObjectToImgUri(LocalMusicStore.model.get(index))
-                        property bool uriEmpty: imgUri == "" || imgUri == undefined
-                        property var name: AppUtility.groupObjectToName(LocalMusicStore.model.get(index))
-                        property bool nameEmpty: name == "" || name == undefined
                         Item {
                             width: parent.width
                             height: width
                             Rectangle {
                                 anchors.fill: parent
                                 color: dColor
-                                opacity: column.uriEmpty ? 1 : 0
+                                opacity: uriEmpty ? 1 : 0
                                 Label {
                                     width: parent.width
                                     anchors.verticalCenter: parent.verticalCenter
-                                    text: column.nameEmpty ? "?" : column.name.substring(0,1)
+                                    text: nameEmpty ? "?" : name.substring(0,1)
                                     horizontalAlignment: Text.AlignHCenter
                                     verticalAlignment: Image.AlignVCenter
                                     style: "display3"
@@ -92,7 +112,7 @@ Item {
                                 fillMode: Image.PreserveAspectFit
                                 horizontalAlignment: Image.AlignHCenter
                                 verticalAlignment: Image.AlignVCenter
-                                source: AppUtility.qrcStrPath(column.imgUri);
+                                source: AppUtility.qrcStrPath(imgUri);
                             }
                         }
                         ListItem.Standard {
@@ -106,6 +126,35 @@ Item {
                         id: ink
                         anchors.fill: parent
                         enabled: true
+                        onClicked: {
+                            overlayView.open(card)
+                        }
+                    }
+                    OverlayView {
+                        id: overlayView
+                        width: Const.cardSize * 3
+                        height: parent.height * 0.8
+                        anchors.centerIn: categoryPage
+                        Rectangle {
+                            width: parent.width
+                            height: childrenRect.height
+                            color: pColor
+                            Label {
+                                width: parent.width
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: nameEmpty ? "?" : name.substring(0,1)
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Image.AlignVCenter
+                                style: "body2"
+                                font.pixelSize: parent.width * 0.5
+                            }
+                            Image {
+                                width: parent.width
+                                height: implicitHeight
+                                fillMode: Image.PreserveAspectFit
+                                source: AppUtility.qrcStrPath(imgUri);
+                            }
+                        }
                     }
                 }
             }
@@ -114,4 +163,30 @@ Item {
     Scrollbar {
         flickableItem: flickable
     }
+
+//    OverlayView {
+//        id: overlayView
+//        width: Const.cardSize * 3
+//        height: parent.height * 0.8
+//        anchors.centerIn: parent
+//        Rectangle {
+//            width: parent.width
+//            height: childrenRect.height
+//            color: inner.pColor
+//            Label {
+//                width: parent.width
+//                anchors.verticalCenter: parent.verticalCenter
+//                text: inner.nameEmpty ? "?" : inner.name.substring(0,1)
+//                horizontalAlignment: Text.AlignHCenter
+//                verticalAlignment: Image.AlignVCenter
+//                style: "body2"
+//                font.pixelSize: parent.width * 0.5
+//            }
+//            Image {
+//                width: parent.width
+//                fillMode: Image.PreserveAspectFit
+//                source: AppUtility.qrcStrPath(inner.imgUri);
+//            }
+//        }
+//    }
 }
