@@ -30,5 +30,6 @@
         <file>UI/MusicAllView.qml</file>
         <file>QuickFlux/Stores/LocalMusicStore.qml</file>
         <file>Scripts/Utility.js</file>
+        <file>Component/MusicListItem.qml</file>
     </qresource>
 </RCC>

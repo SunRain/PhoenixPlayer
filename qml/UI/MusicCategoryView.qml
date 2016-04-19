@@ -156,46 +156,81 @@ Item {
             anchors.fill: parent
             color: inner.pColor
         }
-        Item {
-            id: overlayBanner
-            width: parent.width
-            height: Const.cardSize
-            Rectangle {
-                anchors.fill: parent
-                color: inner.dColor
-                Label {
-                    width: parent.width
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: inner.nameEmpty ? qsTr("UnKnown") : inner.name.substring(0,1)
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Image.AlignVCenter
-                    style: "body2"
-                    font.pixelSize: parent.height * 0.5
+        Flickable {
+            anchors.fill: parent
+            contentWidth: parent.width
+            contentHeight: overlayBanner.height + overylayColumn.height
+            boundsBehavior: Flickable.OvershootBounds
+            clip: true
+            Item {
+                id: overlayBanner
+                width: parent.width
+                height: Const.cardSize
+                Rectangle {
+                    anchors.fill: parent
+                    color: inner.dColor
+                    Label {
+                        width: parent.width
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: inner.nameEmpty ? qsTr("UnKnown") : inner.name.substring(0,1)
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Image.AlignVCenter
+                        style: "body2"
+                        font.pixelSize: parent.height * 0.5
+                    }
+                }
+                Image {
+                    id: overlayImage
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectCrop
+                    source: AppUtility.qrcStrPath(inner.imgUri);
                 }
             }
-            Image {
-                id: overlayImage
-                anchors.fill: parent
-                fillMode: Image.PreserveAspectCrop
-                source: AppUtility.qrcStrPath(inner.imgUri);
-            }
-        }
-        Column {
-            width: parent.width
-            anchors.top: overlayBanner.bottom
-//            Component.onCompleted: {
-//                console.log("====== overlayView column onCompleted")
-//                LocalMusicStore.model.showAudioList(inner.hash)
-//            }
-
-            Repeater {
-                model: LocalMusicStore.model.audioMetaListModel
-                delegate: ListItem.Standard{
-                    property var object: LocalMusicStore.model.audioMetaListModel.get(index)
-                    text: AppUtility.pareseAudioMetaObject(metaKey.KeyHash, object)
+            Column {
+                id: overylayColumn
+                width: parent.width
+                anchors.top: overlayBanner.bottom
+                Repeater {
+                    model: LocalMusicStore.model.audioMetaListModel
+                    delegate: MusicListItem {
+                        property var object: LocalMusicStore.model.audioMetaListModel.get(index)
+                        property var trackMeta: JSON.parse(AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, object))
+                        property var coverMeta: JSON.parse(AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, object))
+                        property var artistMeta: JSON.parse(AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object))
+                        property var albumMeta: JSON.parse(AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object))
+                        property string pColor
+                        property string title: ""
+                        property string imgUri: ""
+                        trackTitle: title
+                        trackChar: "?"
+                        coverColor: pColor
+                        coverImage: imgUri
+                        Component.onCompleted: {
+                            title = AppUtility.pareseAudioMetaObject(metaKey.KeyTitle, trackMeta);
+                            if (title == undefined || title == "") {
+                                title = AppUtility.pareseAudioMetaObject(metaKey.KeyName, object);
+                            }
+                            if (title == undefined || title == "") {
+                                title = qsTr("UnKnown");
+                                musicItem.trackChar = "?";
+                            }
+                            random.generate();
+                            pColor = random.primaryDarkColor;
+                            var t = AppUtility.pareseAudioMetaObject(metaKey.KeyMiddleImg, coverMeta);
+                            if (t == undefined || t == "")
+                                t = AppUtility.pareseAudioMetaObject(metaKey.KeyLargeImg, coverMeta);
+                            if (t == undefined || t == "")
+                                t = AppUtility.pareseAudioMetaObject(metaKey.KeySmallImg, coverMeta);
+                            if (t == undefined || t == "")
+                                t = AppUtility.pareseAudioMetaObject(metaKey.keyUri, artistMeta);
+                            if (t == undefined || t == "")
+                                t = AppUtility.pareseAudioMetaObject(metaKey.keyUri, albumMeta);
+                            imgUri = t;
+                        }
+                    }
                 }
-            }
 
+            }
         }
     }
 }

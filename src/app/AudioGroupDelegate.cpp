@@ -66,6 +66,7 @@ void AudioGroupDelegate::showAudioList(const QString &hash)
     qDebug()<<"=========== "<<Q_FUNC_INFO<<" ==========";
     qDebug()<<Q_FUNC_INFO<<"hash is "<<hash;
     m_audioMetaList.clear ();
+    syncAudioList ();
     if (hash.isEmpty ())
         return;
     foreach (AudioMetaGroupObject o, m_dataList) {
