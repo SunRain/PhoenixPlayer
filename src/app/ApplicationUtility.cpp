@@ -39,6 +39,15 @@ QJSValue ApplicationUtility::groupObjectToList(const QJSValue &data)
     return data;
 }
 
+QJSValue ApplicationUtility::groupObjectToHash(const QJSValue &data)
+{
+    if (!data.isObject ())
+        return QJSValue();
+    QJSValue v = data.property (AudioMetaGroupObject::keyHash ());
+//    qDebug()<<Q_FUNC_INFO<<"hash value "<<v.toVariant ();
+    return v;
+}
+
 QUrl ApplicationUtility::qrcStrPath(const QString &localPath)
 {
     if (localPath.isEmpty ())

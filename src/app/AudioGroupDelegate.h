@@ -14,6 +14,7 @@ namespace PhoenixPlayer {
 class AudioGroupDelegate : public QSListModel
 {
     Q_OBJECT
+    Q_PROPERTY(QObject* audioMetaListModel READ audioMetaListModel CONSTANT)
 public:
     explicit AudioGroupDelegate(QObject *parent = 0);
     virtual ~AudioGroupDelegate();
@@ -23,17 +24,22 @@ public:
     Q_INVOKABLE void showAlbumList();
     Q_INVOKABLE void showGenresList();
     Q_INVOKABLE void clear();
+    ///
+    /// \brief showAudioList show AudioMetaList in current group by group hash
+    /// \param hash
+    ///
+    Q_INVOKABLE void showAudioList(const QString &hash);
 
-//signals:
-//    void keyFiledChanged(QString keyFiled);
-
-//    void modelChanged(QObject* model);
+    QObject* audioMetaListModel() const;
 
 private:
     void sync();
+    void syncAudioList();
 private:
     PhoenixPlayer::MusicLibrary::MusicLibraryManager *m_libraryMgr;
+    QSListModel *m_audioMetaListModel;
     AudioMetaGroupList m_dataList;
+    AudioMetaList m_audioMetaList;
     QString m_keyFiled;
 };
 

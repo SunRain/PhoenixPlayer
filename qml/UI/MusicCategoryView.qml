@@ -28,6 +28,7 @@ Item {
 
     QtObject {
         id: inner
+        property string hash
         property string pColor
         property string dColor
         property string textColor
@@ -41,6 +42,10 @@ Item {
     RandomColor {
         id: random
     }
+    AudioMetaObjectKeyName {
+        id: metaKey
+    }
+
     Flickable {
         id: flickable
         width: gridColumns == 1 ? parent.width : Const.cardSize * gridColumns
@@ -59,6 +64,7 @@ Item {
                     id: card
                     width: Const.cardSize
                     height: column.height
+                    property string hash: AppUtility.groupObjectToHash(LocalMusicStore.model.get(index))
                     property string pColor
                     property string dColor
                     property string textColor
@@ -73,17 +79,10 @@ Item {
                         dColor = random.primaryDarkColor;
                         textColor = random.textColor;
                         subTextColor = random.subTextColor;
-                        inner.pColor = pColor;
-                        inner.dColor = dColor;
-                        inner.textColor = textColor;
-                        inner.subTextColor = subTextColor;
-                        inner.imgUri = imgUri;
-                        inner.name = name;
-                        inner.nameEmpty = nameEmpty;
                     }
                     Rectangle {
                         anchors.fill: parent
-                        color: pColor
+                        color: card.pColor
                     }
                     Column {
                         id: column
@@ -94,12 +93,12 @@ Item {
                             height: width
                             Rectangle {
                                 anchors.fill: parent
-                                color: dColor
-                                opacity: uriEmpty ? 1 : 0
+                                color: card.dColor
+                                opacity: card.uriEmpty ? 1 : 0
                                 Label {
                                     width: parent.width
                                     anchors.verticalCenter: parent.verticalCenter
-                                    text: nameEmpty ? "?" : name.substring(0,1)
+                                    text: card.nameEmpty ? "?" : card.name.substring(0,1)
                                     horizontalAlignment: Text.AlignHCenter
                                     verticalAlignment: Image.AlignVCenter
                                     style: "display3"
@@ -118,7 +117,7 @@ Item {
                         ListItem.Standard {
                             width: parent.width
                             height: Const.itemHeight
-                            text: AppUtility.groupObjectToName(LocalMusicStore.model.get(index))
+                            text: card.nameEmpty ? qsTr("UnKnown") : card.name
                             textColor: textColor
                         }
                     }
@@ -127,33 +126,17 @@ Item {
                         anchors.fill: parent
                         enabled: true
                         onClicked: {
+                            inner.pColor = card.pColor;
+                            inner.dColor = card.dColor;
+                            inner.textColor = card.textColor;
+                            inner.subTextColor = card.subTextColor;
+                            inner.imgUri = card.imgUri;
+                            inner.name = card.name;
+                            inner.nameEmpty = card.nameEmpty;
+                            inner.hash = card.hash;
+                            console.log("==== showAudioList hash is "+inner.hash);
+                            LocalMusicStore.model.showAudioList(inner.hash);
                             overlayView.open(card)
-                        }
-                    }
-                    OverlayView {
-                        id: overlayView
-                        width: Const.cardSize * 3
-                        height: parent.height * 0.8
-                        anchors.centerIn: categoryPage
-                        Rectangle {
-                            width: parent.width
-                            height: childrenRect.height
-                            color: pColor
-                            Label {
-                                width: parent.width
-                                anchors.verticalCenter: parent.verticalCenter
-                                text: nameEmpty ? "?" : name.substring(0,1)
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Image.AlignVCenter
-                                style: "body2"
-                                font.pixelSize: parent.width * 0.5
-                            }
-                            Image {
-                                width: parent.width
-                                height: implicitHeight
-                                fillMode: Image.PreserveAspectFit
-                                source: AppUtility.qrcStrPath(imgUri);
-                            }
                         }
                     }
                 }
@@ -164,29 +147,55 @@ Item {
         flickableItem: flickable
     }
 
-//    OverlayView {
-//        id: overlayView
-//        width: Const.cardSize * 3
-//        height: parent.height * 0.8
-//        anchors.centerIn: parent
-//        Rectangle {
-//            width: parent.width
-//            height: childrenRect.height
-//            color: inner.pColor
-//            Label {
-//                width: parent.width
-//                anchors.verticalCenter: parent.verticalCenter
-//                text: inner.nameEmpty ? "?" : inner.name.substring(0,1)
-//                horizontalAlignment: Text.AlignHCenter
-//                verticalAlignment: Image.AlignVCenter
-//                style: "body2"
-//                font.pixelSize: parent.width * 0.5
+    OverlayView {
+        id: overlayView
+        width: Const.cardSize * 3
+        height: parent.height * 0.8
+        anchors.centerIn: parent
+        Rectangle {
+            anchors.fill: parent
+            color: inner.pColor
+        }
+        Item {
+            id: overlayBanner
+            width: parent.width
+            height: Const.cardSize
+            Rectangle {
+                anchors.fill: parent
+                color: inner.dColor
+                Label {
+                    width: parent.width
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: inner.nameEmpty ? qsTr("UnKnown") : inner.name.substring(0,1)
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Image.AlignVCenter
+                    style: "body2"
+                    font.pixelSize: parent.height * 0.5
+                }
+            }
+            Image {
+                id: overlayImage
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectCrop
+                source: AppUtility.qrcStrPath(inner.imgUri);
+            }
+        }
+        Column {
+            width: parent.width
+            anchors.top: overlayBanner.bottom
+//            Component.onCompleted: {
+//                console.log("====== overlayView column onCompleted")
+//                LocalMusicStore.model.showAudioList(inner.hash)
 //            }
-//            Image {
-//                width: parent.width
-//                fillMode: Image.PreserveAspectFit
-//                source: AppUtility.qrcStrPath(inner.imgUri);
-//            }
-//        }
-//    }
+
+            Repeater {
+                model: LocalMusicStore.model.audioMetaListModel
+                delegate: ListItem.Standard{
+                    property var object: LocalMusicStore.model.audioMetaListModel.get(index)
+                    text: AppUtility.pareseAudioMetaObject(metaKey.KeyHash, object)
+                }
+            }
+
+        }
+    }
 }

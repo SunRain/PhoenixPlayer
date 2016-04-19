@@ -37,6 +37,12 @@ public:
     Q_INVOKABLE QJSValue groupObjectToList(const QJSValue &data);
 
     ///
+    /// \brief groupObjectToHash parse AudioMetaGroupObject
+    /// \param data
+    /// \return AudioMetaGroupObject->hash;
+    ///
+    Q_INVOKABLE QJSValue groupObjectToHash(const QJSValue &data);
+    ///
     /// \brief qrcStrPath convert local path to qrc.
     /// eg. /path/to/file ==> file:///path/to/file
     /// \param localPath
