@@ -1,23 +1,27 @@
-import QtQuick 2.0
-import Material 0.1
+import QtQuick 2.4
+import Material 0.2
 import Material.ListItems 0.1 as ListItem
 import com.sunrain.phoenixplayer.qmlplugin 1.0
 
 import "../Component"
+import "../QuickFlux/Actions"
+import "../QuickFlux/Stores"
+import "../QuickFlux/Adapters"
+import "../"
 
 View {
     id: playControlBar
     width: parent ? parent.width : Units.dp(700)
     height: slider.height//parent ? parent.height : Units.dp(120)
 
-    elevation: 1
+    elevation: 2
     elevationInverted: true
 
-    property bool _isPlaying: playerController.isPlaying()
-    property var _durationValue: playerController.getTrackLength()
-    property var _title: playerController.trackTitle()
-    property var _album: playerController.trackAlbum()
-    property var _artist: playerController.trackArtist()
+//    property bool _isPlaying: playerController.isPlaying()
+//    property var _durationValue: playerController.getTrackLength()
+//    property var _title: playerController.trackTitle()
+//    property var _album: playerController.trackAlbum()
+//    property var _artist: playerController.trackArtist()
 
     Connections {
         target: playerController
@@ -52,11 +56,6 @@ View {
 
     Row {
         id: toggleRow
-//        anchors {
-//            left: trackImage.right
-//            top: parent.top
-//            bottom: parent.bottom
-//        }
         anchors.left: trackImage.right
         height: parent.height
         spacing: Units.dp(2)
@@ -69,8 +68,7 @@ View {
                 iconName: "av/skip_previous"
                 name: "skip previous"
                 onTriggered: {
-//                    musicPlayer.skipBackward();
-                    playerController.skipBackward();
+                    PlayCtrAdapter.adaptSkipBackward();
                 }
             }
         }
@@ -79,16 +77,10 @@ View {
             anchors.verticalCenter: parent.verticalCenter
             size: parent.height * 0.8
             action: Action {
-                iconName: _isPlaying ? "av/pause" :"av/play_arrow" /*{
-                    var state = musicPlayer.playBackendState;
-                    if (state == Common.PlayBackendPaused)
-                        return "av/play_arrow";
-                    return "av/pause";
-                }*/
+                iconName: PlayCtrlBarInfoStore.playPauseIcon//_isPlaying ? "av/pause" :"av/play_arrow"
                 name: "play/pause"
                 onTriggered: {
-//                    musicPlayer.togglePlayPause();
-                    playerController.togglePlayPause();
+                    AppActions.togglePlayPause();
                 }
             }
         }
@@ -100,8 +92,7 @@ View {
                 iconName: "av/skip_next"
                 name: "skip next"
                 onTriggered: {
-//                    musicPlayer.skipForward();
-                    playerController.skipForward();
+                    PlayCtrAdapter.adaptSkipForward();
                 }
             }
         }
@@ -124,16 +115,14 @@ View {
         }
 
         playedSec: 0;
-        trackTitle: _title//musicPlayer.playList.currentTrack.trackMeta.title
-        trackArtist: _artist//usicPlayer.playList.currentTrack.artistMeta.name
+        trackTitle: PlayCtrlBarInfoStore.title//musicPlayer.playList.currentTrack.trackMeta.title
+        trackArtist: PlayCtrlBarInfoStore.artist//usicPlayer.playList.currentTrack.artistMeta.name
         durationInfo: util.formateSongDuration(_durationValue)//musicPlayer.playList.currentTrack.trackMeta.duration
         durationSec: _durationValue
     }
     Row {
         id: menuRow
         anchors {
-//            top: parent.top
-//            bottom: parent.bottom
             right: parent.right
             rightMargin: Units.dp(2)
         }

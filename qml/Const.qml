@@ -13,4 +13,6 @@ QtObject {
     readonly property real tinySpace: Units.dp(8)
     readonly property real cardSize: Units.dp(192)
 
+    readonly property string localMusicCtrlUid: "bibibibibi-this-is-localCtrl"
+
 }

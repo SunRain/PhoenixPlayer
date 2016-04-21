@@ -31,5 +31,9 @@
         <file>QuickFlux/Stores/LocalMusicStore.qml</file>
         <file>Scripts/Utility.js</file>
         <file>Component/MusicListItem.qml</file>
+        <file>QuickFlux/Stores/PlayCtrlBarInfoStore.qml</file>
+        <file>QuickFlux/Adapters/PlayCtrAdapter.qml</file>
+        <file>QuickFlux/Adapters/qmldir</file>
+        <file>LocalPlayCtrl.qml</file>
     </qresource>
 </RCC>

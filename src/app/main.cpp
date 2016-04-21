@@ -114,6 +114,7 @@ int main(int argc, char *argv[])
     QQmlContext *ctx = engine.data ()->rootContext ();
     ctx->setContextProperty ("util", Utility::instance ());
     ctx->setContextProperty ("AppUtility", appUtility.data ());
+    ctx->setContextProperty ("Player", phoenixPlayerLib->playerCore ());
 //    ctx->setContextProperty ("groupDelegate", d);
 #ifdef USE_QRC
     engine.data ()->load (QUrl(QStringLiteral("qrc:/main.qml")));

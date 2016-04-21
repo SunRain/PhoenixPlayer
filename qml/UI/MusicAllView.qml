@@ -11,6 +11,7 @@ import com.sunrain.phoenixplayer.qmlplugin 1.0
 import "../Component"
 import "../QuickFlux/Actions"
 import "../QuickFlux/Stores"
+import "../QuickFlux/Adapters"
 import "../"
 
 Item {
@@ -23,6 +24,10 @@ Item {
     }
     RandomColor {
         id: random
+    }
+    Component.onCompleted: {
+        PlayCtrAdapter.register(Const.localMusicCtrlUid);
+        LocalPlayCtrl.dummy;
     }
 
     ListView {
@@ -37,10 +42,10 @@ Item {
             id: musicItem
             width: parent.width
             property var object: LocalMusicStore.model.get(index)
-            property var trackMeta: JSON.parse(AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, object))
-            property var coverMeta: JSON.parse(AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, object))
-            property var artistMeta: JSON.parse(AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object))
-            property var albumMeta: JSON.parse(AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object))
+            property var trackMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, object)
+            property var coverMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, object)
+            property var artistMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object)
+            property var albumMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object)
             property string pColor
             property string title: ""
             property string imgUri: ""
@@ -69,6 +74,12 @@ Item {
                 if (t == undefined || t == "")
                     t = AppUtility.pareseAudioMetaObject(metaKey.keyUri, albumMeta);
                 imgUri = t;
+                var hash = AppUtility.pareseAudioMetaObject(metaKey.KeyHash, object);
+                console.log("====== hash "+hash);
+            }
+            onClicked: {
+                var hash = AppUtility.pareseAudioMetaObject(metaKey.KeyHash, object);
+                Player.playFromLibrary(hash);
             }
         }
     }

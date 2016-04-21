@@ -14,4 +14,8 @@ ActionCreator {
     signal showArtistCategory();
     signal showGenresCategory();
     signal showAllMusic();
+
+    function togglePlayPause() {
+        Player.togglePlayPause();
+    }
 }

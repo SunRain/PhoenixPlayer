@@ -11,6 +11,7 @@ import com.sunrain.phoenixplayer.qmlplugin 1.0
 import "../Component"
 import "../QuickFlux/Actions"
 import "../QuickFlux/Stores"
+import "../QuickFlux/Adapters"
 import "../"
 
 Item {
@@ -22,8 +23,8 @@ Item {
     property int gridColumns: width > Const.cardSize ? width/Const.cardSize : 1
 
     Component.onCompleted: {
-        //TODO may not showAlbumCategory after Component onCompleted
-//        AppActions.showAlbumCategory();
+        PlayCtrAdapter.register(Const.localMusicCtrlUid);
+        LocalPlayCtrl.dummy;
     }
 
     QtObject {
@@ -194,10 +195,10 @@ Item {
                     model: LocalMusicStore.model.audioMetaListModel
                     delegate: MusicListItem {
                         property var object: LocalMusicStore.model.audioMetaListModel.get(index)
-                        property var trackMeta: JSON.parse(AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, object))
-                        property var coverMeta: JSON.parse(AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, object))
-                        property var artistMeta: JSON.parse(AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object))
-                        property var albumMeta: JSON.parse(AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object))
+                        property var trackMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, object)
+                        property var coverMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, object)
+                        property var artistMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object)
+                        property var albumMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object)
                         property string pColor
                         property string title: ""
                         property string imgUri: ""

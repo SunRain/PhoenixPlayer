@@ -16,4 +16,22 @@ KeyTable {
     property string showArtistCategory
     property string showGenresCategory
     property string showAllMusic
+
+    property string adaptCtrlBarCover
+    property string changeCtrlBarCover
+
+    property string adaptCtrlBarTitle
+    property string changeCtrlBarTitle
+
+    property string adaptCtrlBarAlbumName
+    property string changeCtrlBarAlbumName
+
+    property string adaptCtrlBarArtistName
+    property string changeCtrlBarArtistName
+
+    property string adaptSkipBackward
+    property string doSkipBackward
+
+    property string adaptSkipForward
+    property string doSkipForward
 }
