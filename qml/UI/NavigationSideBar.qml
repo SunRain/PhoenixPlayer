@@ -5,6 +5,8 @@ import Material.ListItems 0.1 as ListItem
 import QtQuick.Controls 1.3 as Controls
 import QtQuick.Controls.Styles 1.3 as Styles
 
+import com.sunrain.phoenixplayer.qmlplugin 1.0
+
 import "../Component"
 import "../QuickFlux/Actions"
 import "../QuickFlux/Stores"
@@ -31,6 +33,9 @@ Sidebar {
 //            "av/queue",
 //            "av/playlist_play"
         ]
+    }
+    AudioMetaObjectKeyName {
+        id: metaKey
     }
     Column {
         id: column
@@ -83,23 +88,47 @@ Sidebar {
             id: recentHeader
             text: qsTr("Recent")
         }
-        Repeater {
-            id: musicRepeater2
-            property int selectedSection: 0
-            model: recentHeader.expanded ? inner.sidebarLocalTitles.length : 0//size of sectionTitles
-            delegate: ListItem.Standard {
-                width: parent.width
-                text: inner.sidebarLocalTitles[index]
-                selected: musicRepeater2.selectedSection == index
-                iconName: inner.sidebarLocalIconNames[index]
-                onClicked: {
-                    musicRepeater2.selectedSection = index
-                }
-            }
-        }
+//        Repeater {
+//            id: musicRepeater2
+//            property int selectedSection: 0
+//            model: recentHeader.expanded ? inner.sidebarLocalTitles.length : 0//size of sectionTitles
+//            delegate: ListItem.Standard {
+//                width: parent.width
+//                text: inner.sidebarLocalTitles[index]
+//                selected: musicRepeater2.selectedSection == index
+//                iconName: inner.sidebarLocalIconNames[index]
+//                onClicked: {
+//                    musicRepeater2.selectedSection = index
+//                }
+//            }
+//        }
         ListItem.Divider {}
         ListItem.Subheader {
             text: qsTr("Playlist")
+        }
+        Repeater {
+            model: PlayListStore.listModel
+            delegate: ListItem.Standard {
+                property var object: PlayListStore.listModel.get(index)
+                property var trackMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, object)
+                property var coverMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, object)
+                property var artistMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object)
+                property var albumMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object)
+
+                property var title: "UnKnown"
+                width: parent.width
+                text: title
+                Component.onCompleted: {
+                    title = AppUtility.pareseAudioMetaObject(metaKey.KeyTitle, trackMeta);
+                    if (title == undefined || title == "") {
+                        title = AppUtility.pareseAudioMetaObject(metaKey.KeyName, object);
+                    }
+                    if (title == undefined || title == "") {
+                        title = qsTr("UnKnown");
+//                        musicItem.trackChar = "?";
+                    }
+                }
+            }
         }
     }
 }

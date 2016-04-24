@@ -35,5 +35,7 @@
         <file>QuickFlux/Adapters/PlayCtrAdapter.qml</file>
         <file>QuickFlux/Adapters/qmldir</file>
         <file>LocalPlayCtrl.qml</file>
+        <file>QuickFlux/Stores/PlayListStore.qml</file>
+        <file>Component/AudioMetaObjectParser.qml</file>
     </qresource>
 </RCC>

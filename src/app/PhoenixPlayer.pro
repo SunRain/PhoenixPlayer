@@ -12,13 +12,15 @@ include (../PhoenixPlayerCore/libPhoenixPlayer/libPhoenixPlayer.pri)
 HEADERS += \
     AudioGroupDelegate.h \
     ApplicationUtility.h \
-    AllMusicDelegate.h
+    AllMusicDelegate.h \
+    PlayListDelegate.h
 
 SOURCES += \
     main.cpp \
     AudioGroupDelegate.cpp \
     ApplicationUtility.cpp \
-    AllMusicDelegate.cpp
+    AllMusicDelegate.cpp \
+    PlayListDelegate.cpp
 
 contains (CONFIG, USE_QRC) {
     RESOURCES += \

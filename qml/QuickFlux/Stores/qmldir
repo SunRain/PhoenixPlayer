@@ -1,2 +1,4 @@
 singleton LocalMusicStore 1.0 LocalMusicStore.qml
 singleton PlayCtrlBarInfoStore 1.0 PlayCtrlBarInfoStore.qml
+singleton PlayListStore 1.0 PlayListStore.qml
+

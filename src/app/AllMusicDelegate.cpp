@@ -31,9 +31,9 @@ void AllMusicDelegate::refresh()
 {
     m_dataList.clear ();
     m_dataList = m_libraryMgr->allTracks ();
-    foreach (AudioMetaObject o, m_dataList) {
-        qDebug()<<Q_FUNC_INFO<<">>>>>>>>>>>>>> data hash "<<o.hash ();
-    }
+//    foreach (AudioMetaObject o, m_dataList) {
+//        qDebug()<<Q_FUNC_INFO<<">>>>>>>>>>>>>> data hash "<<o.hash ();
+//    }
     sync ();
 }
 
@@ -43,7 +43,7 @@ void AllMusicDelegate::sync()
     runner.setKeyField (m_keyFiled);
     QVariantList list;
     foreach (AudioMetaObject o, m_dataList) {
-        qDebug()<<Q_FUNC_INFO<<">>>>>>>>>>>>> append "<<o.toMap ();
+//        qDebug()<<Q_FUNC_INFO<<">>>>>>>>>>>>> append "<<o.toMap ();
         list.append (o.toMap ());
     }
     QList<QSPatch> patches = runner.compare (this->storage (), list);
