@@ -32,16 +32,26 @@ AudioGroupDelegate::~AudioGroupDelegate()
 void AudioGroupDelegate::showArtistList()
 {
     qDebug()<<">>>>>>>>>>>>>>> "<<Q_FUNC_INFO<<" <<<<<<<<<<<";
-
+m_dataList.clear ();
+sync ();
     m_dataList = m_libraryMgr->artistList ();
+//    foreach (AudioMetaGroupObject o, m_dataList) {
+//        qDebug()<<Q_FUNC_INFO<<"== hash "<<o.hash ();
+
+//    }
     sync ();
 }
 
 void AudioGroupDelegate::showAlbumList()
 {
     qDebug()<<">>>>>>>>>>>>>>> "<<Q_FUNC_INFO<<" <<<<<<<<<<<";
-
+m_dataList.clear ();
+sync ();
     m_dataList = m_libraryMgr->albumList ();
+//    foreach (AudioMetaGroupObject o, m_dataList) {
+//        qDebug()<<Q_FUNC_INFO<<"== hash "<<o.hash ();
+
+//    }
     sync ();
 }
 
@@ -49,7 +59,13 @@ void AudioGroupDelegate::showGenresList()
 {
     qDebug()<<">>>>>>>>>>>>>>> "<<Q_FUNC_INFO<<" <<<<<<<<<<<";
 
+    m_dataList.clear ();
+    sync ();
     m_dataList = m_libraryMgr->genreList ();
+//    foreach (AudioMetaGroupObject o, m_dataList) {
+//        qDebug()<<Q_FUNC_INFO<<"== hash "<<o.hash ();
+
+//    }
     sync ();
 }
 
@@ -85,6 +101,21 @@ void AudioGroupDelegate::showAudioList(const QString &hash)
 QObject *AudioGroupDelegate::audioMetaListModel() const
 {
     return m_audioMetaListModel;
+}
+
+QString AudioGroupDelegate::keyName() const
+{
+    return AudioMetaGroupObject::keyName ();
+}
+
+QString AudioGroupDelegate::keyHash() const
+{
+    return AudioMetaGroupObject::keyHash ();
+}
+
+QString AudioGroupDelegate::keyImgUri() const
+{
+    return AudioMetaGroupObject::keyImgUri ();
 }
 
 void AudioGroupDelegate::sync()

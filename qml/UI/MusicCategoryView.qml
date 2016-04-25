@@ -65,16 +65,18 @@ Item {
                     id: card
                     width: Const.cardSize
                     height: column.height
-                    property string hash: AppUtility.groupObjectToHash(LocalMusicStore.model.get(index))
+                    property var object: LocalMusicStore.model.get(index)
+                    property string hash: object[LocalMusicStore.groupKeyHash]//AppUtility.groupObjectToHash(LocalMusicStore.model.get(index))
                     property string pColor
                     property string dColor
                     property string textColor
                     property string subTextColor
-                    property var imgUri: AppUtility.groupObjectToImgUri(LocalMusicStore.model.get(index))
+                    property var imgUri: object[LocalMusicStore.groupKeyImgUri]//AppUtility.groupObjectToImgUri(LocalMusicStore.model.get(index))
                     property bool uriEmpty: imgUri == "" || imgUri == undefined
-                    property var name: AppUtility.groupObjectToName(LocalMusicStore.model.get(index))
+                    property var name: object[LocalMusicStore.groupKeyName]//AppUtility.groupObjectToName(LocalMusicStore.model.get(index))
                     property bool nameEmpty: name == "" || name == undefined
                     Component.onCompleted: {
+                        console.log("===== categoryPage Card index "+index + " hash "+hash)
                         random.generate();
                         pColor = random.primaryLightColor;
                         dColor = random.primaryDarkColor;
@@ -195,10 +197,10 @@ Item {
                     model: LocalMusicStore.model.audioMetaListModel
                     delegate: MusicListItem {
                         property var object: LocalMusicStore.model.audioMetaListModel.get(index)
-                        property var trackMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, object)
-                        property var coverMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, object)
-                        property var artistMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object)
-                        property var albumMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object)
+                        property var trackMeta: object[metaKey.KeyTrackMeta]//AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, object)
+                        property var coverMeta: object[metaKey.KeyCoverMeta]//AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, object)
+                        property var artistMeta: object[metaKey.KeyArtistMeta]//AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object)
+                        property var albumMeta: object[metaKey.KeyAlbumMeta]//AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object)
                         property string pColor
                         property string title: ""
                         property string imgUri: ""
@@ -207,9 +209,9 @@ Item {
                         coverColor: pColor
                         coverImage: imgUri
                         Component.onCompleted: {
-                            title = AppUtility.pareseAudioMetaObject(metaKey.KeyTitle, trackMeta);
+                            title = trackMeta[metaKey.KeyTitle]//AppUtility.pareseAudioMetaObject(metaKey.KeyTitle, trackMeta);
                             if (title == undefined || title == "") {
-                                title = AppUtility.pareseAudioMetaObject(metaKey.KeyName, object);
+                                title = object[metaKey.KeyName]//AppUtility.pareseAudioMetaObject(metaKey.KeyName, object);
                             }
                             if (title == undefined || title == "") {
                                 title = qsTr("UnKnown");
@@ -217,15 +219,15 @@ Item {
                             }
                             random.generate();
                             pColor = random.primaryDarkColor;
-                            var t = AppUtility.pareseAudioMetaObject(metaKey.KeyMiddleImg, coverMeta);
+                            var t = coverMeta[metaKey.KeyMiddleImg]//AppUtility.pareseAudioMetaObject(metaKey.KeyMiddleImg, coverMeta);
                             if (t == undefined || t == "")
-                                t = AppUtility.pareseAudioMetaObject(metaKey.KeyLargeImg, coverMeta);
+                                t = coverMeta[metaKey.KeyLargeImg]//AppUtility.pareseAudioMetaObject(metaKey.KeyLargeImg, coverMeta);
                             if (t == undefined || t == "")
-                                t = AppUtility.pareseAudioMetaObject(metaKey.KeySmallImg, coverMeta);
+                                t = coverMeta[metaKey.KeySmallImg]//AppUtility.pareseAudioMetaObject(metaKey.KeySmallImg, coverMeta);
                             if (t == undefined || t == "")
-                                t = AppUtility.pareseAudioMetaObject(metaKey.keyUri, artistMeta);
+                                t = artistMeta[metaKey.keyUri]//AppUtility.pareseAudioMetaObject(metaKey.keyUri, artistMeta);
                             if (t == undefined || t == "")
-                                t = AppUtility.pareseAudioMetaObject(metaKey.keyUri, albumMeta);
+                                t = albumMeta[metaKey.keyUri]//AppUtility.pareseAudioMetaObject(metaKey.keyUri, albumMeta);
                             imgUri = t;
                         }
                     }

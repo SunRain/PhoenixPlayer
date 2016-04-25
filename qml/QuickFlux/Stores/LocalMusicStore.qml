@@ -13,6 +13,10 @@ AppListener {
     property var model: groupDelegate
     property string sourceUri: Qt.resolvedUrl("../../UI/MusicCategoryView.qml")
 
+    readonly property string groupKeyName: groupDelegate.keyName
+    readonly property string groupKeyHash: groupDelegate.keyHash
+    readonly property string groupKeyImgUri: groupDelegate.keyImgUri
+
     AllMusicDelegate {
         id: allMusicDelegate
     }
@@ -73,6 +77,12 @@ AppListener {
         onDispatched: {
             console.log("==== localMusicStore showAllMusic")
             inner.curViewType = inner.view_all_music;
+        }
+    }
+    Filter {
+        type: ActionTypes.localMusicScannerFinish
+        onDispatched: {
+            allMusicDelegate.refresh();
         }
     }
 }

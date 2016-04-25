@@ -115,7 +115,7 @@ Sidebar {
                 property var artistMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object)
                 property var albumMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object)
 
-                property var title: "UnKnown"
+                property string title: "UnKnown"
                 width: parent.width
                 text: title
                 Component.onCompleted: {

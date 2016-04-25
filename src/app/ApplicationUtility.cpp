@@ -120,6 +120,13 @@ QJSValue ApplicationUtility::pareseAudioMetaObject(const QString &key, const QJS
         return v;
 }
 
+//QJSValue ApplicationUtility::objectToMap(const QJSValue &data)
+//{
+//    if (!data.isObject ())
+//        return QJSValue();
+//    return data.toVariant ();
+//}
+
 
 
 

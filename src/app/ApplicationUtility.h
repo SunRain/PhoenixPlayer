@@ -65,6 +65,13 @@ public:
     ///
     Q_INVOKABLE QJSValue pareseAudioMetaObject(const QString &key, const QJSValue &data);
 
+//    ///
+//    /// \brief objectToMap parse audioMetaObject to QVariantMap
+//    /// \param data
+//    /// \return
+//    ///
+//    Q_INVOKABLE QJSValue objectToMap(const QJSValue &data);
+
 
 };
 

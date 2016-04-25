@@ -15,6 +15,9 @@ class AudioGroupDelegate : public QSListModel
 {
     Q_OBJECT
     Q_PROPERTY(QObject* audioMetaListModel READ audioMetaListModel CONSTANT)
+    Q_PROPERTY(QString keyName READ keyName CONSTANT)
+    Q_PROPERTY(QString keyHash READ keyHash CONSTANT)
+    Q_PROPERTY(QString keyImgUri READ keyImgUri CONSTANT)
 public:
     explicit AudioGroupDelegate(QObject *parent = 0);
     virtual ~AudioGroupDelegate();
@@ -32,9 +35,14 @@ public:
 
     QObject* audioMetaListModel() const;
 
+    QString keyName() const;
+    QString keyHash() const;
+    QString keyImgUri() const;
+
 private:
     void sync();
     void syncAudioList();
+
 private:
     PhoenixPlayer::MusicLibrary::MusicLibraryManager *m_libraryMgr;
     QSListModel *m_audioMetaListModel;

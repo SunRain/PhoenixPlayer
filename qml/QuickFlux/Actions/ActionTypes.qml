@@ -8,9 +8,7 @@ KeyTable {
     property string selectMusicScannerDirs
     property string showProgress
     property string hideProgress
-
-//    property string toMusicCategoryPage
-//    property string toAllMusicPage
+    property string localMusicScannerFinish
 
     property string showAlbumCategory
     property string showArtistCategory

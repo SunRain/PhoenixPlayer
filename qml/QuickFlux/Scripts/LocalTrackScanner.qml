@@ -5,6 +5,7 @@ import QtQuick.Dialogs 1.2
 import com.sunrain.phoenixplayer.qmlplugin 1.0
 
 import "../Actions"
+import "../Stores"
 
 Item {
     id: localScanner
@@ -33,6 +34,7 @@ Item {
             }).then(localMusicScanner.onSearchingFinished, function() {
                 console.log("========= localMusicScanner.onSearchingFinished")
                 AppActions.hideProgress();
+                AppActions.notifyLocalMusicScannerFinish();
             })
 
             once(dialog.onRejected, exit.bind(this,0));
