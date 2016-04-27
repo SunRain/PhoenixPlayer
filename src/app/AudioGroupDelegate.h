@@ -14,7 +14,8 @@ namespace PhoenixPlayer {
 class AudioGroupDelegate : public QSListModel
 {
     Q_OBJECT
-    Q_PROPERTY(QObject* audioMetaListModel READ audioMetaListModel CONSTANT)
+//    Q_PROPERTY(QObject* audioMetaListModel READ audioMetaListModel CONSTANT)
+    Q_PROPERTY(QVariantList audioMetaList READ audioMetaList NOTIFY audioMetaListChanged)
     Q_PROPERTY(QString keyName READ keyName CONSTANT)
     Q_PROPERTY(QString keyHash READ keyHash CONSTANT)
     Q_PROPERTY(QString keyImgUri READ keyImgUri CONSTANT)
@@ -38,6 +39,10 @@ public:
     QString keyName() const;
     QString keyHash() const;
     QString keyImgUri() const;
+    QVariantList audioMetaList() const;
+
+signals:
+    void audioMetaListChanged(QVariantList audioMetaList);
 
 private:
     void sync();

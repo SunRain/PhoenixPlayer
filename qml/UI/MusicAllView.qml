@@ -19,9 +19,9 @@ Item {
     width: parent ? parent.width : Units.dp(1440)
     height: parent ? parent.height : Units.dp(900)
 
-//    AudioMetaObjectKeyName {
-//        id: metaKey
-//    }
+    AudioMetaObjectKeyName {
+        id: metaKey
+    }
     RandomColor {
         id: random
     }
@@ -45,50 +45,44 @@ Item {
         delegate: MusicListItem {
             id: musicItem
             width: parent.width
-            AudioMetaObjectParser {
-                id: parser
-                audioObject: LocalMusicStore.model.get(index)
-            }
-//            property var object: LocalMusicStore.model.get(index)
-//            property var trackMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, object)
-//            property var coverMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, object)
-//            property var artistMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object)
-//            property var albumMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object)
-
+            property var object: LocalMusicStore.model.get(index)
+            property var trackMeta: object[metaKey.KeyTrackMeta]
+            property var coverMeta: object[metaKey.KeyCoverMeta]
+            property var artistMeta: object[metaKey.KeyArtistMeta]
+            property var albumMeta: object[metaKey.KeyAlbumMeta]
             property string pColor
-            property string title: parser.trackTitle
-            property string imgUri: parser.coverImage
+            property string title: null
+            property string imgUri: null
             trackTitle: title
-//            trackChar: "?"
+            trackChar: "?"
             coverColor: pColor
             coverImage: imgUri
             Component.onCompleted: {
-//                parser.audioObject = LocalMusicStore.model.get(index)
-//                title = AppUtility.pareseAudioMetaObject(metaKey.KeyTitle, trackMeta);
-//                if (title == undefined || title == "") {
-//                    title = AppUtility.pareseAudioMetaObject(metaKey.KeyName, object);
-//                }
-//                if (title == undefined || title == "") {
-//                    title = qsTr("UnKnown");
-//                    musicItem.trackChar = "?";
-//                }
+                title = trackMeta[metaKey.KeyTitle]
+                if (title == undefined || title == "") {
+                    title = object[metaKey.KeyName]
+                }
+                if (title == undefined || title == "") {
+                    title = qsTr("UnKnown");
+                    musicItem.trackChar = "?";
+                }
                 random.generate();
                 pColor = random.primaryDarkColor;
-//                var t = AppUtility.pareseAudioMetaObject(metaKey.KeyMiddleImg, coverMeta);
-//                if (t == undefined || t == "")
-//                    t = AppUtility.pareseAudioMetaObject(metaKey.KeyLargeImg, coverMeta);
-//                if (t == undefined || t == "")
-//                    t = AppUtility.pareseAudioMetaObject(metaKey.KeySmallImg, coverMeta);
-//                if (t == undefined || t == "")
-//                    t = AppUtility.pareseAudioMetaObject(metaKey.keyUri, artistMeta);
-//                if (t == undefined || t == "")
-//                    t = AppUtility.pareseAudioMetaObject(metaKey.keyUri, albumMeta);
-//                imgUri = t;
-                var hash = parser.hash//AppUtility.pareseAudioMetaObject(metaKey.KeyHash, object);
+                var t = coverMeta[metaKey.KeyMiddleImg]
+                if (t == undefined || t == "")
+                    t = coverMeta[metaKey.KeyLargeImg]
+                if (t == undefined || t == "")
+                    t = coverMeta[metaKey.KeySmallImg]
+                if (t == undefined || t == "")
+                    t = artistMeta[metaKey.keyUri]
+                if (t == undefined || t == "")
+                    t = albumMeta[metaKey.keyUri]
+                imgUri = t;
+                var hash = object[metaKey.KeyHash];
                 console.log("====== hash "+hash);
             }
             onClicked: {
-                var hash = parser.hash//AppUtility.pareseAudioMetaObject(metaKey.KeyHash, object);
+                var hash = object[metaKey.KeyHash];
                 Player.playFromLibrary(hash);
             }
         }

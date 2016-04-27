@@ -96,6 +96,7 @@ void AudioGroupDelegate::showAudioList(const QString &hash)
         }
     }
     syncAudioList ();
+//    emit audioMetaListChanged (m_audioMetaList);
 }
 
 QObject *AudioGroupDelegate::audioMetaListModel() const
@@ -116,6 +117,15 @@ QString AudioGroupDelegate::keyHash() const
 QString AudioGroupDelegate::keyImgUri() const
 {
     return AudioMetaGroupObject::keyImgUri ();
+}
+
+QVariantList AudioGroupDelegate::audioMetaList() const
+{
+    QVariantList list;
+    foreach (AudioMetaObject o, m_audioMetaList) {
+        list.append (o.toMap ());
+    }
+    return list;
 }
 
 void AudioGroupDelegate::sync()
@@ -144,6 +154,8 @@ void AudioGroupDelegate::syncAudioList()
     runner.patch (m_audioMetaListModel, patches);
 
     qDebug()<<Q_FUNC_INFO<<"m_audioMetaListModel Data size "<<m_audioMetaListModel->storage ().size ();
+
+     emit audioMetaListChanged (list);
 }
 
 

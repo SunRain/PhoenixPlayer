@@ -160,6 +160,7 @@ Item {
             color: inner.pColor
         }
         Flickable {
+            id: overlayFlickable
             anchors.fill: parent
             contentWidth: parent.width
             contentHeight: overlayBanner.height + overylayColumn.height
@@ -194,13 +195,13 @@ Item {
                 width: parent.width
                 anchors.top: overlayBanner.bottom
                 Repeater {
-                    model: LocalMusicStore.model.audioMetaListModel
+                    model: LocalMusicStore.model.audioMetaList
                     delegate: MusicListItem {
-                        property var object: LocalMusicStore.model.audioMetaListModel.get(index)
-                        property var trackMeta: object[metaKey.KeyTrackMeta]//AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, object)
-                        property var coverMeta: object[metaKey.KeyCoverMeta]//AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, object)
-                        property var artistMeta: object[metaKey.KeyArtistMeta]//AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object)
-                        property var albumMeta: object[metaKey.KeyAlbumMeta]//AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object)
+                        property var object: LocalMusicStore.model.audioMetaList[index]
+                        property var trackMeta: object[metaKey.KeyTrackMeta]
+                        property var coverMeta: object[metaKey.KeyCoverMeta]
+                        property var artistMeta: object[metaKey.KeyArtistMeta]
+                        property var albumMeta: object[metaKey.KeyAlbumMeta]
                         property string pColor
                         property string title: ""
                         property string imgUri: ""
@@ -209,9 +210,9 @@ Item {
                         coverColor: pColor
                         coverImage: imgUri
                         Component.onCompleted: {
-                            title = trackMeta[metaKey.KeyTitle]//AppUtility.pareseAudioMetaObject(metaKey.KeyTitle, trackMeta);
+                            title = trackMeta[metaKey.KeyTitle]
                             if (title == undefined || title == "") {
-                                title = object[metaKey.KeyName]//AppUtility.pareseAudioMetaObject(metaKey.KeyName, object);
+                                title = object[metaKey.KeyName]
                             }
                             if (title == undefined || title == "") {
                                 title = qsTr("UnKnown");
@@ -219,21 +220,24 @@ Item {
                             }
                             random.generate();
                             pColor = random.primaryDarkColor;
-                            var t = coverMeta[metaKey.KeyMiddleImg]//AppUtility.pareseAudioMetaObject(metaKey.KeyMiddleImg, coverMeta);
+                            var t = coverMeta[metaKey.KeyMiddleImg]
                             if (t == undefined || t == "")
-                                t = coverMeta[metaKey.KeyLargeImg]//AppUtility.pareseAudioMetaObject(metaKey.KeyLargeImg, coverMeta);
+                                t = coverMeta[metaKey.KeyLargeImg]
                             if (t == undefined || t == "")
-                                t = coverMeta[metaKey.KeySmallImg]//AppUtility.pareseAudioMetaObject(metaKey.KeySmallImg, coverMeta);
+                                t = coverMeta[metaKey.KeySmallImg]
                             if (t == undefined || t == "")
-                                t = artistMeta[metaKey.keyUri]//AppUtility.pareseAudioMetaObject(metaKey.keyUri, artistMeta);
+                                t = artistMeta[metaKey.keyUri]
                             if (t == undefined || t == "")
-                                t = albumMeta[metaKey.keyUri]//AppUtility.pareseAudioMetaObject(metaKey.keyUri, albumMeta);
+                                t = albumMeta[metaKey.keyUri]
                             imgUri = t;
                         }
                     }
                 }
 
             }
+        }
+        Scrollbar {
+            flickableItem: overlayFlickable
         }
     }
 }
