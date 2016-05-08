@@ -22,6 +22,7 @@
 #include "AudioMetaObject.h"
 #include "SingletonPointer.h"
 #include "Utility.h"
+#include "MediaResource.h"
 
 using namespace PhoenixPlayer;
 using namespace PhoenixPlayer::MusicLibrary;
@@ -45,24 +46,30 @@ int main(int argc, char *argv[])
 //    MusicLibraryManager *manager = MusicLibraryManager::instance ();
     VolumeControl *volume = new VolumeControl(loader);
 //    volume->setMuted (false);
-    volume->setVolume (50);
+    volume->setVolume (10);
 //    PlayerCore *musicPlayer = PlayerCore::instance ();
 //    Util *util = Util::instance ();
 //    MetadataLookupMgrWrapper *lookup = MetadataLookupMgrWrapper::instance ();
 
     BackendHost *h = loader->curBackendHost ();
     IPlayBackend *b = h->instance<IPlayBackend>();
-    b->init ();
+    b->initialize ();
     b->stop ();
-    BaseMediaObject obj;
-    obj.setFilePath (app.data ()->applicationDirPath ());
-    obj.setFileName ("test.mp3");
-    obj.setMediaType (Common::MediaTypeLocalFile);
-    b->changeMedia (&obj);
-    b->play ();
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
+    QString uri = QString("%1/test.mp3").arg (QDir::currentPath ());
+    MediaResource *res = MediaResource::create (uri);
+//    BaseMediaObject obj;
+//    obj.setFilePath (app.data ()->applicationDirPath ());
+//    obj.setFileName ("test.mp3");
+//    obj.setMediaType (Common::MediaTypeLocalFile);
+    b->changeMedia (res);
+//    b->play ();
+
+//    QQmlApplicationEngine engine;
+    QScopedPointer<QQmlApplicationEngine> engine(new QQmlApplicationEngine(app.data ()));
+    QQmlContext *ctx = engine.data ()->rootContext ();
+    ctx->setContextProperty ("Ctrl", b);
+    engine.data ()->load (QUrl(QStringLiteral("qrc:///main.qml")));
 
     return app.data ()->exec ();
 }

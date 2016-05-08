@@ -46,6 +46,7 @@ Item {
             id: musicItem
             width: parent.width
             property var object: LocalMusicStore.model.get(index)
+            property var hash: object[metaKey.KeyHash];
             property var trackMeta: object[metaKey.KeyTrackMeta]
             property var coverMeta: object[metaKey.KeyCoverMeta]
             property var artistMeta: object[metaKey.KeyArtistMeta]
@@ -57,6 +58,7 @@ Item {
             trackChar: "?"
             coverColor: pColor
             coverImage: imgUri
+            selected: PlayCtrlBarInfoStore.currentHash == hash
             Component.onCompleted: {
                 title = trackMeta[metaKey.KeyTitle]
                 if (title == undefined || title == "") {
@@ -78,11 +80,11 @@ Item {
                 if (t == undefined || t == "")
                     t = albumMeta[metaKey.keyUri]
                 imgUri = t;
-                var hash = object[metaKey.KeyHash];
+//                var hash = object[metaKey.KeyHash];
                 console.log("====== hash "+hash);
             }
             onClicked: {
-                var hash = object[metaKey.KeyHash];
+//                var hash = object[metaKey.KeyHash];
                 Player.playFromLibrary(hash);
             }
         }

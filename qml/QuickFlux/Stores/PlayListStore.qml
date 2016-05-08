@@ -10,6 +10,10 @@ AppListener {
 
     property var listModel: listDelegate
     property var currentIndex: listDelegate.listMgr.currentIndex
+    onCurrentIndexChanged: {
+        console.log(">>>>>>>>>>>>>>> playListStore currentIndex "+currentIndex)
+    }
+
     property int count: listDelegate.count
     property var playListNames: listDelegate.listMgr.existPlayLists
 

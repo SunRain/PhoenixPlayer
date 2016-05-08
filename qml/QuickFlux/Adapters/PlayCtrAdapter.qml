@@ -36,7 +36,7 @@ Item {
     }
 
     function adaptSkipBackward() {
-        console.log("=== adapter adaptSkipBackward uid "+inner.uid);
+//        console.log("=== adapter adaptSkipBackward uid "+inner.uid);
         AppDispatcher.dispatch(ActionTypes.adaptSkipBackward, {"uid":inner.uid});
     }
 

@@ -110,14 +110,15 @@ Sidebar {
             model: PlayListStore.listModel
             delegate: ListItem.Standard {
                 property var object: PlayListStore.listModel.get(index)
+                property var hash: object[metaKey.KeyHash];
                 property var trackMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, object)
                 property var coverMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, object)
                 property var artistMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object)
                 property var albumMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object)
-
                 property string title: "UnKnown"
                 width: parent.width
                 text: title
+                selected: PlayCtrlBarInfoStore.currentHash == hash && index == PlayListStore.currentIndex
                 Component.onCompleted: {
                     title = AppUtility.pareseAudioMetaObject(metaKey.KeyTitle, trackMeta);
                     if (title == undefined || title == "") {
@@ -127,6 +128,9 @@ Sidebar {
                         title = qsTr("UnKnown");
 //                        musicItem.trackChar = "?";
                     }
+                }
+                onClicked: {
+                    Player.playFromLibrary(hash);
                 }
             }
         }

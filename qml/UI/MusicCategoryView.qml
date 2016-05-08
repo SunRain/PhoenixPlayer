@@ -198,6 +198,7 @@ Item {
                     model: LocalMusicStore.model.audioMetaList
                     delegate: MusicListItem {
                         property var object: LocalMusicStore.model.audioMetaList[index]
+                        property var hash: object[metaKey.KeyHash];
                         property var trackMeta: object[metaKey.KeyTrackMeta]
                         property var coverMeta: object[metaKey.KeyCoverMeta]
                         property var artistMeta: object[metaKey.KeyArtistMeta]
@@ -209,6 +210,10 @@ Item {
                         trackChar: "?"
                         coverColor: pColor
                         coverImage: imgUri
+                        selected: PlayCtrlBarInfoStore.currentHash == hash
+                        onClicked: {
+                            Player.playFromLibrary(hash)
+                        }
                         Component.onCompleted: {
                             title = trackMeta[metaKey.KeyTitle]
                             if (title == undefined || title == "") {
@@ -233,7 +238,6 @@ Item {
                         }
                     }
                 }
-
             }
         }
         Scrollbar {

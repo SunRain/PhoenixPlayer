@@ -23,26 +23,26 @@ View {
 //    property var _album: playerController.trackAlbum()
 //    property var _artist: playerController.trackArtist()
 
-    Connections {
-        target: playerController
-        onTrackChanged: {
-            _durationValue = playerController.getTrackLength();
-            _title = playerController.trackTitle()
-            _album = playerController.trackAlbum()
-            _artist = playerController.trackArtist()
-        }
-        onPlayTickChanged: {
-//            if (!_sliderPressed) {
-//                slider.value = playerController.playTickActualSec();//sec;
-//                playedTime.text = util.formateSongDuration(playerController.playTickActualSec());
-//            }
-            console.log(" onPlayTickChanged playedSec " + playerController.playTickActualSec());
-            slider.playedSec = playerController.playTickActualSec();
-        }
-        onPlayBackendStateChanged: {
-            _isPlaying = playerController.isPlaying();
-        }
-    }
+//    Connections {
+//        target: playerController
+//        onTrackChanged: {
+//            _durationValue = playerController.getTrackLength();
+//            _title = playerController.trackTitle()
+//            _album = playerController.trackAlbum()
+//            _artist = playerController.trackArtist()
+//        }
+//        onPlayTickChanged: {
+////            if (!_sliderPressed) {
+////                slider.value = playerController.playTickActualSec();//sec;
+////                playedTime.text = util.formateSongDuration(playerController.playTickActualSec());
+////            }
+//            console.log(" onPlayTickChanged playedSec " + playerController.playTickActualSec());
+//            slider.playedSec = playerController.playTickActualSec();
+//        }
+//        onPlayBackendStateChanged: {
+//            _isPlaying = playerController.isPlaying();
+//        }
+//    }
 
     Image {
         id: trackImage
@@ -51,7 +51,7 @@ View {
         height: parent.height
         width: height
         fillMode: Image.PreserveAspectFit
-        source: "qrc:///default_disc_240.png"
+        source: PlayCtrlBarInfoStore.coverUri//"qrc:///default_disc_240.png"
     }
 
     Row {
@@ -111,14 +111,15 @@ View {
         onPlayJumpTo: {
             //newSec
             console.log("********* onPlayJumpTo "+ newSec);
-            musicPlayer.setPosition(newSec, false);
+//            musicPlayer.setPosition(newSec, false);
+            Player.setPosition(newSec, false)
         }
 
-        playedSec: 0;
+        playedSec: PlayCtrlBarInfoStore.tickInSeconds
         trackTitle: PlayCtrlBarInfoStore.title//musicPlayer.playList.currentTrack.trackMeta.title
         trackArtist: PlayCtrlBarInfoStore.artist//usicPlayer.playList.currentTrack.artistMeta.name
-        durationInfo: util.formateSongDuration(_durationValue)//musicPlayer.playList.currentTrack.trackMeta.duration
-        durationSec: _durationValue
+        durationInfo: util.formateSongDuration(PlayCtrlBarInfoStore.tickInSeconds)+"/"+util.formateSongDuration(PlayCtrlBarInfoStore.durationInSeconds)//musicPlayer.playList.currentTrack.trackMeta.duration
+        durationSec: PlayCtrlBarInfoStore.durationInSeconds//_durationValue
     }
     Row {
         id: menuRow
