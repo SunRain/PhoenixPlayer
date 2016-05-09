@@ -18,6 +18,8 @@ ActionCreator {
     signal showGenresCategory();
     signal showAllMusic();
 
+    signal changePlayMode();
+
     function togglePlayPause() {
         Player.togglePlayPause();
     }

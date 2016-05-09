@@ -32,4 +32,6 @@ KeyTable {
 
     property string adaptSkipForward
     property string doSkipForward
+
+    property string changePlayMode
 }

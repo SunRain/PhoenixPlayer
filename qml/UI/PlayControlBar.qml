@@ -160,9 +160,14 @@ View {
             id: repeat
             anchors.verticalCenter: parent.verticalCenter
             size: parent.height / 2
-            action: Action {
-                iconName: "av/repeat"
-                name: "repeat control"
+            iconName: PlayCtrlBarInfoStore.repeatIconName//"av/repeat"
+//            action: Action {
+//                iconName: PlayCtrlBarInfoStore.repeatIconName//"av/repeat"
+//                name: "repeat control"
+//            }
+            color: PlayCtrlBarInfoStore.repeatIconHightlight ? Theme.light.iconColor : Theme.light.hintColor
+            onClicked: {
+                AppActions.changePlayMode();
             }
         }
     }
