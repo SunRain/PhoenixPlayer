@@ -7,8 +7,8 @@ import ".."
 Column {
     id: playControlSilder
 
-    width: parent ? parent.width : Units.dp(700)
-//    spacing: Units.dp(6)
+    width: parent ? parent.width : dp(700)
+//    spacing: dp(6)
 
     property string trackTitle: qsTr("UnKnow")
     property string trackArtist: qsTr("UnKnow")
@@ -25,11 +25,11 @@ Column {
     }
 
     Item {
-        width: parent.width - Units.dp(100)
+        width: parent.width - dp(100)
         height: title.height * 2
         anchors {
             left: parent.left
-            leftMargin: Units.dp(50)
+            leftMargin: dp(50)
         }
 
         Label {
@@ -46,11 +46,11 @@ Column {
             id: artist
             anchors {
                 left: title.right
-                leftMargin: Units.dp(Const.tinySpace)
+                leftMargin: dp(Const.tinySpace)
 //                top: parent.top
                 verticalCenter: parent.verticalCenter
                 right: durationInfo.left
-                rightMargin: Units.dp(Const.tinySpace)
+                rightMargin: dp(Const.tinySpace)
             }
             style: "subheading"
             text: " "+qsTr("-")+" "+trackArtist
@@ -73,12 +73,12 @@ Column {
         height: slider.height
         Slider {
             id: slider
-            width: parent.width - Units.dp(50)
+            width: parent.width - dp(50)
             anchors{
-//                verticalCenterOffset: - Units.dp(Const.tinySpace)
+//                verticalCenterOffset: - dp(Const.tinySpace)
                 top: parent.top
-                //(Units.dp(54) - Units.dp(32))/2  from material style
-                topMargin: -Units.dp(11)
+                //(dp(54) - dp(32))/2  from material style
+                topMargin: -dp(11)
                 horizontalCenter: parent.horizontalCenter
             }
             value: 0
@@ -87,7 +87,7 @@ Column {
             maximumValue: 100
             numericValueLabel: true
             knobLabel: util.formateSongDuration(slider.value)//"aa:bb" //"bb:b " + value
-            knobDiameter: Units.dp(42)
+            knobDiameter: dp(42)
 
             property int jumpValue: 0
 

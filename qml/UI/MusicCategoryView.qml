@@ -16,8 +16,8 @@ import "../"
 
 Item {
     id: categoryPage
-    width: parent ? parent.width : Units.dp(1440)
-    height: parent ? parent.height : Units.dp(900)
+    width: parent ? parent.width : dp(1440)
+    height: parent ? parent.height : dp(900)
 
     property int modelcount: LocalMusicStore.model.count
     property int gridColumns: width > Const.cardSize ? width/Const.cardSize : 1

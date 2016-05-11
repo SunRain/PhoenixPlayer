@@ -76,7 +76,7 @@ View {
         }
     }
 
-    width: units.dp(250)
+    width: dp(250)
 
 
     anchors.leftMargin: expanded ? 0 : -width
@@ -100,7 +100,7 @@ View {
         height: childrenRect.height
         anchors {
             top: parent.top
-            topMargin: units.dp(10)
+            topMargin: dp(10)
             horizontalCenter: parent.horizontalCenter
         }
     }
@@ -112,11 +112,11 @@ View {
 
         anchors {
             top: topLoader.bottom //headerItem.visible ? headerItem.bottom : parent.top
-            topMargin: units.dp(10)
+            topMargin: dp(10)
             left: parent.left
             right: parent.right
             bottom: bottomLoader.top //parent.bottom
-            bottomMargin: units.dp(10)
+            bottomMargin: dp(10)
             rightMargin: mode === "left" ? 1 : 0
             leftMargin: mode === "right" ? 1 : 0
         }
@@ -153,7 +153,7 @@ View {
         height: childrenRect.height
         anchors {
             bottom: parent.bottom
-            bottomMargin: units.dp(10)
+            bottomMargin: dp(10)
             horizontalCenter: parent.horizontalCenter
         }
     }

@@ -5,7 +5,7 @@ import Material.ListItems 0.1 as ListItem
 import "../"
 ListItem.BaseListItem {
     id: musicListItem
-    width: parent ? parent.width : Units.dp(1440)
+    width: parent ? parent.width : dp(1440)
     height: Const.itemHeight
 
     property alias coverColor: cover.color
@@ -62,7 +62,7 @@ ListItem.BaseListItem {
         anchors.right: ctrl.left
         anchors.rightMargin: Const.tinySpace
         anchors.verticalCenter: parent.verticalCenter
-        spacing: Units.dp(3)
+        spacing: dp(3)
         Label {
             elide: Text.ElideRight
             style: "subheading"

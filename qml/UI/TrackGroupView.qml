@@ -16,8 +16,8 @@ GridView {
         console.log("change page type to "+ pageType)
     }
 
-    width: parent ? parent.width : Units.dp(1280)
-    height: parent ? parent.height : Units.dp(800)
+    width: parent ? parent.width : dp(1280)
+    height: parent ? parent.height : dp(800)
     clip: true
     cellWidth: trackGroupView.width / 6
     cellHeight: trackGroupView.height/ 4
@@ -55,10 +55,10 @@ GridView {
 
 //            Image {
 //                id: cover
-//                width: parent.width - Units.dp(6)
+//                width: parent.width - dp(6)
 //                height: width
-//                x: Units.dp(3)
-//                y: Units.dp(3)
+//                x: dp(3)
+//                y: dp(3)
 //                source: model.imageUri //appUtil.adjustCoverUri(model.imageUri, "images/cover-big.png", true);
 //            }
             Label {

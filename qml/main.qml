@@ -16,8 +16,8 @@ RootWindow {
     title: qsTr("Phoenix Player")
 //    flags: Qt.FramelessWindowHint
 
-    width: Units.dp(1440)
-    height: Units.dp(900)
+    width: dp(1440)
+    height: dp(900)
 
     id: demo
 
@@ -40,7 +40,7 @@ RootWindow {
         indeterminate: false
         width: Math.min(parent.width/10, parent.height/10)
         height: width
-        dashThickness: Units.dp(8)
+        dashThickness: dp(8)
     }
 
     PlayerController {

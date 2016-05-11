@@ -10,7 +10,7 @@ Column {
     id: mainVerticalNavigation
     width: parent.width
     clip: true
-    spacing: Units.dp(2)
+    spacing: dp(2)
 //    property bool selected: value
 //    property color tintColor: value
     property int selectedIndex: 0
@@ -63,7 +63,7 @@ Column {
             IconButton {
                 id: button
                 anchors.centerIn: parent
-                size: parent.width *0.8 //Units.dp(48)
+                size: parent.width *0.8 //dp(48)
                 action: Action {
                     iconName: model.icon
                     name: model.name

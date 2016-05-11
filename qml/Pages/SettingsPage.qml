@@ -27,7 +27,7 @@ Page {
         Column {
             id: column
             width: parent.width
-            spacing: Units.dp(5)
+            spacing: dp(5)
 
 
             ListItem.SectionHeader {
@@ -47,11 +47,11 @@ Page {
                 anchors {
                     left: parent.left
                     right: parent.right
-                    margins: Units.dp(16)
+                    margins: dp(16)
                 }
 
                 visible: header.expanded
-                spacing: Units.dp(10)
+                spacing: dp(10)
                 Button {
                     text: qsTr("Refresh")
                     onClicked:  {

@@ -11,8 +11,8 @@ import "../"
 
 View {
     id: playControlBar
-    width: parent ? parent.width : Units.dp(700)
-    height: slider.height//parent ? parent.height : Units.dp(120)
+    width: parent ? parent.width : dp(700)
+    height: slider.height//parent ? parent.height : dp(120)
 
     elevation: 2
     elevationInverted: true
@@ -47,7 +47,7 @@ View {
     Image {
         id: trackImage
         anchors.left: parent.left
-        anchors.leftMargin: Units.dp(2)
+        anchors.leftMargin: dp(2)
         height: parent.height
         width: height
         fillMode: Image.PreserveAspectFit
@@ -58,7 +58,7 @@ View {
         id: toggleRow
         anchors.left: trackImage.right
         height: parent.height
-        spacing: Units.dp(2)
+        spacing: dp(2)
 
         IconButton {
             id: skipBack
@@ -102,11 +102,11 @@ View {
         id: slider
         anchors {
             left: toggleRow.right
-            leftMargin: Units.dp(2)
+            leftMargin: dp(2)
 //            top: parent.top
 //            bottom: parent.bottom
             right: menuRow.left
-            rightMargin: Units.dp(2)
+            rightMargin: dp(2)
         }
         onPlayJumpTo: {
             //newSec
@@ -125,10 +125,10 @@ View {
         id: menuRow
         anchors {
             right: parent.right
-            rightMargin: Units.dp(2)
+            rightMargin: dp(2)
         }
         height: parent.height
-        spacing: Units.dp(6)
+        spacing: dp(6)
         IconButton {
             id: queue
             anchors.verticalCenter: parent.verticalCenter
