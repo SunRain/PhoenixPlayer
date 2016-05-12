@@ -29,9 +29,9 @@ Controls.Button {
         background: View {
             id: background
 
-            implicitHeight: units.dp(36)
+            implicitHeight: dp(36)
 
-            radius: units.dp(2)
+            radius: dp(2)
 
             property int controlElevation: control.hasOwnProperty("elevation") ? control.elevation : 1
 
@@ -69,7 +69,7 @@ Controls.Button {
 
                 anchors.fill: parent
                 focused: control.focus
-                focusWidth: parent.width - units.dp(30)
+                focusWidth: parent.width - dp(30)
                 focusColor: Qt.darker(background.backgroundColor, 1.05)
 
                 Connections {
@@ -81,10 +81,10 @@ Controls.Button {
             }
         }
         label: Item {
-            implicitHeight: Math.max(units.dp(36), label.height + units.dp(16))
+            implicitHeight: Math.max(dp(36), label.height + dp(16))
             implicitWidth: control.hasOwnProperty("parent")
                            ? control.parent.width
-                           : Math.max(units.dp(88), label.width + units.dp(32))
+                           : Math.max(dp(88), label.width + dp(32))
 
             Item {
                 id: label
@@ -92,7 +92,7 @@ Controls.Button {
                     left: parent.left
                     top: parent.top
                 }
-                width: icon.width + label2.width + units.dp(16)
+                width: icon.width + label2.width + dp(16)
                 height: Math.max(icon.height, label2.height)
 
                 Image {
@@ -111,7 +111,7 @@ Controls.Button {
                     id: label2
                     anchors {
                         left: icon.right
-                        leftMargin: units.dp(16)
+                        leftMargin: dp(16)
                         verticalCenter: icon.verticalCenter
                     }
                     text: control.text
