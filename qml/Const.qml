@@ -6,7 +6,8 @@ import Material 0.3
 
 QtObject {
     id: constValue
-
+    readonly property int screenWidth: Units.dp * 1440
+    readonly property int screenHeight: Units.dp * 900
     readonly property real leftEdgeMargins: Units.dp * 24
     readonly property real itemHeight: Units.dp * 64
     readonly property real subHeaderHeight: Units.dp * 48

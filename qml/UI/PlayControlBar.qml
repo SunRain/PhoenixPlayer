@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import Material 0.2
+import Material 0.3
 import Material.ListItems 0.1 as ListItem
 import com.sunrain.phoenixplayer.qmlplugin 1.0
 
@@ -136,6 +136,9 @@ View {
             action: Action {
                 iconName: "av/queue_music"
                 name: "play queue"
+                onTriggered: {
+                    queueSheet.open();
+                }
             }
         }
         IconButton {
@@ -170,5 +173,13 @@ View {
                 AppActions.changePlayMode();
             }
         }
+    }
+
+    PlayQueue {
+        id: queueSheet
+        width: parent.width * 0.6
+        anchors.right: parent.right
+        height: Const.screenHeight * 0.4
+
     }
 }

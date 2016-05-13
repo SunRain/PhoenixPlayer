@@ -1,6 +1,6 @@
 import QtQuick 2.2
 import QuickFlux 1.0
-import Material 0.2
+import Material 0.3
 import Material.ListItems 0.1 as ListItem
 import QtQuick.Controls 1.3 as Controls
 import QtQuick.Controls.Styles 1.3 as Styles

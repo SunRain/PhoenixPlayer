@@ -37,5 +37,6 @@
         <file>LocalPlayCtrl.qml</file>
         <file>QuickFlux/Stores/PlayListStore.qml</file>
         <file>Component/AudioMetaObjectParser.qml</file>
+        <file>UI/PlayQueue.qml</file>
     </qresource>
 </RCC>
