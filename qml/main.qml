@@ -1,6 +1,6 @@
 import QtQuick 2.2
 import QuickFlux 1.0
-import Material 0.2
+import Material 0.3
 import Material.ListItems 0.1 as ListItem
 import com.sunrain.phoenixplayer.qmlplugin 1.0
 
@@ -10,14 +10,15 @@ import "UI"
 import "Pages"
 import "QuickFlux/Actions"
 import "QuickFlux/Scripts"
+import "."
 
-RootWindow {
+/*RootWindow*/ApplicationWindow {
     visible: true
     title: qsTr("Phoenix Player")
 //    flags: Qt.FramelessWindowHint
 
-    width: dp(1440)
-    height: dp(900)
+    width: Const.screenWidth
+    height: Const.screenHeight
 
     id: demo
 
@@ -30,8 +31,8 @@ RootWindow {
 
     initialPage: LocalMusicViewPage{}
 
-    bottomBar: PlayControlBar {
-    }
+//    bottomBar: PlayControlBar {
+//    }
 
     ProgressCircle {
         id: progressCircle
@@ -43,9 +44,9 @@ RootWindow {
         dashThickness: dp(8)
     }
 
-    PlayerController {
-        id: playerController
-    }
+//    PlayerController {
+//        id: playerController
+//    }
 
     LocalTrackScanner {
         id: scanner
