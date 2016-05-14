@@ -80,9 +80,9 @@ AppListener {
             }
         }
     }
-    AudioMetaObjectKeyName {
-        id: metaKey
-    }
+//    AudioMetaObjectKeyName {
+//        id: MetaKey
+//    }
 
     Connections {
         target: Player
@@ -90,9 +90,9 @@ AppListener {
             inner.playBackendState = state;
         }
         onTrackChanged: { //currentTrack
-            var trackMeta = currentTrack[metaKey.KeyTrackMeta]
-            durationInSeconds = trackMeta[metaKey.KeyDuration];
-            currentHash = currentTrack[metaKey.KeyHash];
+            var trackMeta = currentTrack[MetaKey.KeyTrackMeta]
+            durationInSeconds = trackMeta[MetaKey.KeyDuration];
+            currentHash = currentTrack[MetaKey.KeyHash];
             PlayCtrAdapter.adaptCtrlBarAlbumName();
             PlayCtrAdapter.adaptCtrlBarArtistName();
             PlayCtrAdapter.adaptCtrlBarCover();

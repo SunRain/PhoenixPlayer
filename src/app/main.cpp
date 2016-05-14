@@ -109,7 +109,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<PlayListDelegate>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "PlayListDelegate");
 
 
-    qmlRegisterType<AudioMetaObjectKeyName>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AudioMetaObjectKeyName");
+//    qmlRegisterType<AudioMetaObjectKeyName>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AudioMetaObjectKeyName");
+    qmlRegisterUncreatableType<AudioMetaObjectKeyName>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "MetaKey", QStringLiteral("MetaKey can't creatable."));
 
     QScopedPointer<ApplicationUtility> appUtility(new ApplicationUtility());
     QScopedPointer<QQmlApplicationEngine> engine(new QQmlApplicationEngine(app.data ()));

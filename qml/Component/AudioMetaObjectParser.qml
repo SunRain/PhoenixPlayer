@@ -16,34 +16,34 @@ QObject {
     property var coverImage: null
     property string hash: ""
 
-    AudioMetaObjectKeyName {
-        id: metaKey
-    }
+//    AudioMetaObjectKeyName {
+//        id: MetaKey
+//    }
 
     function parser() {
-        trackMeta = AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, audioObject)
-        coverMeta = AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, audioObject)
-        artistMeta = AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, audioObject)
-        albumMeta = AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, audioObject)
-        var title = AppUtility.pareseAudioMetaObject(metaKey.KeyTitle, trackMeta);
+        trackMeta = AppUtility.pareseAudioMetaObject(MetaKey.KeyTrackMeta, audioObject)
+        coverMeta = AppUtility.pareseAudioMetaObject(MetaKey.KeyCoverMeta, audioObject)
+        artistMeta = AppUtility.pareseAudioMetaObject(MetaKey.KeyArtistMeta, audioObject)
+        albumMeta = AppUtility.pareseAudioMetaObject(MetaKey.KeyAlbumMeta, audioObject)
+        var title = AppUtility.pareseAudioMetaObject(MetaKey.KeyTitle, trackMeta);
         if (title == undefined || title == "") {
-            title = AppUtility.pareseAudioMetaObject(metaKey.KeyName, audioObject);
+            title = AppUtility.pareseAudioMetaObject(MetaKey.KeyName, audioObject);
         }
         if (title == undefined || title == "") {
             title = qsTr("UnKnown");
         }
         trackTitle = title;
-        var t = AppUtility.pareseAudioMetaObject(metaKey.KeyMiddleImg, coverMeta);
+        var t = AppUtility.pareseAudioMetaObject(MetaKey.KeyMiddleImg, coverMeta);
         if (t == undefined || t == "")
-            t = AppUtility.pareseAudioMetaObject(metaKey.KeyLargeImg, coverMeta);
+            t = AppUtility.pareseAudioMetaObject(MetaKey.KeyLargeImg, coverMeta);
         if (t == undefined || t == "")
-            t = AppUtility.pareseAudioMetaObject(metaKey.KeySmallImg, coverMeta);
+            t = AppUtility.pareseAudioMetaObject(MetaKey.KeySmallImg, coverMeta);
         if (t == undefined || t == "")
-            t = AppUtility.pareseAudioMetaObject(metaKey.keyUri, artistMeta);
+            t = AppUtility.pareseAudioMetaObject(MetaKey.keyUri, artistMeta);
         if (t == undefined || t == "")
-            t = AppUtility.pareseAudioMetaObject(metaKey.keyUri, albumMeta);
+            t = AppUtility.pareseAudioMetaObject(MetaKey.keyUri, albumMeta);
         coverImage = t;
-        hash = AppUtility.pareseAudioMetaObject(metaKey.KeyHash, audioObject);
+        hash = AppUtility.pareseAudioMetaObject(MetaKey.KeyHash, audioObject);
     }
 
 }

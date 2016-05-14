@@ -19,9 +19,9 @@ Item {
     width: parent ? parent.width : dp(1440)
     height: parent ? parent.height : dp(900)
 
-    AudioMetaObjectKeyName {
-        id: metaKey
-    }
+//    AudioMetaObjectKeyName {
+//        id: MetaKey
+//    }
     RandomColor {
         id: random
     }
@@ -46,11 +46,11 @@ Item {
             id: musicItem
             width: parent.width
             property var object: LocalMusicStore.model.get(index)
-            property var hash: object[metaKey.KeyHash];
-            property var trackMeta: object[metaKey.KeyTrackMeta]
-            property var coverMeta: object[metaKey.KeyCoverMeta]
-            property var artistMeta: object[metaKey.KeyArtistMeta]
-            property var albumMeta: object[metaKey.KeyAlbumMeta]
+            property var hash: object[MetaKey.KeyHash];
+            property var trackMeta: object[MetaKey.KeyTrackMeta]
+            property var coverMeta: object[MetaKey.KeyCoverMeta]
+            property var artistMeta: object[MetaKey.KeyArtistMeta]
+            property var albumMeta: object[MetaKey.KeyAlbumMeta]
             property string pColor
             property string title: null
             property string imgUri: null
@@ -60,9 +60,9 @@ Item {
             coverImage: imgUri
             selected: PlayCtrlBarInfoStore.currentHash == hash
             Component.onCompleted: {
-                title = trackMeta[metaKey.KeyTitle]
+                title = trackMeta[MetaKey.KeyTitle]
                 if (title == undefined || title == "") {
-                    title = object[metaKey.KeyName]
+                    title = object[MetaKey.KeyName]
                 }
                 if (title == undefined || title == "") {
                     title = qsTr("UnKnown");
@@ -70,21 +70,21 @@ Item {
                 }
                 random.generate();
                 pColor = random.primaryDarkColor;
-                var t = coverMeta[metaKey.KeyMiddleImg]
+                var t = coverMeta[MetaKey.KeyMiddleImg]
                 if (t == undefined || t == "")
-                    t = coverMeta[metaKey.KeyLargeImg]
+                    t = coverMeta[MetaKey.KeyLargeImg]
                 if (t == undefined || t == "")
-                    t = coverMeta[metaKey.KeySmallImg]
+                    t = coverMeta[MetaKey.KeySmallImg]
                 if (t == undefined || t == "")
-                    t = artistMeta[metaKey.keyUri]
+                    t = artistMeta[MetaKey.keyUri]
                 if (t == undefined || t == "")
-                    t = albumMeta[metaKey.keyUri]
+                    t = albumMeta[MetaKey.keyUri]
                 imgUri = t;
-//                var hash = object[metaKey.KeyHash];
+//                var hash = object[MetaKey.KeyHash];
                 console.log("====== hash "+hash);
             }
             onClicked: {
-//                var hash = object[metaKey.KeyHash];
+//                var hash = object[MetaKey.KeyHash];
                 Player.playFromLibrary(hash);
             }
         }

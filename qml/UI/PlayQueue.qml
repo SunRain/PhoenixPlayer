@@ -15,9 +15,9 @@ BottomSheet {
     width: parent ? parent.width : Const.screenWidth
     height: parent ? parent.height : Const.screenHeight
 
-    AudioMetaObjectKeyName {
-        id: metaKey
-    }
+//    AudioMetaObjectKeyName {
+//        id: MetaKey
+//    }
 
     Flickable {
         id: flickable
@@ -31,19 +31,19 @@ BottomSheet {
                 model: PlayListStore.listModel
                 delegate: ListItem.Standard {
                     property var object: PlayListStore.listModel.get(index)
-                    property var hash: object[metaKey.KeyHash];
-                    property var trackMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyTrackMeta, object)
-                    property var coverMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyCoverMeta, object)
-                    property var artistMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyArtistMeta, object)
-                    property var albumMeta: AppUtility.pareseAudioMetaObject(metaKey.KeyAlbumMeta, object)
+                    property var hash: object[MetaKey.KeyHash];
+                    property var trackMeta: AppUtility.pareseAudioMetaObject(MetaKey.KeyTrackMeta, object)
+                    property var coverMeta: AppUtility.pareseAudioMetaObject(MetaKey.KeyCoverMeta, object)
+                    property var artistMeta: AppUtility.pareseAudioMetaObject(MetaKey.KeyArtistMeta, object)
+                    property var albumMeta: AppUtility.pareseAudioMetaObject(MetaKey.KeyAlbumMeta, object)
                     property string title: "UnKnown"
                     width: parent.width
                     text: title
                     selected: PlayCtrlBarInfoStore.currentHash == hash && index == PlayListStore.currentIndex
                     Component.onCompleted: {
-                        title = AppUtility.pareseAudioMetaObject(metaKey.KeyTitle, trackMeta);
+                        title = AppUtility.pareseAudioMetaObject(MetaKey.KeyTitle, trackMeta);
                         if (title == undefined || title == "") {
-                            title = AppUtility.pareseAudioMetaObject(metaKey.KeyName, object);
+                            title = AppUtility.pareseAudioMetaObject(MetaKey.KeyName, object);
                         }
                         if (title == undefined || title == "") {
                             title = qsTr("UnKnown");

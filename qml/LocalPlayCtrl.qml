@@ -11,9 +11,9 @@ AppListener {
 
     property string dummy: "bibibibi"
 
-    AudioMetaObjectKeyName {
-        id: metaKey
-    }
+//    AudioMetaObjectKeyName {
+//        id: MetaKey
+//    }
 
     QtObject {
         id: inner
@@ -24,37 +24,37 @@ AppListener {
         property var artist: null
         property var cover: null
         onMetaChanged: {
-            var trackMeta = meta[metaKey.KeyTrackMeta];
-            title = trackMeta[metaKey.KeyTitle]
+            var trackMeta = meta[MetaKey.KeyTrackMeta];
+            title = trackMeta[MetaKey.KeyTitle]
             if (title == undefined || title == "") {
-                title = meta[metaKey.KeyName]
+                title = meta[MetaKey.KeyName]
             }
             if (title == undefined || title == "") {
                 title = qsTr("UnKnown");
             }
 
-            var albumMeta = meta[metaKey.KeyAlbumMeta];
-            album = albumMeta[metaKey.KeyName];
+            var albumMeta = meta[MetaKey.KeyAlbumMeta];
+            album = albumMeta[MetaKey.KeyName];
             if (album == undefined || album == "") {
                 album = qsTr("UnKnown");
             }
 
-            var artisMeta = meta[metaKey.KeyArtistMeta];
-            artist = artisMeta[metaKey.KeyName];
+            var artisMeta = meta[MetaKey.KeyArtistMeta];
+            artist = artisMeta[MetaKey.KeyName];
             if (artist == undefined || artist == "") {
                 artist = qsTr("UnKnown");
             }
 
-            var coverMeta = meta[metaKey.KeyCoverMeta];
-            var t = coverMeta[metaKey.KeyMiddleImg]
+            var coverMeta = meta[MetaKey.KeyCoverMeta];
+            var t = coverMeta[MetaKey.KeyMiddleImg]
             if (t == undefined || t == "")
-                t = coverMeta[metaKey.KeyLargeImg]
+                t = coverMeta[MetaKey.KeyLargeImg]
             if (t == undefined || t == "")
-                t = coverMeta[metaKey.KeySmallImg]
+                t = coverMeta[MetaKey.KeySmallImg]
             if (t == undefined || t == "")
-                t = artisMeta[metaKey.keyUri]
+                t = artisMeta[MetaKey.keyUri]
             if (t == undefined || t == "")
-                t = albumMeta[metaKey.keyUri]
+                t = albumMeta[MetaKey.keyUri]
             cover = t;
 
             console.log("========= localPlayCtrl title "+ title
