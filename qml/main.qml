@@ -12,7 +12,7 @@ import "QuickFlux/Actions"
 import "QuickFlux/Scripts"
 import "."
 
-/*RootWindow*/ApplicationWindow {
+RootWindow {
     visible: true
     title: qsTr("Phoenix Player")
 //    flags: Qt.FramelessWindowHint
@@ -27,12 +27,13 @@ import "."
         primaryDarkColor: Palette.colors["blue"]["700"]
         accentColor: Palette.colors["red"]["A200"]
         tabHighlightColor: "white"
+        backgroundColor: Palette.colors["white"]["500"]
     }
 
-    initialPage: LocalMusicViewPage{}
+    initialPage: MusicViewPage{}
 
-//    bottomBar: PlayControlBar {
-//    }
+    bottomBar: PlayControlBar {
+    }
 
     ProgressCircle {
         id: progressCircle

@@ -25,7 +25,7 @@
         <file>Component/RandomColor.qml</file>
         <file>Const.qml</file>
         <file>qmldir</file>
-        <file>Pages/LocalMusicViewPage.qml</file>
+        <file>Pages/MusicViewPage.qml</file>
         <file>UI/MusicCategoryView.qml</file>
         <file>UI/MusicAllView.qml</file>
         <file>QuickFlux/Stores/LocalMusicStore.qml</file>
@@ -38,5 +38,6 @@
         <file>QuickFlux/Stores/PlayListStore.qml</file>
         <file>Component/AudioMetaObjectParser.qml</file>
         <file>UI/PlayQueue.qml</file>
+        <file>Pages/PlayerViewPage.qml</file>
     </qresource>
 </RCC>

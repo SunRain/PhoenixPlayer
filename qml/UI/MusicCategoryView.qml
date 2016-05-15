@@ -43,9 +43,6 @@ Item {
     RandomColor {
         id: random
     }
-//    AudioMetaObjectKeyName {
-//        id: MetaKey
-//    }
 
     Flickable {
         id: flickable
@@ -76,7 +73,7 @@ Item {
                     property var name: object[LocalMusicStore.groupKeyName]//AppUtility.groupObjectToName(LocalMusicStore.model.get(index))
                     property bool nameEmpty: name == "" || name == undefined
                     Component.onCompleted: {
-                        console.log("===== categoryPage Card index "+index + " hash "+hash)
+//                        console.log("===== categoryPage Card index "+index + " hash "+hash)
                         random.generate();
                         pColor = random.primaryLightColor;
                         dColor = random.primaryDarkColor;

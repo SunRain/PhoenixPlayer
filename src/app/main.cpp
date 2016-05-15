@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     }
 
     PhoenixPlayer::LibPhoenixPlayer_Init ();
-    LibPhoenixPlayer::instance ()->registerPlugins ("com.sunrain.phoenixplayer.qmlplugin");
+    phoenixPlayerLib->registerPlugins ("com.sunrain.phoenixplayer.qmlplugin");
 
     /////////////////////////////////////////////////
 //    qmlRegisterUncreatableType<Common>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "Common", "Cannot be created");
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 
 
 //    qmlRegisterType<AudioMetaObjectKeyName>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AudioMetaObjectKeyName");
-    qmlRegisterUncreatableType<AudioMetaObjectKeyName>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "MetaKey", QStringLiteral("MetaKey can't creatable."));
+//    qmlRegisterUncreatableType<AudioMetaObjectKey>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "MetaKey", QStringLiteral("MetaKey can't creatable."));
 
     QScopedPointer<ApplicationUtility> appUtility(new ApplicationUtility());
     QScopedPointer<QQmlApplicationEngine> engine(new QQmlApplicationEngine(app.data ()));

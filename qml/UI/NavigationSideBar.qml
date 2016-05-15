@@ -118,7 +118,7 @@ Sidebar {
                 property string title: "UnKnown"
                 width: parent.width
                 text: title
-                selected: PlayCtrlBarInfoStore.currentHash == hash && index == PlayListStore.currentIndex
+                selected: PlayCtrlBarInfoStore.currentHash == hash && index == PlayListStore.playingIdx
                 Component.onCompleted: {
                     title = AppUtility.pareseAudioMetaObject(MetaKey.KeyTitle, trackMeta);
                     if (title == undefined || title == "") {
@@ -130,7 +130,8 @@ Sidebar {
                     }
                 }
                 onClicked: {
-                    Player.playFromLibrary(hash);
+//                    Player.playFromLibrary(hash);
+                    Player.playAt(index)
                 }
             }
         }

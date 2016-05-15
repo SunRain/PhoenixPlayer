@@ -11,24 +11,25 @@ namespace PhoenixPlayer {
         class MusicLibraryManager;
     }
     class PlayListMgr;
+    class MusicQueue;
 }
 
 class PlayListDelegate : public QSListModel
 {
     Q_OBJECT
-    Q_PROPERTY(QObject* listMgr READ listMgr CONSTANT)
+    Q_PROPERTY(QObject* playQueue READ playQueue CONSTANT)
 public:
     explicit PlayListDelegate(QObject *parent = 0);
     virtual ~PlayListDelegate();
 
     Q_INVOKABLE void refresh();
 
-    QObject* listMgr() const;
+    QObject* playQueue() const;
 
 private:
     void sync();
 private:
-    PhoenixPlayer::PlayListMgr *m_listMgr;
+    PhoenixPlayer::MusicQueue *m_playQueue;
     AudioMetaList m_dataList;
     QString m_keyFiled;
 };

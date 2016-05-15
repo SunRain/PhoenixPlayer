@@ -12,6 +12,7 @@ import "../Component/MaterialMod"
 import "../UI"
 import "../QuickFlux/Actions"
 import "../QuickFlux/Stores"
+import "../"
 
 Page {
     id: viewPage
@@ -64,6 +65,11 @@ Page {
             AppActions.selectMusicScannerDirs();
         }
     }
+
+//    rightSidebar: PlayerViewPage {
+//        width: Const.rightSidebarWidth
+//    }
+
 
 
 

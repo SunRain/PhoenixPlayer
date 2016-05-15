@@ -9,13 +9,17 @@ AppListener {
     id: playListStore
 
     property var listModel: listDelegate
-    property var currentIndex: listDelegate.listMgr.currentIndex
-    onCurrentIndexChanged: {
-        console.log(">>>>>>>>>>>>>>> playListStore currentIndex "+currentIndex)
+    property int playingIdx: listDelegate.playQueue.currentIndex
+    onPlayingIdxChanged: {
+        console.log(">>>>>>>>>>>>>>> playListStore currentIndex "+playingIdx)
     }
 
-    property int count: listDelegate.count
-    property var playListNames: listDelegate.listMgr.existPlayLists
+//    onCurrentIndexChanged: {
+//        console.log(">>>>>>>>>>>>>>> playListStore currentIndex "+currentIndex)
+//    }
+
+    property int playQueueCount: listDelegate.count
+//    property var playListNames: listDelegate.listMgr.existPlayLists
 
 
     PlayListDelegate {

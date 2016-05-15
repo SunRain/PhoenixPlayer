@@ -11,6 +11,7 @@
 
 #include "PlayerCore/PlayerCore.h"
 #include "PlayerCore/PlayListMgr.h"
+#include "PlayerCore/MusicQueue.h"
 
 using namespace PhoenixPlayer;
 using namespace PhoenixPlayer::MusicLibrary;
@@ -19,10 +20,10 @@ PlayListDelegate::PlayListDelegate(QObject *parent)
     : QSListModel(parent)
     , m_keyFiled(AudioMetaObject::keyHash ())
 {
-    m_listMgr = phoenixPlayerLib->playerCore ()->playList ();
-    connect (m_listMgr, &PlayListMgr::queueChanged,
+    m_playQueue = phoenixPlayerLib->playerCore ()->playQueue();
+    connect (m_playQueue, &MusicQueue::queueChanged,
              [&](){
-        m_dataList = m_listMgr->currentList ();
+        m_dataList = m_playQueue->currentList();
 //        m_dataList.swap (m_listMgr->currentList ());
         sync ();
     });
@@ -38,14 +39,14 @@ PlayListDelegate::~PlayListDelegate()
 void PlayListDelegate::refresh()
 {
     m_dataList.clear ();
-    m_dataList = m_listMgr->currentList ();
+    m_dataList = m_playQueue->currentList();
 //    m_dataList.swap (m_listMgr->currentList ());
     sync ();
 }
 
-QObject *PlayListDelegate::listMgr() const
+QObject *PlayListDelegate::playQueue() const
 {
-    return qobject_cast<QObject*>(m_listMgr);
+    return qobject_cast<QObject*>(m_playQueue);
 }
 
 void PlayListDelegate::sync()
