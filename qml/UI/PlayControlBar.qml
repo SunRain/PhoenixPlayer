@@ -164,10 +164,6 @@ View {
             anchors.verticalCenter: parent.verticalCenter
             size: parent.height / 2
             iconName: PlayCtrlBarInfoStore.repeatIconName//"av/repeat"
-//            action: Action {
-//                iconName: PlayCtrlBarInfoStore.repeatIconName//"av/repeat"
-//                name: "repeat control"
-//            }
             color: PlayCtrlBarInfoStore.repeatIconHightlight ? Theme.light.iconColor : Theme.light.hintColor
             onClicked: {
                 AppActions.changePlayMode();
@@ -178,7 +174,7 @@ View {
     PlayQueue {
         id: queueSheet
         width: parent.width * 0.6
-        anchors.right: parent.right
+        anchors.horizontalCenter: parent.horizontalCenter
         height: Const.screenHeight * 0.4
 
     }

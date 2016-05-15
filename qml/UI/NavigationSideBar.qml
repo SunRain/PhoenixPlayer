@@ -103,36 +103,38 @@ Sidebar {
 //            }
 //        }
         ListItem.Divider {}
-        ListItem.Subheader {
-            text: qsTr("Playlist")
+        ListItem.BaseListItem {
+            width: parent.width
+            height: Const.subHeaderHeight
+            Label {
+                anchors {
+                    left: parent.left
+                    leftMargin: 16 * Units.dp
+                    verticalCenter: parent.verticalCenter
+                }
+                font.pixelSize: 14 * Units.dp
+                font.family: "Roboto"
+                font.weight: Font.DemiBold
+                color: Theme.light.subTextColor
+                text: qsTr("PlayList")
+            }
+            IconButton {
+                anchors {
+                    right: parent.right
+                    rightMargin: 16 * Units.dp
+                    verticalCenter: parent.verticalCenter
+                }
+                iconName: "av/playlist_add"
+                onClicked: {
+                    plstCreate.open();
+                }
+            }
+
         }
         Repeater {
-            model: PlayListStore.listModel
+            model: PlayListStore.playLists
             delegate: ListItem.Standard {
-                property var object: PlayListStore.listModel.get(index)
-                property var hash: object[MetaKey.KeyHash];
-                property var trackMeta: AppUtility.pareseAudioMetaObject(MetaKey.KeyTrackMeta, object)
-                property var coverMeta: AppUtility.pareseAudioMetaObject(MetaKey.KeyCoverMeta, object)
-                property var artistMeta: AppUtility.pareseAudioMetaObject(MetaKey.KeyArtistMeta, object)
-                property var albumMeta: AppUtility.pareseAudioMetaObject(MetaKey.KeyAlbumMeta, object)
-                property string title: "UnKnown"
-                width: parent.width
-                text: title
-                selected: PlayCtrlBarInfoStore.currentHash == hash && index == PlayListStore.playingIdx
-                Component.onCompleted: {
-                    title = AppUtility.pareseAudioMetaObject(MetaKey.KeyTitle, trackMeta);
-                    if (title == undefined || title == "") {
-                        title = AppUtility.pareseAudioMetaObject(MetaKey.KeyName, object);
-                    }
-                    if (title == undefined || title == "") {
-                        title = qsTr("UnKnown");
-//                        musicItem.trackChar = "?";
-                    }
-                }
-                onClicked: {
-//                    Player.playFromLibrary(hash);
-                    Player.playAt(index)
-                }
+                text: PlayListStore.playLists.get(index)
             }
         }
     }

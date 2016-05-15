@@ -11,6 +11,7 @@ AppListener {
     id: localMusicStore
 
     property var model: groupDelegate
+    property var allMusicModel: allMusicDelegate
     property string sourceUri: Qt.resolvedUrl("../../UI/MusicCategoryView.qml")
 
     readonly property string groupKeyName: groupDelegate.keyName

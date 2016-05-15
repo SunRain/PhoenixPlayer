@@ -11,8 +11,8 @@ Item {
     width: parent ? parent.width : dp(700)
     height: infoView.height + slider.height
 
-    property string trackTitle: qsTr("UnKnow")
-    property string trackArtist: qsTr("UnKnow")
+    property string trackTitle: qsTr("UnKnow title")
+    property string trackArtist: qsTr("UnKnow artist")
     property alias durationInfo: durationInfo.text
     property alias durationSec: slider.maximumValue
 
@@ -48,11 +48,11 @@ Item {
             id: artist
             anchors {
                 left: title.right
-                leftMargin: dp(Const.tinySpace)
+                leftMargin: Const.tinySpace
 //                top: parent.top
                 verticalCenter: parent.verticalCenter
                 right: durationInfo.left
-                rightMargin: dp(Const.tinySpace)
+                rightMargin: Const.tinySpace
             }
             style: "subheading"
             text: " "+qsTr("-")+" "+trackArtist
@@ -63,7 +63,6 @@ Item {
                 right: parent.right
                 verticalCenter: parent.verticalCenter
             }
-
             style: "title"
             text: "duration info"
         }

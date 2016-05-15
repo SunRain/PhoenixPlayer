@@ -66,6 +66,9 @@ RootWindow {
             progressCircle.opacity = 0
         }
     }
+    PlayListCreateDialog {
+        id: plstCreate
+    }
 
 //    AppListener {
 //        id: stackListener

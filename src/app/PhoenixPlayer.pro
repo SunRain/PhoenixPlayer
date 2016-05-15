@@ -13,14 +13,16 @@ HEADERS += \
     AudioGroupDelegate.h \
     ApplicationUtility.h \
     AllMusicDelegate.h \
-    PlayListDelegate.h
+    PlayListDelegate.h \
+    PlayQueueDelegate.h
 
 SOURCES += \
     main.cpp \
     AudioGroupDelegate.cpp \
     ApplicationUtility.cpp \
     AllMusicDelegate.cpp \
-    PlayListDelegate.cpp
+    PlayListDelegate.cpp \
+    PlayQueueDelegate.cpp
 
 contains (CONFIG, USE_QRC) {
     RESOURCES += \

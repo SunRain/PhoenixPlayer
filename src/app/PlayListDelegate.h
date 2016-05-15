@@ -7,31 +7,41 @@
 #include "qslistmodel.h"
 
 namespace PhoenixPlayer {
-    namespace MusicLibrary {
-        class MusicLibraryManager;
-    }
+//    namespace MusicLibrary {
+//        class MusicLibraryManager;
+//    }
     class PlayListMgr;
-    class MusicQueue;
+//    class MusicQueue;
 }
 
-class PlayListDelegate : public QSListModel
+class PlayListDelegate : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QObject* playQueue READ playQueue CONSTANT)
+    Q_PROPERTY(QStringList availablePlayList READ availablePlayList WRITE setAvailablePlayList NOTIFY availablePlayListChanged)
 public:
     explicit PlayListDelegate(QObject *parent = 0);
     virtual ~PlayListDelegate();
 
     Q_INVOKABLE void refresh();
 
-    QObject* playQueue() const;
+    ///
+    /// \brief addToPlayQueue open listName and add to play queue
+    /// \param listName
+    ///
+    Q_INVOKABLE void addToPlayQueue(const QString &listName);
+
+
+    QStringList availablePlayList() const;
+
+public slots:
+    void setAvailablePlayList(QStringList availablePlayList);
+
+signals:
+    void availablePlayListChanged(QStringList availablePlayList);
 
 private:
-    void sync();
-private:
-    PhoenixPlayer::MusicQueue *m_playQueue;
-    AudioMetaList m_dataList;
-    QString m_keyFiled;
+    PhoenixPlayer::PlayListMgr *m_listMgr;
+    QStringList m_availablePlayList;
 };
 
 #endif // PLAYLISTDELEGATE_H

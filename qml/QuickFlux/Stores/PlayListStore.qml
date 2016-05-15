@@ -8,21 +8,24 @@ import com.sunrain.phoenixplayer.qmlplugin 1.0
 AppListener {
     id: playListStore
 
-    property var listModel: listDelegate
-    property int playingIdx: listDelegate.playQueue.currentIndex
+//
+    property var queueModel: queueDelegate
+    property int playQueueCount: queueDelegate.count
+    property alias playingIdx: queueDelegate.playingIdx
     onPlayingIdxChanged: {
         console.log(">>>>>>>>>>>>>>> playListStore currentIndex "+playingIdx)
     }
 
-//    onCurrentIndexChanged: {
-//        console.log(">>>>>>>>>>>>>>> playListStore currentIndex "+currentIndex)
-//    }
 
-    property int playQueueCount: listDelegate.count
-//    property var playListNames: listDelegate.listMgr.existPlayLists
-
+    property var playLists: listDelegate.availablePlayList
 
     PlayListDelegate {
         id: listDelegate
     }
+
+    PlayQueueDelegate {
+        id: queueDelegate
+    }
+
+
 }

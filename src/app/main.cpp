@@ -37,6 +37,7 @@
 #include "AudioGroupDelegate.h"
 #include "AllMusicDelegate.h"
 #include "PlayListDelegate.h"
+#include "PlayQueueDelegate.h"
 
 #include "ApplicationUtility.h"
 
@@ -107,6 +108,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<AudioGroupDelegate>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AudioGroupDelegate");
     qmlRegisterType<AllMusicDelegate>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AllMusicDelegate");
     qmlRegisterType<PlayListDelegate>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "PlayListDelegate");
+    qmlRegisterType<PlayQueueDelegate>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "PlayQueueDelegate");
+
 
 
 //    qmlRegisterType<AudioMetaObjectKeyName>("com.sunrain.phoenixplayer.qmlplugin", 1, 0, "AudioMetaObjectKeyName");
