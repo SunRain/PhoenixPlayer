@@ -2,16 +2,13 @@
 #define PLAYLISTDELEGATE_H
 
 #include <QObject>
+#include <QJSValue>
 
 #include "AudioMetaGroupObject.h"
 #include "qslistmodel.h"
 
 namespace PhoenixPlayer {
-//    namespace MusicLibrary {
-//        class MusicLibraryManager;
-//    }
     class PlayListMgr;
-//    class MusicQueue;
 }
 
 class PlayListDelegate : public QObject
@@ -22,7 +19,25 @@ public:
     explicit PlayListDelegate(QObject *parent = 0);
     virtual ~PlayListDelegate();
 
+    ///
+    /// \brief refresh refresh available Playlist
+    ///
     Q_INVOKABLE void refresh();
+
+
+    ///
+    /// \brief openPlaylist
+    /// \param playlistName
+    ///
+//    Q_INVOKABLE void openPlaylist(const QString &playlistName);
+
+
+    ///
+    /// \brief createPlaylist
+    /// \param name playlist name
+    /// \param audioList
+    ///
+    Q_INVOKABLE void createPlaylist(const QString &name, const QJSValue &audioList);
 
     ///
     /// \brief addToPlayQueue open listName and add to play queue

@@ -15,18 +15,33 @@ import "../"
 Dialog {
     id: plstCreate
 
-    property int trackSize: 0
     property var trackList: []
+    property alias plstName: titleInput.text
     title: qsTr("Create playlist")
-    text: qsTr("Name") + " ["+titleInput.text +"] "+qsTr("track number")+" ["+trackSize+"]"
+    text: qsTr("Name") + " ["+titleInput.text +"] "+qsTr("track number")+" ["+trackList.length+"]"
 
+    /*
+    * Dialog inner, onAccepted signal is received first, then Dialog parent will receive onAccepted
+    * so it is ok to do something here,
+    * and dialog parent will only to close dialog when receive onAccepted or onRejected
+    */
     onAccepted: {
+        console.log("=== plstCreate  onAccepted");
+        var tmp = [];
+        for(var i=0; i<trackList.length; ++i) {
+            tmp.push(trackList[i].track)
+        }
+        AppActions.savePlayList(titleInput.text, tmp);
+    }
+    onRejected: {
 
     }
 
     TextField {
         id: titleInput
         width: parent.width
+        text: qsTr("Playlist name")
+//        floatingLabel: true
         placeholderText: qsTr("playlist name")
     }
     ListItem.BaseListItem {
@@ -49,13 +64,18 @@ Dialog {
             property var trackMeta: object[MetaKey.KeyTrackMeta]
             property string title: ""
             text: title
+            checked: false
             onCheckedChanged: {
                 if (checked) {
-                    trackList.push(title)
+                    trackList.push({"index":index, "track":object})
                 } else {
-                    //TODO remove from array
+                    for(var i=0; i<trackList.length; ++i) {
+                        if (trackList[i].idx == index) {
+                            break;
+                        }
+                    }
+                    trackList.splice(i,1);
                 }
-                trackSize = trackList.length;
             }
 
             Component.onCompleted: {

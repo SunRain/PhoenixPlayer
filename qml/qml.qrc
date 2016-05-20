@@ -40,5 +40,6 @@
         <file>UI/PlayQueue.qml</file>
         <file>Pages/PlayerViewPage.qml</file>
         <file>UI/PlayListCreateDialog.qml</file>
+        <file>QuickFlux/Scripts/PlayListDialogs.qml</file>
     </qresource>
 </RCC>

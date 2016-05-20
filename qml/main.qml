@@ -52,6 +52,10 @@ RootWindow {
     LocalTrackScanner {
         id: scanner
     }
+    PlayListDialogs {
+        id: plsDialogs
+    }
+
     AppScript {
         runWhen: ActionTypes.showProgress
         script: {
@@ -66,9 +70,9 @@ RootWindow {
             progressCircle.opacity = 0
         }
     }
-    PlayListCreateDialog {
-        id: plstCreate
-    }
+//    PlayListCreateDialog {
+//        id: plstCreate
+//    }
 
 //    AppListener {
 //        id: stackListener

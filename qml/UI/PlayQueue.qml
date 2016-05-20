@@ -37,10 +37,10 @@ BottomSheet {
                     id: musicItem
                     property var object: PlayListStore.queueModel.get(index)
                     property var hash: object[MetaKey.KeyHash];
-                    property var trackMeta: AppUtility.pareseAudioMetaObject(MetaKey.KeyTrackMeta, object)
-                    property var coverMeta: AppUtility.pareseAudioMetaObject(MetaKey.KeyCoverMeta, object)
-                    property var artistMeta: AppUtility.pareseAudioMetaObject(MetaKey.KeyArtistMeta, object)
-                    property var albumMeta: AppUtility.pareseAudioMetaObject(MetaKey.KeyAlbumMeta, object)
+                    property var trackMeta: object[MetaKey.KeyTrackMeta]//AppUtility.pareseAudioMetaObject(MetaKey.KeyTrackMeta, object)
+                    property var coverMeta: object[MetaKey.KeyCoverMeta]//AppUtility.pareseAudioMetaObject(MetaKey.KeyCoverMeta, object)
+                    property var artistMeta: object[MetaKey.KeyArtistMeta]//AppUtility.pareseAudioMetaObject(MetaKey.KeyArtistMeta, object)
+                    property var albumMeta: object[MetaKey.KeyAlbumMeta]//AppUtility.pareseAudioMetaObject(MetaKey.KeyAlbumMeta, object)
                     property string title: "UnKnown"
                     width: parent.width
                     height: Const.itemHeight * 0.8
@@ -64,9 +64,9 @@ BottomSheet {
                         color: musicItem.selected ? theme.primaryColor : Theme.light.textColor
                     }
                     Component.onCompleted: {
-                        title = AppUtility.pareseAudioMetaObject(MetaKey.KeyTitle, trackMeta);
+                        title = trackMeta[MetaKey.KeyTitle]//AppUtility.pareseAudioMetaObject(MetaKey.KeyTitle, trackMeta);
                         if (title == undefined || title == "") {
-                            title = AppUtility.pareseAudioMetaObject(MetaKey.KeyName, object);
+                            title = object[MetaKey.KeyName]//AppUtility.pareseAudioMetaObject(MetaKey.KeyName, object);
                         }
                         if (title == undefined || title == "") {
                             title = qsTr("UnKnown");

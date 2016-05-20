@@ -20,6 +20,8 @@ ActionCreator {
 
     signal changePlayMode();
 
+    signal openPlstCreateDlg();
+
     function togglePlayPause() {
         Player.togglePlayPause();
     }
@@ -37,5 +39,15 @@ ActionCreator {
     }
     function changeCtrlBarArtistName(value) {
         AppDispatcher.dispatch(ActionTypes.changeCtrlBarArtistName, {"value":value})
+    }
+
+    function savePlayList(name, musicObjectList) {
+        AppDispatcher.dispatch(ActionTypes.savePlst, {"name":name, "value":musicObjectList})
+    }
+    function openPlstModifyDlg(value) {
+        AppDispatcher.dispatch(ActionTypes.openPlstModifyDlg, {"value":value})
+    }
+    function playPlst(name) {
+        AppDispatcher.dispatch(ActionTypes.playPlst, {"name":name})
     }
 }

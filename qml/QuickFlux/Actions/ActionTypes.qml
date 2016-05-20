@@ -34,4 +34,9 @@ KeyTable {
     property string doSkipForward
 
     property string changePlayMode
+
+    property string openPlstCreateDlg
+    property string playPlst
+    property string savePlst
+    property string openPlstModifyDlg
 }

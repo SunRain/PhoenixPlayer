@@ -126,7 +126,8 @@ Sidebar {
                 }
                 iconName: "av/playlist_add"
                 onClicked: {
-                    plstCreate.open();
+//                    plstCreate.open();
+                    AppActions.openPlstCreateDlg();
                 }
             }
 
@@ -134,7 +135,10 @@ Sidebar {
         Repeater {
             model: PlayListStore.playLists
             delegate: ListItem.Standard {
-                text: PlayListStore.playLists.get(index)
+                text: modelData
+                onClicked: {
+                    AppActions.playPlst(modelData);
+                }
             }
         }
     }
