@@ -126,7 +126,6 @@ Sidebar {
                 }
                 iconName: "av/playlist_add"
                 onClicked: {
-//                    plstCreate.open();
                     AppActions.openPlstCreateDlg();
                 }
             }
@@ -135,9 +134,48 @@ Sidebar {
         Repeater {
             model: PlayListStore.playLists
             delegate: ListItem.Standard {
+                id: plstItem
                 text: modelData
-                onClicked: {
-                    AppActions.playPlst(modelData);
+                secondaryItem: IconButton {
+                    anchors.verticalCenter: parent.verticalCenter
+                    iconName: "navigation/more_vert"
+                    onClicked: {
+                        menu.open(plstItem, 0, 0)
+                    }
+                }
+                Dropdown {
+                    id: menu
+                    anchor: Item.TopRight
+                    width: plstItem.width * 0.8
+                    height: options.height
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: 2 * Units.dp
+                    }
+                    Column {
+                        id: options
+                        width: parent.width
+                        Repeater {
+                            model: [qsTr("Add to queue"), qsTr("Modify playlist")]
+                            ListItem.Standard {
+                                width: parent.width
+                                text: modelData
+                                onClicked: {
+                                    switch(index) {
+                                    case 0:
+                                        AppActions.playPlst(plstItem.text)
+                                        break;
+                                    case 1:
+                                        AppActions.openPlstModifyDlg(plstItem.text)
+                                        break;
+                                    default:
+                                        break;
+                                    }
+                                    menu.close();
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

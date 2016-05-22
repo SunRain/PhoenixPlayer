@@ -39,4 +39,5 @@ KeyTable {
     property string playPlst
     property string savePlst
     property string openPlstModifyDlg
+    property string showTracksInPlst
 }

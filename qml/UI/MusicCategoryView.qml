@@ -194,6 +194,7 @@ Item {
                 Repeater {
                     model: LocalMusicStore.model.audioMetaList
                     delegate: MusicListItem {
+                        width: parent.width
                         property var object: LocalMusicStore.model.audioMetaList[index]
                         property var hash: object[MetaKey.KeyHash];
                         property var trackMeta: object[MetaKey.KeyTrackMeta]

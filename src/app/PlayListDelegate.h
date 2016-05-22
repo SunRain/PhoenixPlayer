@@ -24,20 +24,26 @@ public:
     ///
     Q_INVOKABLE void refresh();
 
-
     ///
     /// \brief openPlaylist
     /// \param playlistName
+    /// \return AudioMetaList in QVariantList
     ///
-//    Q_INVOKABLE void openPlaylist(const QString &playlistName);
+   Q_INVOKABLE  QVariantList openPlaylist(const QString &playlistName) const;
 
+//    ///
+//    /// \brief openPlaylist
+//    /// \param playlistName
+//    /// \return
+//    ///
+//    AudioMetaList openPlaylist(const QString &playlistName) const;
 
     ///
     /// \brief createPlaylist
     /// \param name playlist name
     /// \param audioList
     ///
-    Q_INVOKABLE void createPlaylist(const QString &name, const QJSValue &audioList);
+    Q_INVOKABLE void createPlaylist(const QString &name, const QJSValue &audioList, bool override = false);
 
     ///
     /// \brief addToPlayQueue open listName and add to play queue
@@ -53,6 +59,9 @@ public slots:
 
 signals:
     void availablePlayListChanged(QStringList availablePlayList);
+
+private:
+    AudioMetaList audioInPlaylist(const QString &playlistName) const;
 
 private:
     PhoenixPlayer::PlayListMgr *m_listMgr;

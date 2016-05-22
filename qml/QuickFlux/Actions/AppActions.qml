@@ -41,13 +41,16 @@ ActionCreator {
         AppDispatcher.dispatch(ActionTypes.changeCtrlBarArtistName, {"value":value})
     }
 
-    function savePlayList(name, musicObjectList) {
-        AppDispatcher.dispatch(ActionTypes.savePlst, {"name":name, "value":musicObjectList})
+    function savePlayList(name, musicObjectList, override) {
+        AppDispatcher.dispatch(ActionTypes.savePlst, {"name":name, "value":musicObjectList, "override":override})
     }
-    function openPlstModifyDlg(value) {
-        AppDispatcher.dispatch(ActionTypes.openPlstModifyDlg, {"value":value})
+    function openPlstModifyDlg(name) {
+        AppDispatcher.dispatch(ActionTypes.openPlstModifyDlg, {"name":name})
     }
     function playPlst(name) {
         AppDispatcher.dispatch(ActionTypes.playPlst, {"name":name})
+    }
+    function showTracksInPlst(name) {
+        AppDispatcher.dispatch(ActionTypes.showTracksInPlst, {"name":name});
     }
 }

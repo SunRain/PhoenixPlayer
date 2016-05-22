@@ -45,34 +45,28 @@ void PlayListDelegate::refresh()
     setAvailablePlayList(list);
 }
 
-//void PlayListDelegate::openPlaylist(const QString &playlistName)
-//{
-//    if (playlistName.isEmpty())
-//        return;
-//    if (!m_listMgr->open(playlistName)) {
-//        qWarning()<<Q_FUNC_INFO<<QString("Open playlist [%1] faile").arg(playlistName);
-//        return;
-//    }
-////    QVariantList list;
-////    foreach (const QVariant v, m_listMgr->currentList()) {
-////        list.append(v.toMap());
-////    }
-////    return list;
-//    phoenixPlayerLib->playerCore()->playQueue()->addTrack(m_listMgr->currentList());
-//}
+QVariantList PlayListDelegate::openPlaylist(const QString &playlistName) const
+{
+    QVariantList list;
+    foreach (AudioMetaObject o, audioInPlaylist(playlistName)) {
+        list.append(o.toMap());
+    }
+    return list;
+}
 
-void PlayListDelegate::createPlaylist(const QString &name, const QJSValue &audioList)
+void PlayListDelegate::createPlaylist(const QString &name, const QJSValue &audioList, bool override)
 {
     if (name.isEmpty())
         return;
     if (!audioList.isArray())
         return;
     QVariantList list = audioList.toVariant().toList();
+    m_listMgr->clear();
     foreach (QVariant v, list) {
         AudioMetaObject o = AudioMetaObject::fromMap(v.toMap());
         m_listMgr->addTrack(o);
     }
-    if (!m_listMgr->save(name)) {
+    if (!m_listMgr->save(name, override)) {
         qWarning()<<Q_FUNC_INFO<<"save playlist error";
     }
     m_listMgr->refreshExistPlayLists();
@@ -80,29 +74,9 @@ void PlayListDelegate::createPlaylist(const QString &name, const QJSValue &audio
 
 void PlayListDelegate::addToPlayQueue(const QString &listName)
 {
-    if (!m_listMgr->open(listName)) {
-        qWarning()<<Q_FUNC_INFO<<QString("Open playlist [%1] faile").arg(listName);
-        return;
+    foreach (AudioMetaObject o, audioInPlaylist(listName)) {
+        phoenixPlayerLib->playerCore()->playQueue()->addTrack(o);
     }
-    AudioMetaList list = m_listMgr->currentList();
-
-    MusicLibraryDAOHost *host = phoenixPlayerLib->pluginLoader()->curDAOHost();
-    if (host) {
-        IMusicLibraryDAO *dao = host->instance<IMusicLibraryDAO>();
-        if (dao) {
-            foreach (AudioMetaObject o, list) {
-                if (dao->trackHashList().contains(o.hash())) {
-                    AudioMetaObject obj = dao->trackFromHash(o.hash());
-                    phoenixPlayerLib->playerCore()->playQueue()->addTrack(obj);
-
-                } else {
-                    phoenixPlayerLib->playerCore()->playQueue()->addTrack(o);
-                }
-            }
-            return;
-        }
-    }
-    phoenixPlayerLib->playerCore()->playQueue()->addTrack(list);
 }
 
 QStringList PlayListDelegate::availablePlayList() const
@@ -116,6 +90,33 @@ void PlayListDelegate::setAvailablePlayList(QStringList availablePlayList)
         return;
     m_availablePlayList = availablePlayList;
     emit availablePlayListChanged(availablePlayList);
+}
+
+AudioMetaList PlayListDelegate::audioInPlaylist(const QString &playlistName) const
+{
+    if (!m_listMgr->open(playlistName)) {
+        qWarning()<<Q_FUNC_INFO<<QString("Open playlist [%1] faile").arg(playlistName);
+        return AudioMetaList();
+    }
+    AudioMetaList list = m_listMgr->currentList();
+
+    MusicLibraryDAOHost *host = phoenixPlayerLib->pluginLoader()->curDAOHost();
+    if (host) {
+        IMusicLibraryDAO *dao = host->instance<IMusicLibraryDAO>();
+        if (dao) {
+            AudioMetaList retList;
+            foreach (AudioMetaObject o, list) {
+                if (dao->trackHashList().contains(o.hash())) {
+                    AudioMetaObject obj = dao->trackFromHash(o.hash());
+                    retList.append(obj);
+                } else {
+                    retList.append(o);
+                }
+            }
+            return retList;
+        }
+    }
+    return list;
 }
 
 

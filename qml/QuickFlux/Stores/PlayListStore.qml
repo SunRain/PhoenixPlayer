@@ -20,8 +20,14 @@ AppListener {
     }
 
 
+    property alias playListDelegate: listDelegate
     property alias playLists: listDelegate.availablePlayList
-    property var musicList
+//    property var musicList
+    property string openedPlaylistName: ""
+    property var tracksInOpenedList: []
+    onTracksInOpenedListChanged: {
+        console.log("==== onTracksInOpenedListChanged "+tracksInOpenedList.length);
+    }
 
     PlayListDelegate {
         id: listDelegate
@@ -39,8 +45,9 @@ AppListener {
         onDispatched: {
             var name = message.name;
             var list = message.value;
-//            console.log("=== name "+name+" list "+list);
-            listDelegate.createPlaylist(name, list);
+            var override = message.override;
+//            console.log("=== name "+name+" list "+list+ " override "+override);
+            listDelegate.createPlaylist(name, list, override);
         }
     }
     Filter {
@@ -48,6 +55,14 @@ AppListener {
         onDispatched: {
             var name = message.name;
             listDelegate.addToPlayQueue(name);
+        }
+    }
+    Filter {
+        type: ActionTypes.showTracksInPlst
+        onDispatched:  {
+            var name = message.name;
+            openedPlaylistName = name;
+            tracksInOpenedList = listDelegate.openPlaylist(name);
         }
     }
 

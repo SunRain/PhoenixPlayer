@@ -96,8 +96,12 @@ ListItem.BaseListItem {
     Dropdown {
         id: menu
         anchor: Item.TopRight
-        width: parent.width /2
+        width: musicListItem.width /2
         height: options.height
+        Rectangle {
+            anchors.fill: parent
+            radius: 2 * Units.dp
+        }
         Column {
             id: options
             width: parent.width
@@ -113,7 +117,6 @@ ListItem.BaseListItem {
                     }
                 }
             }
-
         }
     }
 }
