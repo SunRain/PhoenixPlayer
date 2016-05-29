@@ -42,5 +42,7 @@
         <file>UI/PlayListCreateDialog.qml</file>
         <file>QuickFlux/Scripts/PlayListDialogs.qml</file>
         <file>Component/SimpleDialog.qml</file>
+        <file>UI/CategoryDetailView.qml</file>
+        <file>QuickFlux/Scripts/CategoryDetailScript.qml</file>
     </qresource>
 </RCC>

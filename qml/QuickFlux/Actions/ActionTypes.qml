@@ -40,4 +40,6 @@ KeyTable {
     property string savePlst
     property string openPlstModifyDlg
     property string showTracksInPlst
+
+    property string openCategoryDetailView
 }

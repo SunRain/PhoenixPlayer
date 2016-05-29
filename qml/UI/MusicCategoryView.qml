@@ -1,7 +1,6 @@
 import QtQuick 2.4
 import QuickFlux 1.0
-import Material 0.2
-import Material.Extras 0.1
+import Material 0.3
 import Material.ListItems 0.1 as ListItem
 import QtQuick.Controls 1.3 as Controls
 import QtQuick.Controls.Styles 1.3 as Styles
@@ -12,6 +11,7 @@ import "../Component"
 import "../QuickFlux/Actions"
 import "../QuickFlux/Stores"
 import "../QuickFlux/Adapters"
+import "../QuickFlux/Scripts"
 import "../"
 
 Item {
@@ -28,7 +28,7 @@ Item {
     }
 
     QtObject {
-        id: inner
+        id: overlayInner
         property string hash
         property string pColor
         property string dColor
@@ -38,6 +38,10 @@ Item {
         property bool uriEmpty: true
         property var name
         property bool nameEmpty: true
+    }
+
+    CategoryDetailScript {
+        id: sc
     }
 
     RandomColor {
@@ -126,17 +130,19 @@ Item {
                         anchors.fill: parent
                         enabled: true
                         onClicked: {
-                            inner.pColor = card.pColor;
-                            inner.dColor = card.dColor;
-                            inner.textColor = card.textColor;
-                            inner.subTextColor = card.subTextColor;
-                            inner.imgUri = card.imgUri;
-                            inner.name = card.name;
-                            inner.nameEmpty = card.nameEmpty;
-                            inner.hash = card.hash;
-                            console.log("==== showAudioList hash is "+inner.hash);
-                            LocalMusicStore.model.showAudioList(inner.hash);
-                            overlayView.open(card)
+//                            overlayInner.pColor = card.pColor;
+//                            overlayInner.dColor = card.dColor;
+//                            overlayInner.textColor = card.textColor;
+//                            overlayInner.subTextColor = card.subTextColor;
+//                            overlayInner.imgUri = card.imgUri;
+//                            overlayInner.name = card.name;
+//                            overlayInner.nameEmpty = card.nameEmpty;
+//                            overlayInner.hash = card.hash;
+//                            overlayInner.uriEmpty = card.uriEmpty
+//                            console.log("==== showAudioList hash is "+overlayInner.hash);
+//                            LocalMusicStore.model.showAudioList(overlayInner.hash);
+//                            overlayView.open(card)
+                            AppActions.openCategoryDetailView(card, card.hash, card.name, card.imgUri);
                         }
                     }
                 }
@@ -147,99 +153,123 @@ Item {
         flickableItem: flickable
     }
 
-    OverlayView {
-        id: overlayView
-        width: Const.cardSize * 3
-        height: parent.height * 0.8
-        anchors.centerIn: parent
-        Rectangle {
-            anchors.fill: parent
-            color: inner.pColor
-        }
-        Flickable {
-            id: overlayFlickable
-            anchors.fill: parent
-            contentWidth: parent.width
-            contentHeight: overlayBanner.height + overylayColumn.height
-            boundsBehavior: Flickable.OvershootBounds
-            clip: true
-            Item {
-                id: overlayBanner
-                width: parent.width
-                height: Const.cardSize
-                Rectangle {
-                    anchors.fill: parent
-                    color: inner.dColor
-                    Label {
-                        width: parent.width
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: inner.nameEmpty ? qsTr("UnKnown") : inner.name.substring(0,1)
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Image.AlignVCenter
-                        style: "body2"
-                        font.pixelSize: parent.height * 0.5
-                    }
-                }
-                Image {
-                    id: overlayImage
-                    anchors.fill: parent
-                    fillMode: Image.PreserveAspectCrop
-                    source: AppUtility.qrcStrPath(inner.imgUri);
-                }
-            }
-            Column {
-                id: overylayColumn
-                width: parent.width
-                anchors.top: overlayBanner.bottom
-                Repeater {
-                    model: LocalMusicStore.model.audioMetaList
-                    delegate: MusicListItem {
-                        width: parent.width
-                        property var object: LocalMusicStore.model.audioMetaList[index]
-                        property var hash: object[MetaKey.KeyHash];
-                        property var trackMeta: object[MetaKey.KeyTrackMeta]
-                        property var coverMeta: object[MetaKey.KeyCoverMeta]
-                        property var artistMeta: object[MetaKey.KeyArtistMeta]
-                        property var albumMeta: object[MetaKey.KeyAlbumMeta]
-                        property string pColor
-                        property string title: ""
-                        property string imgUri: ""
-                        trackTitle: title
-                        trackChar: "?"
-                        coverColor: pColor
-                        coverImage: imgUri
-                        selected: PlayCtrlBarInfoStore.currentHash == hash
-                        onClicked: {
-                            Player.playFromLibrary(hash)
-                        }
-                        Component.onCompleted: {
-                            title = trackMeta[MetaKey.KeyTitle]
-                            if (title == undefined || title == "") {
-                                title = object[MetaKey.KeyName]
-                            }
-                            if (title == undefined || title == "") {
-                                title = qsTr("UnKnown");
-                                musicItem.trackChar = "?";
-                            }
-                            random.generate();
-                            pColor = random.primaryDarkColor;
-                            var t = coverMeta[MetaKey.KeyMiddleImg]
-                            if (t == undefined || t == "")
-                                t = coverMeta[MetaKey.KeyLargeImg]
-                            if (t == undefined || t == "")
-                                t = coverMeta[MetaKey.KeySmallImg]
-                            if (t == undefined || t == "")
-                                t = artistMeta[MetaKey.keyUri]
-                            if (t == undefined || t == "")
-                                t = albumMeta[MetaKey.keyUri]
-                            imgUri = t;
-                        }
-                    }
-                }
-            }
-        }
-        Scrollbar {
-            flickableItem: overlayFlickable
-        }
-    }
+//    OverlayView {
+//        id: overlayView
+//        width: Const.screenWidth * 0.8
+//        height: parent.height * 0.8
+//        anchors.centerIn: parent
+//        Rectangle {
+//            anchors.fill: parent
+//            color: overlayInner.dColor
+//        }
+//        Flickable {
+//            id: overlayFlickable
+//            anchors.fill: parent
+//            contentWidth: parent.width
+//            contentHeight: wrapper.height
+//            boundsBehavior: Flickable.OvershootBounds
+//            clip: true
+//            Column {
+//                id: wrapper
+//                width: parent.width
+//                spacing: Const.tinySpace
+//                Item {
+//                    id: overlayBanner
+//                    width: parent.width - Const.tinySpace * 2
+//                    x: Const.tinySpace
+//                    height: Math.max(Const.cardSize, infoColumn.height)
+//                    Rectangle {
+//                        anchors.fill: parent
+//                        z: parent.z - 1
+//                        radius: 2 * Units.dp
+//                        opacity: 0.2
+//                    }
+//                    Image {
+//                        id: coverImg
+//                        height: parent.height // * 0.8
+//                        width: height
+//                        anchors {
+//                            left: parent.left
+//                            verticalCenter: parent.verticalCenter
+//                        }
+//                        fillMode: Image.PreserveAspectCrop
+//                        source: overlayInner.uriEmpty
+//                        //TODO fit for qrc
+//                                ? "../images/default_disc.png"
+//                                : AppUtility.qrcStrPath(overlayInner.imgUri);
+//                    }
+//                    Column {
+//                        id: infoColumn
+//                        anchors {
+//                            left: coverImg.right
+//                            leftMargin: Const.tinySpace
+//                            right: parent.right
+//                            rightMargin: Const.middleSpace
+//                            verticalCenter: parent.verticalCenter
+//                        }
+//                        ListItem.Standard {
+//                            width: parent.width
+//                            interactive: false
+//                            text: overlayInner.nameEmpty ? qsTr("Unknown") : overlayInner.name
+//                        }
+
+//                        ListItem.Standard {
+//                            width: parent.width
+//                            text: qsTr("Album&Artist by")
+//                            valueText: "info"
+//                            interactive: false
+//                        }
+//                        ListItem.Standard {
+//                            width: parent.width
+//                            text: qsTr("Length")
+//                            valueText: "time & track Num. info"
+//                            interactive: false
+//                        }
+//                        ListItem.Standard {
+//                            width: parent.width
+//                            text: qsTr("Released")
+//                            valueText: "date"
+//                            interactive: false
+//                        }
+//                    }
+//                }
+//                Column {
+//                    id: overylayColumn
+//                    width: parent.width - Const.tinySpace *2
+//                    x: Const.tinySpace
+//                    spacing: Const.tinySpace /2
+//                    Repeater {
+//                        model: LocalMusicStore.model.audioMetaList
+//                        delegate: MusicListItem {
+//                            width: parent.width
+//                            showDivider: true
+//                            property var object: LocalMusicStore.model.audioMetaList[index]
+//                            property var hash: object[MetaKey.KeyHash];
+//                            property string pColor
+//                            coverColor: overlayInner.pColor
+//                            audioMetaObject: object
+//                            selected: PlayCtrlBarInfoStore.currentHash == hash
+//                            showIndictor: selected
+//                            onClicked: {
+//                                Player.playFromLibrary(hash)
+//                            }
+//                            Component.onCompleted: {
+//                                random.generate();
+//                                pColor = random.primaryDarkColor;
+//                            }
+//                            Rectangle {
+//                                anchors.fill: parent
+//                                z: parent.z - 1
+//                                radius: 2 * Units.dp
+//                                opacity: 0.2
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        Scrollbar {
+//            flickableItem: overlayFlickable
+//        }
+//    }
 }

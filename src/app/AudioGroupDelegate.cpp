@@ -18,6 +18,8 @@ using namespace PhoenixPlayer::MusicLibrary;
 AudioGroupDelegate::AudioGroupDelegate(QObject *parent)
     : QSListModel(parent)
     , m_keyFiled(AudioMetaGroupObject::keyHash ())
+    , m_audioMetaListCount(0)
+    , m_audioMetaListTotalTime(0)
 {
     m_libraryMgr = phoenixPlayerLib->libraryMgr ();
     m_audioMetaListModel = new QSListModel(this);
@@ -71,6 +73,8 @@ void AudioGroupDelegate::showGenresList()
 
 void AudioGroupDelegate::clear()
 {
+    m_audioMetaListCount = 0;
+    m_audioMetaListTotalTime = 0;
     m_dataList.clear ();
     m_audioMetaList.clear ();
     syncAudioList ();
@@ -128,6 +132,16 @@ QVariantList AudioGroupDelegate::audioMetaList() const
     return list;
 }
 
+int AudioGroupDelegate::audioMetaListCount() const
+{
+    return m_audioMetaListCount;
+}
+
+int AudioGroupDelegate::audioMetaListTotalTime() const
+{
+    return m_audioMetaListTotalTime;
+}
+
 void AudioGroupDelegate::sync()
 {
     QSDiffRunner runner;
@@ -147,7 +161,9 @@ void AudioGroupDelegate::syncAudioList()
     QSDiffRunner runner;
     runner.setKeyField (AudioMetaObject::keyHash ());
     QVariantList list;
+    int totalTime = 0;
     foreach (AudioMetaObject o, m_audioMetaList) {
+        totalTime += o.trackMeta().duration();
         list.append (o.toMap ());
     }
     QList<QSPatch> patches = runner.compare (m_audioMetaListModel->storage (), list);
@@ -155,7 +171,11 @@ void AudioGroupDelegate::syncAudioList()
 
     qDebug()<<Q_FUNC_INFO<<"m_audioMetaListModel Data size "<<m_audioMetaListModel->storage ().size ();
 
-     emit audioMetaListChanged (list);
+    m_audioMetaListCount = m_audioMetaList.count();
+    m_audioMetaListTotalTime = totalTime;
+    emit audioMetaListChanged (list);
+    emit audioMetaListCountChanged(m_audioMetaListCount);
+    emit audioMetaListTotalTimeChanged(m_audioMetaListTotalTime);
 }
 
 

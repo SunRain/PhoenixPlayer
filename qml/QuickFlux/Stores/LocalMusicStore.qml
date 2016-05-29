@@ -11,12 +11,14 @@ AppListener {
     id: localMusicStore
 
     property var model: groupDelegate
-    property var allMusicModel: allMusicDelegate
+    property alias allMusicModel: allMusicDelegate
     property string sourceUri: Qt.resolvedUrl("../../UI/MusicCategoryView.qml")
 
     readonly property string groupKeyName: groupDelegate.keyName
     readonly property string groupKeyHash: groupDelegate.keyHash
     readonly property string groupKeyImgUri: groupDelegate.keyImgUri
+
+    property alias groupModel: groupDelegate
 
     AllMusicDelegate {
         id: allMusicDelegate

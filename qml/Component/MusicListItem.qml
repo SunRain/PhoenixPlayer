@@ -2,91 +2,137 @@ import QtQuick 2.4
 import Material 0.3
 import Material.ListItems 0.1 as ListItem
 
+import com.sunrain.phoenixplayer.qmlplugin 1.0
+
 import "../"
+
 ListItem.BaseListItem {
     id: musicListItem
     width: parent ? parent.width : dp(1440)
-    height: Const.itemHeight
+    height: Const.itemHeight//72 * Units.dp
 
     property alias coverColor: cover.color
-    property string trackTitle: ""
-    onTrackTitleChanged: {
-        if (trackTitle == "" || trackTitle == undefined)
-            trackChar = "?";
-        else
-            trackChar = trackTitle.substring(0,1)
+    property bool showIndictor: false
+    property color indictorColor: Theme.accentColor
+    property var audioMetaObject: null
+    onAudioMetaObjectChanged: {
+        inner.trackMeta = audioMetaObject[MetaKey.KeyTrackMeta];
+        inner.coverMeta = audioMetaObject[MetaKey.KeyCoverMeta];
+        inner.artistMeta = audioMetaObject[MetaKey.KeyArtistMeta];
+        inner.albumMeta = audioMetaObject[MetaKey.KeyAlbumMeta];
+        var title = inner.trackMeta[MetaKey.KeyTitle];
+        if (title == undefined || title == "") {
+            title = audioMetaObject[MetaKey.KeyName]
+        }
+        if (title == undefined || title == "") {
+            inner.trackTitle = qsTr("UnKnown");
+            inner.trackChar = "?";
+        } else {
+            inner.trackTitle = title;
+            inner.trackChar = inner.trackTitle.substring(0,1);
+        }
+        var t = inner.coverMeta[MetaKey.KeyMiddleImg]
+        if (t == undefined || t == "")
+            t = inner.coverMeta[MetaKey.KeyLargeImg]
+        if (t == undefined || t == "")
+            t = inner.coverMeta[MetaKey.KeySmallImg]
+        if (t == undefined || t == "")
+            t = inner.artistMeta[MetaKey.keyUri]
+        if (t == undefined || t == "")
+            t = inner.albumMeta[MetaKey.keyUri]
+        inner.coverImg = t;
     }
-    property alias trackChar: coverLabel.text
-    property alias coverImage: coverImage.source
+
+    QtObject {
+        id: inner
+        property string hash: ""
+        property var trackMeta: null
+        property var coverMeta: null
+        property var artistMeta: null
+        property var albumMeta: null
+        property string trackTitle: qsTr("UnKnown")
+        property string trackChar: "?"
+        property string coverImg: ""
+    }
+
+//    property string trackTitle: ""
+//    onTrackTitleChanged: {
+//        if (trackTitle == "" || trackTitle == undefined)
+//            trackChar = "?";
+//        else
+//            trackChar = trackTitle.substring(0,1)
+//    }
+//    property alias trackChar: coverLabel.text
+//    property alias coverImage: coverImage.source
+
+    Rectangle {
+        id: indictor
+        width: showIndictor ? 4 * Units.dp : 0
+        height: parent.height
+        color: indictorColor
+        visible: showIndictor
+        enabled: showIndictor
+    }
 
     Rectangle {
         id: cover
-        height: parent.height * 0.8
         width: height
-        anchors.left: parent.left
-        anchors.leftMargin: Const.tinySpace
-        anchors.verticalCenter: parent.verticalCenter
-//        color: pColor
+        height: parent.height
+        anchors.left: indictor.right
+
         Label {
             id: coverLabel
             width: parent.width
             anchors.verticalCenter: parent.verticalCenter
-//            text: trackChar
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Image.AlignVCenter
             style: "body2"
             font.pixelSize: parent.width * 0.5
+            text: inner.trackChar
         }
         Image {
             id: coverImage
             anchors.fill: parent
             fillMode: Image.PreserveAspectFit
-//            source :{
-//                var t = AppUtility.pareseAudioMetaObject(metaKey.KeyMiddleImg, coverMeta);
-//                if (t == undefined || t == "")
-//                    t = AppUtility.pareseAudioMetaObject(metaKey.KeyLargeImg, coverMeta);
-//                if (t == undefined || t == "")
-//                    t = AppUtility.pareseAudioMetaObject(metaKey.KeySmallImg, coverMeta);
-//                if (t == undefined || t == "")
-//                    t = AppUtility.pareseAudioMetaObject(metaKey.keyUri, artistMeta);
-//                if (t == undefined || t == "")
-//                    t = AppUtility.pareseAudioMetaObject(metaKey.keyUri, albumMeta);
-//                return t;
-//            }
+            source: inner.coverImg
         }
     }
-
     Column {
-        anchors.left: cover.right
-        anchors.leftMargin: Const.tinySpace
-        anchors.right: ctrl.left
-        anchors.rightMargin: Const.tinySpace
-        anchors.verticalCenter: parent.verticalCenter
-        spacing: dp(3)
+        id: column
+        anchors {
+            left: cover.right
+            leftMargin: Const.tinySpace
+            right: ctrlBtn.left
+            rightMargin: Const.tinySpace
+            verticalCenter: parent.verticalCenter
+        }
+        spacing: 3 * Units.dp
         Label {
+            width: parent.width
             elide: Text.ElideRight
-            style: "subheading"
-            maximumLineCount: 1
+            style: "body1"
             verticalAlignment: Text.AlignVCenter
-            text: trackTitle
+            color: Theme.light.subTextColor
+            text: inner.trackTitle
         }
         Label {
+            width: parent.width
             color: Theme.light.subTextColor
             elide: Text.ElideRight
             wrapMode: Text.WordWrap
-            style: "body1"
             verticalAlignment: Text.AlignVCenter
-            maximumLineCount: 1
-            text: "bibibiibibbibi"
+            style: "body1"
+            text: "bibibibibibi"
         }
     }
 
     IconButton {
-        id: ctrl
-        size: Const.itemHeight /2
-        anchors.right: parent.right
-        anchors.rightMargin: Const.tinySpace
-        anchors.verticalCenter: parent.verticalCenter
+        id: ctrlBtn
+        anchors {
+            right: parent.right
+            rightMargin: Const.tinySpace
+            verticalCenter: parent.verticalCenter
+        }
         iconName: "navigation/more_vert"
         onClicked: {
             menu.open(musicListItem, 0, 0)

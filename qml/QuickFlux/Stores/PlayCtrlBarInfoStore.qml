@@ -15,19 +15,21 @@ AppListener {
     property var title: null
     property var album: null
     property var artist: null
-    property var coverUri: null
+    property string coverUri: inner.default_cover
     property int durationInSeconds: 0
     property int tickInSeconds: 0
 
     property string currentHash: null
 
-    property string repeatIconName: "av/repeat"
+    property string repeatIconName: "av/repeat/default_disc.png"
     property bool repeatIconHightlight: inner.playMode == Common.PlayModeRepeatAll
                                         ||  inner.playMode == Common.PlayModeRepeatCurrent
                                         || inner.playMode == Common.PlayModeShuffle
 
     QtObject {
         id: inner
+        //TODO use qrc
+        property string default_cover: "../images/default_disc.png"
         property bool isPlaying: Player.playMode == Common.PlayBackendPlaying
         property int playBackendState: Common.PlayBackendStopped
         onPlayBackendStateChanged: { //state
@@ -119,7 +121,11 @@ AppListener {
         type: ActionTypes.changeCtrlBarCover
         onDispatched: {
             console.log("====== infoStore cover "+message.value)
-            coverUri = message.value
+//            coverUri = message.value
+            var v = message.value;
+            if (v === undefined || v === "")
+                v = inner.default_cover;
+            coverUri = v;
         }
     }
 

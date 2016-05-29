@@ -16,6 +16,8 @@ class AudioGroupDelegate : public QSListModel
     Q_OBJECT
 //    Q_PROPERTY(QObject* audioMetaListModel READ audioMetaListModel CONSTANT)
     Q_PROPERTY(QVariantList audioMetaList READ audioMetaList NOTIFY audioMetaListChanged)
+    Q_PROPERTY(int audioMetaListCount READ audioMetaListCount NOTIFY audioMetaListCountChanged)
+    Q_PROPERTY(int audioMetaListTotalTime READ audioMetaListTotalTime NOTIFY audioMetaListTotalTimeChanged)
     Q_PROPERTY(QString keyName READ keyName CONSTANT)
     Q_PROPERTY(QString keyHash READ keyHash CONSTANT)
     Q_PROPERTY(QString keyImgUri READ keyImgUri CONSTANT)
@@ -40,9 +42,13 @@ public:
     QString keyHash() const;
     QString keyImgUri() const;
     QVariantList audioMetaList() const;
+    int audioMetaListCount() const;
+    int audioMetaListTotalTime() const;
 
 signals:
     void audioMetaListChanged(QVariantList audioMetaList);
+    void audioMetaListCountChanged(int audioMetaListCount);
+    void audioMetaListTotalTimeChanged(int audioMetaListTotalTime);
 
 private:
     void sync();
@@ -54,6 +60,8 @@ private:
     AudioMetaGroupList m_dataList;
     AudioMetaList m_audioMetaList;
     QString m_keyFiled;
+    int m_audioMetaListCount;
+    int m_audioMetaListTotalTime;
 };
 
 #endif // AUDIOGROUPDELEGATE_H

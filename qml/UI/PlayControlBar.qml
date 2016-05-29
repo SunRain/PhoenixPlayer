@@ -44,19 +44,31 @@ View {
 //        }
 //    }
 
-    Image {
+    Rectangle {
         id: trackImage
         anchors.left: parent.left
         anchors.leftMargin: dp(2)
-        height: parent.height
+        anchors.verticalCenter: parent.verticalCenter
+        height: parent.height * 0.8
         width: height
-        fillMode: Image.PreserveAspectFit
-        source: PlayCtrlBarInfoStore.coverUri//"qrc:///default_disc_240.png"
+
+        radius: 2 * Units.dp
+
+        color: theme.accentColor
+
+        Image {
+            width: parent.width * 0.8
+            height: width
+            anchors.centerIn: parent
+            fillMode: Image.PreserveAspectFit
+            source: PlayCtrlBarInfoStore.coverUri//"qrc:///default_disc_240.png"
+        }
     }
 
     Row {
         id: toggleRow
         anchors.left: trackImage.right
+        anchors.leftMargin: Const.tinySpace
         height: parent.height
         spacing: dp(2)
 

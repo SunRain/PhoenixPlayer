@@ -53,4 +53,12 @@ ActionCreator {
     function showTracksInPlst(name) {
         AppDispatcher.dispatch(ActionTypes.showTracksInPlst, {"name":name});
     }
+
+    function openCategoryDetailView(parent, hash, name, cover) {
+        AppDispatcher.dispatch(ActionTypes.openCategoryDetailView,
+                               {"viewParent":parent,
+                                   "hash":hash,
+                                   "name":name,
+                                   "cover":cover});
+    }
 }

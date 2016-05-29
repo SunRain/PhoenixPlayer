@@ -19,19 +19,13 @@ Item {
     width: parent ? parent.width : dp(1440)
     height: parent ? parent.height : dp(900)
 
-//    AudioMetaObjectKeyName {
-//        id: MetaKey
-//    }
-    RandomColor {
-        id: random
-    }
-//    AudioMetaObjectParser {
-//        id: parser
-//    }
-
     Component.onCompleted: {
         PlayCtrAdapter.register(Const.localMusicCtrlUid);
         LocalPlayCtrl.dummy;
+    }
+
+    RandomColor {
+        id: random
     }
 
     ListView {
@@ -47,41 +41,44 @@ Item {
             width: parent.width
             property var object: LocalMusicStore.model.get(index)
             property var hash: object[MetaKey.KeyHash];
-            property var trackMeta: object[MetaKey.KeyTrackMeta]
-            property var coverMeta: object[MetaKey.KeyCoverMeta]
-            property var artistMeta: object[MetaKey.KeyArtistMeta]
-            property var albumMeta: object[MetaKey.KeyAlbumMeta]
+//            property var trackMeta: object[MetaKey.KeyTrackMeta]
+//            property var coverMeta: object[MetaKey.KeyCoverMeta]
+//            property var artistMeta: object[MetaKey.KeyArtistMeta]
+//            property var albumMeta: object[MetaKey.KeyAlbumMeta]
             property string pColor
-            property string title: null
-            property string imgUri: null
-            trackTitle: title
-            trackChar: "?"
+//            property string title: null
+//            property string imgUri: null
+//            trackTitle: title
+//            trackChar: "?"
+//            coverColor: pColor
+//            coverImage: imgUri
             coverColor: pColor
-            coverImage: imgUri
+            audioMetaObject: object
             selected: PlayCtrlBarInfoStore.currentHash == hash
+            showIndictor: selected
             Component.onCompleted: {
-                title = trackMeta[MetaKey.KeyTitle]
-                if (title == undefined || title == "") {
-                    title = object[MetaKey.KeyName]
-                }
-                if (title == undefined || title == "") {
-                    title = qsTr("UnKnown");
-                    musicItem.trackChar = "?";
-                }
+//                title = trackMeta[MetaKey.KeyTitle]
+//                if (title == undefined || title == "") {
+//                    title = object[MetaKey.KeyName]
+//                }
+//                if (title == undefined || title == "") {
+//                    title = qsTr("UnKnown");
+//                    musicItem.trackChar = "?";
+//                }
                 random.generate();
                 pColor = random.primaryDarkColor;
-                var t = coverMeta[MetaKey.KeyMiddleImg]
-                if (t == undefined || t == "")
-                    t = coverMeta[MetaKey.KeyLargeImg]
-                if (t == undefined || t == "")
-                    t = coverMeta[MetaKey.KeySmallImg]
-                if (t == undefined || t == "")
-                    t = artistMeta[MetaKey.keyUri]
-                if (t == undefined || t == "")
-                    t = albumMeta[MetaKey.keyUri]
-                imgUri = t;
-//                var hash = object[MetaKey.KeyHash];
-                console.log("====== hash "+hash);
+//                var t = coverMeta[MetaKey.KeyMiddleImg]
+//                if (t == undefined || t == "")
+//                    t = coverMeta[MetaKey.KeyLargeImg]
+//                if (t == undefined || t == "")
+//                    t = coverMeta[MetaKey.KeySmallImg]
+//                if (t == undefined || t == "")
+//                    t = artistMeta[MetaKey.keyUri]
+//                if (t == undefined || t == "")
+//                    t = albumMeta[MetaKey.keyUri]
+//                imgUri = t;
+////                var hash = object[MetaKey.KeyHash];
+//                console.log("====== hash "+hash);
             }
             onClicked: {
 //                var hash = object[MetaKey.KeyHash];
