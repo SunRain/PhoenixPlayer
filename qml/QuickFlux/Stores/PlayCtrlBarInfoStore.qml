@@ -26,6 +26,7 @@ AppListener {
                                         ||  inner.playMode == Common.PlayModeRepeatCurrent
                                         || inner.playMode == Common.PlayModeShuffle
 
+    property string playModeText: qsTr("PlayModeOrder")
     QtObject {
         id: inner
         //TODO use qrc
@@ -50,18 +51,23 @@ AppListener {
             switch(playModeIdx) {
                 case 0:
                     Player.playMode = Common.PlayModeOrder;
-                break;
+                    playModeText = qsTr("PlayModeOrder")
+                    break;
                 case 1:
                     Player.playMode = Common.PlayModeRepeatCurrent;
-                break;
+                    playModeText = qsTr("PlayModeRepeatCurrent")
+                    break;
                 case 2:
                     Player.playMode = Common.PlayModeRepeatAll;
-                break;
+                    playModeText = qsTr("PlayModeRepeatAll")
+                    break;
                 case 3:
                     Player.playMode = Common.PlayModeShuffle;
-                break;
+                    playModeText = qsTr("PlayModeShuffle")
+                    break;
                 default:
                     Player.playMode = Common.PlayModeOrder;
+                    playModeText = qsTr("PlayModeOrder")
             }
         }
 

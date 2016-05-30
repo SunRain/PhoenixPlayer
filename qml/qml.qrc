@@ -44,5 +44,6 @@
         <file>Component/SimpleDialog.qml</file>
         <file>UI/CategoryDetailView.qml</file>
         <file>QuickFlux/Scripts/CategoryDetailScript.qml</file>
+        <file>Component/TextCollapsible.qml</file>
     </qresource>
 </RCC>

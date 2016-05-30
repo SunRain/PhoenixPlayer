@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import QuickFlux 1.0
 import Material 0.3
+import QtQuick.Layouts 1.1
 import Material.ListItems 0.1 as ListItem
 import QtQuick.Controls 1.3 as Controls
 import QtQuick.Controls.Styles 1.3 as Styles
@@ -21,10 +22,13 @@ OverlayView {
 
     property string coverUri: ""
     onCoverUriChanged: {
-        if (coverUri == "")
+        if (coverUri == "") {
             inner.coverUri = "../images/default_disc.png";
-        else  //TODO fit for qrc
+            inner.useDefaultCover = true;
+        } else { //TODO fit for qrc
             inner.coverUri = AppUtility.qrcStrPath(singleView.coverUri);
+            inner.useDefaultCover = false;
+        }
     }
     property string categoryName: ""
     onCategoryNameChanged: {
@@ -52,6 +56,7 @@ OverlayView {
 
     QtObject {
         id: inner
+        property bool useDefaultCover: true
         property string coverUri: "../images/default_disc.png";
         property string categoryName: qsTr("UnKnow");
     }
@@ -77,7 +82,8 @@ OverlayView {
                 id: topBar
                 width: parent.width
                 height: Math.max(cover.height, topbarColumn.height)
-                Image {
+
+                Item {
                     id: cover
                     width: Const.cardSize
                     height: width
@@ -85,8 +91,43 @@ OverlayView {
                         left: parent.left
                         top: parent.top
                     }
-                    fillMode: Image.PreserveAspectCrop
-                    source: inner.coverUri
+                    MouseArea {
+                        id: coverMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                    }
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: 2 * Units.dp
+                        color: coverMouse.containsMouse && inner.useDefaultCover
+                               ? Qt.rgba(0,0,0,0.1)
+                               : Qt.rgba(0,0,0,0.03)
+
+                        IconButton {
+                            anchors{
+                                top: parent.top
+                                right: parent.right
+                                margins: Const.tinySpace
+                            }
+                            size: Const.itemHeight /2
+                            action: Action {
+                                iconName: "file/cloud_download"
+                                name: qsTr("Download cover")
+                            }
+                            opacity: inner.useDefaultCover ? 1 : 0
+                            Behavior on opacity {
+                                NumberAnimation { duration: 100; easing.type: Easing.InOutQuad }
+                            }
+                        }
+                    }
+                    Image {
+                        width: inner.useDefaultCover ? parent.width * 0.8 : parent.width
+                        height: width
+                        anchors.centerIn: parent
+                        fillMode: Image.PreserveAspectCrop
+                        antialiasing: true
+                        source: inner.coverUri
+                    }
                 }
                 Column {
                     id: topbarColumn
@@ -127,11 +168,36 @@ OverlayView {
                             }
                         }
                     }
-                    Label {
+                    TextCollapsible {
                         id: displayInfo
                         width: parent.width
                         style: "body1"
                         text: "bibibibibi info bibibibiibbi"
+                    }
+                    ProgressBar {
+                        id: infoDlProgress
+                        width: parent.width
+                        color: Theme.accentColor
+                        SequentialAnimation on value {
+                            running: true
+                            loops: NumberAnimation.Infinite
+                            NumberAnimation {
+                                duration: 3000
+                                from: 0
+                                to: 1
+                            }
+                            PauseAnimation { duration: 1000 } // This puts a bit of time between the loop
+                        }
+                    }
+
+                    Button {
+                        width: parent.width
+                        text: qsTr("Download infomation")
+//                        action: Icon {
+//                            anchors.centerIn: parent
+//                            size: 32 * Units.dp
+//                            name: "action/info_outline"
+//                        }
                     }
                 }
             }

@@ -66,9 +66,14 @@ Page {
         }
     }
 
-//    rightSidebar: PlayerViewPage {
-//        width: Const.rightSidebarWidth
-//    }
+    Snackbar {
+        id: snackbar
+        duration: 1000
+        property string snackbarText: PlayCtrlBarInfoStore.playModeText
+        onSnackbarTextChanged: {
+            snackbar.open(snackbarText)
+        }
+    }
 
 
 

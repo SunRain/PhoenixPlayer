@@ -12,55 +12,27 @@ import "../"
 View {
     id: playControlBar
     width: parent ? parent.width : dp(700)
-    height: slider.height//parent ? parent.height : dp(120)
+    height: slider.height
 
     elevation: 2
     elevationInverted: true
 
-//    property bool _isPlaying: playerController.isPlaying()
-//    property var _durationValue: playerController.getTrackLength()
-//    property var _title: playerController.trackTitle()
-//    property var _album: playerController.trackAlbum()
-//    property var _artist: playerController.trackArtist()
-
-//    Connections {
-//        target: playerController
-//        onTrackChanged: {
-//            _durationValue = playerController.getTrackLength();
-//            _title = playerController.trackTitle()
-//            _album = playerController.trackAlbum()
-//            _artist = playerController.trackArtist()
-//        }
-//        onPlayTickChanged: {
-////            if (!_sliderPressed) {
-////                slider.value = playerController.playTickActualSec();//sec;
-////                playedTime.text = util.formateSongDuration(playerController.playTickActualSec());
-////            }
-//            console.log(" onPlayTickChanged playedSec " + playerController.playTickActualSec());
-//            slider.playedSec = playerController.playTickActualSec();
-//        }
-//        onPlayBackendStateChanged: {
-//            _isPlaying = playerController.isPlaying();
-//        }
-//    }
-
-    Rectangle {
+    Item {
         id: trackImage
         anchors.left: parent.left
         anchors.leftMargin: dp(2)
         anchors.verticalCenter: parent.verticalCenter
         height: parent.height * 0.8
         width: height
-
-        radius: 2 * Units.dp
-
-        color: theme.accentColor
-
+        Rectangle {
+            anchors.fill: parent
+            radius: 2 * Units.dp
+            color: Qt.rgba(0,0,0,0.2)
+        }
         Image {
-            width: parent.width * 0.8
-            height: width
-            anchors.centerIn: parent
+            anchors.fill: parent
             fillMode: Image.PreserveAspectFit
+            antialiasing: true
             source: PlayCtrlBarInfoStore.coverUri//"qrc:///default_disc_240.png"
         }
     }
@@ -175,7 +147,7 @@ View {
             id: repeat
             anchors.verticalCenter: parent.verticalCenter
             size: parent.height / 2
-            iconName: PlayCtrlBarInfoStore.repeatIconName//"av/repeat"
+            iconName: PlayCtrlBarInfoStore.repeatIconName
             color: PlayCtrlBarInfoStore.repeatIconHightlight ? Theme.light.iconColor : Theme.light.hintColor
             onClicked: {
                 AppActions.changePlayMode();
